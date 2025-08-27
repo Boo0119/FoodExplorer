@@ -14,7 +14,7 @@
      <!-- Navigation -->
 <nav class="navbar navbar-expand-lg fixed-top navbar-light shadow-sm app-navbar">
   <div class="container">
-    <a class="navbar-brand" href="#home">
+    <a class="navbar-brand" href="index.html">
       <i class="fas fa-utensils me-2"></i>MY StreetFood
     </a>
 
@@ -24,18 +24,18 @@
     </button>
 
     <div class="collapse navbar-collapse" id="navbarNav">
-      <!-- LEFT: order you requested -->
+      <!-- Navigation Menu -->
       <ul class="navbar-nav me-auto align-items-lg-center">
-        <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
-        <li class="nav-item"><a class="nav-link" href="#top-ranking">Top Ranking</a></li>
+        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="ranking.html">Top Ranking</a></li>
 
         <!-- Street Food dropdown -->
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="streetFoodDropdown" role="button"
              data-bs-toggle="dropdown" aria-expanded="false">Street Food</a>
           <ul class="dropdown-menu" aria-labelledby="streetFoodDropdown">
-            <li><a class="dropdown-item" href="search-states.html"><i class="fas fa-map-marker-alt me-2"></i>States</a></li>
-            <li><a class="dropdown-item" href="search-races.html"><i class="fas fa-users me-2"></i>Races</a></li>
+            <li><a class="dropdown-item" href="state.html"><i class="fas fa-map-marker-alt me-2"></i>States</a></li>
+            <li><a class="dropdown-item" href="Race.html"><i class="fas fa-users me-2"></i>Races</a></li>
           </ul>
         </li>
 
@@ -44,18 +44,20 @@
         <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
       </ul>
 
-      <!-- RIGHT: auth controls -->
+      <!-- Auth Buttons -->
       <div class="d-flex align-items-center gap-2">
-        <button id="btnLogin"  type="button" class="btn btn-outline-primary px-3 rounded-pill">Login</button>
-        <button id="btnSignup" type="button" class="btn btn-primary px-3 rounded-pill">Sign Up</button>
+        <span id="navUser" class="nav-link text-muted small d-none">Hello, <span id="usernameDisplay"></span></span>
+        <a id="btnLogin" href="login.html" class="btn btn-outline-primary px-3 rounded-pill text-decoration-none">Login</a>
+        <a id="btnSignup" href="signup.html" class="btn btn-primary px-3 rounded-pill text-decoration-none text-white">Sign Up</a>
         <button id="btnLogout" type="button" class="btn btn-outline-secondary px-3 rounded-pill d-none">Logout</button>
-        <span id="navUser" class="nav-link text-muted small d-none"></span>
+      </div>
+
+      <!-- Weather + Time -->
+      <div class="weather-time-box">
+        <div id="local-time" class="small"></div>
+        <div id="local-weather" class="small"></div>
       </div>
     </div>
-      <div class="weather-time-box ms-auto">
-            <div id="local-time" class="small"></div>
-            <div id="local-weather" class="small"></div>
-        </div>
   </div>
 </nav> 
  <div class="font-controls" style="position: fixed; left: 20px; bottom: 50px; z-index: 9999; display:flex; gap:8px;">
