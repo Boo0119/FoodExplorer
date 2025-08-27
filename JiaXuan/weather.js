@@ -47,13 +47,12 @@ updateTime();
   function renderWeather(data) {
     const temp = Math.round(data.main?.temp);
     const condition = data.weather?.[0]?.main || "";
-    const description = data.weather?.[0]?.description || "";
     const icon = weatherIcons[condition] || "🌤️";
     const city = data.name || "";
     const country = data.sys?.country || "";
-    const locationLabel = city ? ` — ${city}${country ? ", " + country : ""}` : "";
+    const locationLabel = city ? `${city}${country ? ", " + country : ""}` : "";
     const el = document.getElementById("local-weather");
-    if (el) el.textContent = `${icon} ${isFinite(temp) ? temp + "°C" : ""}${temp ? ", " : ""}${description}${locationLabel}`;
+    if (el) el.textContent = `${icon} ${isFinite(temp) ? temp + "°C" : ""}${temp && locationLabel ? ", " : ""}${locationLabel}`;
   }
 
   async function loadWeatherWithFallback() {
