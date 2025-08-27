@@ -1,0 +1,413 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pahang Street Food</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="RouYan/state.css">
+  <link rel="stylesheet" href="RouYan/food.css">
+</head>
+
+<body data-state="pahang">
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg fixed-top navbar-light shadow-sm app-navbar">
+    <div class="container">
+      <a class="navbar-brand" href="#home">
+        <i class="fas fa-utensils me-2"></i>MY StreetFood
+      </a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <!-- LEFT: order you requested -->
+        <ul class="navbar-nav me-auto align-items-lg-center">
+          <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="#top-ranking">Top Ranking</a></li>
+
+          <!-- Street Food dropdown -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="streetFoodDropdown" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">Street Food</a>
+            <ul class="dropdown-menu" aria-labelledby="streetFoodDropdown">
+              <li><a class="dropdown-item" href="search-states.html"><i
+                    class="fas fa-map-marker-alt me-2"></i>States</a></li>
+              <li><a class="dropdown-item" href="search-races.html"><i class="fas fa-users me-2"></i>Races</a></li>
+            </ul>
+          </li>
+
+          <li class="nav-item"><a class="nav-link text-uppercase" href="blog.html">BLOG</a></li>
+          <li class="nav-item"><a class="nav-link" href="nearme.html">Near Me</a></li>
+          <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
+        </ul>
+
+        <!-- RIGHT: auth controls -->
+        <div class="d-flex align-items-center gap-2">
+          <button id="btnLogin" type="button" class="btn btn-outline-primary px-3 rounded-pill">Login</button>
+          <button id="btnSignup" type="button" class="btn btn-primary px-3 rounded-pill">Sign Up</button>
+          <span id="navUser" class="nav-link text-muted small d-none"></span>
+          <button id="btnLogout" type="button"
+            class="btn btn-outline-secondary px-3 rounded-pill d-none">Logout</button>
+        </div>
+      </div>
+    </div>
+    <!-- Weather Widget -->
+    <div class="weather-widget">
+      <h3 id="weather-location">Loading...</h3>
+      <p id="weather-temp"></p>
+      <img id="weather-icon" src="" alt="Weather Icon">
+    </div>
+  </nav>
+
+  <!-- Header -->
+  <header>
+    <h1>Pahang Street Food</h1>
+    <p>Discover the iconic street foods of Pahang, Malaysia</p>
+    <a href="#search-section" class="btn">Start the Journey</a>
+  </header>
+
+  <!-- Search and Controls Section -->
+  <section id="search-section" class="search-controls-section">
+    <div class="search-container">
+      <!-- Search Bar -->
+      <div class="search-bar-container">
+        <div class="search-bar">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="search-input" placeholder="Search by name, ingredients, or description..." />
+          <button id="clear-search" class="clear-btn" style="display: none;">✕</button>
+        </div>
+        <div id="search-results" class="search-results" style="display: none;"></div>
+      </div>
+      <!-- Controls Row -->
+      <div class="controls-row">
+        <!-- Sort Controls -->
+        <div class="sort-container">
+          <span class="sort-label">Sort by:</span>
+          <button class="sort-btn" onclick="sortFoodItems('asc')">A-Z</button>
+          <button class="sort-btn" onclick="sortFoodItems('desc')">Z-A</button>
+          <button class="sort-btn reset-btn" onclick="resetOrder()">Original Order</button>
+        </div>
+        <!-- Favorites Button -->
+        <div class="favorites-container">
+          <button id="favorites-btn" class="favorites-btn">
+            <span class="heart-icon">❤️</span>
+            <span>My Favorites</span>
+            <span id="favorites-count" class="favorites-count">0</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Food Sections Container -->
+  <div id="food-container">
+    <!-- 3-Colour Pan Mee -->
+    <section id="panmee" class="food-section" data-name="3-Colour Pan Mee"
+      data-ingredients="handmade noodles,anchovy broth,vegetables,minced pork,chicken,fried shallots">
+      <div class="slideshow" data-slideshow="panmee">
+        <div class="slides">
+          <img src="Images/State Food/Pahang/3-colour-pan-mee1.jpg" class="active" alt="3-Colour Pan Mee 1"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Pahang/3-colour-pan-mee2.jpg" alt="3-Colour Pan Mee 2"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Pahang/3-colour-pan-mee3.jpg" alt="3-Colour Pan Mee 3"
+            onclick="openImageModal(this.src, this.alt)">
+        </div>
+        <button class="prev" onclick="changeSlideshow('panmee', -1)">❮</button>
+        <button class="next" onclick="changeSlideshow('panmee', 1)">❯</button>
+        <div class="dots" id="dots-panmee">
+          <span class="dot active" onclick="currentSlideshow('panmee', 1)"></span>
+          <span class="dot" onclick="currentSlideshow('panmee', 2)"></span>
+          <span class="dot" onclick="currentSlideshow('panmee', 3)"></span>
+        </div>
+        <div class="zoom-icon">🔍</div>
+      </div>
+      <div class="food-details">
+        <div class="food-header">
+          <h2>3-Colour Pan Mee 三色板面 ⭐⭐⭐⭐☆ (4.4/5)</h2>
+          <button class="favorite-btn" onclick="toggleFavorite('panmee')" data-food-id="panmee">
+            <span class="heart">🤍</span>
+          </button>
+        </div>
+        <p>3-Colour Pan Mee is a unique Pahang noodle dish where handmade noodles are colored naturally with pandan,
+          sweet potato, and pumpkin, served with a rich anchovy-based broth.</p>
+        <p><b>Normal Price:</b> RM 6.00 - RM 10.00</p>
+        <p><b>Popular in:</b> Kuantan, Pahang</p>
+        <p><b>Best Served With:</b> Sambal and lime</p>
+        <a href="https://en.wikipedia.org/wiki/Pan_mee" target="_blank" class="more-btn">More Info</a>
+      </div>
+      <div class="ingredients">
+        <h3>Ingredients:</h3>
+        <ul>
+          <li>Handmade noodles (3 colors)</li>
+          <li>Anchovy broth</li>
+          <li>Vegetables</li>
+          <li>Minced pork or chicken</li>
+          <li>Fried shallots</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Gulai Tempoyak Ikan Patin -->
+    <section id="gulaitempoyak" class="food-section" data-name="Gulai Tempoyak Ikan Patin"
+      data-ingredients="ikan patin,tempoyak,turmeric,chili,coconut milk">
+      <div class="slideshow" data-slideshow="gulaitempoyak">
+        <div class="slides">
+          <img src="Images/State Food/Pahang/gulaitempoyakikanpatin1.jpg" class="active"
+            alt="Gulai Tempoyak Ikan Patin 1" onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Pahang/gulaitempoyakikanpatin2.jpg" alt="Gulai Tempoyak Ikan Patin 2"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Pahang/gulaitempoyakikanpatin3.jpg" alt="Gulai Tempoyak Ikan Patin 3"
+            onclick="openImageModal(this.src, this.alt)">
+        </div>
+        <button class="prev" onclick="changeSlideshow('gulaitempoyak', -1)">❮</button>
+        <button class="next" onclick="changeSlideshow('gulaitempoyak', 1)">❯</button>
+        <div class="dots" id="dots-gulaitempoyak">
+          <span class="dot active" onclick="currentSlideshow('gulaitempoyak', 1)"></span>
+          <span class="dot" onclick="currentSlideshow('gulaitempoyak', 2)"></span>
+          <span class="dot" onclick="currentSlideshow('gulaitempoyak', 3)"></span>
+        </div>
+        <div class="zoom-icon">🔍</div>
+      </div>
+      <div class="food-details">
+        <div class="food-header">
+          <h2>Gulai Tempoyak Ikan Patin 酱榴莲白须公 ⭐⭐⭐⭐⭐ (4.9/5)</h2>
+          <button class="favorite-btn" onclick="toggleFavorite('gulaitempoyak')" data-food-id="gulaitempoyak">
+            <span class="heart">🤍</span>
+          </button>
+        </div>
+        <p>Gulai Tempoyak Ikan Patin is the most famous Pahang dish, made with freshwater silver catfish (ikan patin)
+          cooked in a rich gravy of fermented durian (tempoyak) and turmeric.</p>
+        <p><b>Normal Price:</b> RM 12.00 - RM 20.00</p>
+        <p><b>Popular in:</b> Temerloh, Pahang</p>
+        <p><b>Best Served With:</b> White rice</p>
+        <a href="https://rona.my/resepi/ikan-patin-masak-tempoyak/" target="_blank" class="more-btn">More Info</a>
+      </div>
+      <div class="ingredients">
+        <h3>Ingredients:</h3>
+        <ul>
+          <li>Ikan patin (silver catfish)</li>
+          <li>Tempoyak (fermented durian)</li>
+          <li>Turmeric</li>
+          <li>Chili</li>
+          <li>Coconut milk</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Ikan Bakar Petai -->
+    <section id="ikanbakarpetai" class="food-section" data-name="Ikan Bakar Petai"
+      data-ingredients="fish,chili paste,petai,turmeric,lime">
+      <div class="slideshow" data-slideshow="ikanbakarpetai">
+        <div class="slides">
+          <img src="Images/State Food/Pahang/ikanbakarpetai1.jpg" class="active" alt="Ikan Bakar Petai 1"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Pahang/ikanbakarpetai2.jpg" alt="Ikan Bakar Petai 2"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Pahang/ikanbakarpetai3.jpg" alt="Ikan Bakar Petai 3"
+            onclick="openImageModal(this.src, this.alt)">
+        </div>
+        <button class="prev" onclick="changeSlideshow('ikanbakarpetai', -1)">❮</button>
+        <button class="next" onclick="changeSlideshow('ikanbakarpetai', 1)">❯</button>
+        <div class="dots" id="dots-ikanbakarpetai">
+          <span class="dot active" onclick="currentSlideshow('ikanbakarpetai', 1)"></span>
+          <span class="dot" onclick="currentSlideshow('ikanbakarpetai', 2)"></span>
+          <span class="dot" onclick="currentSlideshow('ikanbakarpetai', 3)"></span>
+        </div>
+        <div class="zoom-icon">🔍</div>
+      </div>
+      <div class="food-details">
+        <div class="food-header">
+          <h2>Ikan Bakar Petai 烤鱼与臭豆 ⭐⭐⭐⭐☆ (4.6/5)</h2>
+          <button class="favorite-btn" onclick="toggleFavorite('ikanbakarpetai')" data-food-id="ikanbakarpetai">
+            <span class="heart">🤍</span>
+          </button>
+        </div>
+        <p>Ikan Bakar Petai is a smoky grilled fish dish marinated with spices and served with sambal belacan and petai
+          (stink beans).</p>
+        <p><b>Normal Price:</b> RM 10.00 - RM 25.00</p>
+        <p><b>Popular in:</b> East Coast Malaysia, especially Pahang</p>
+        <p><b>Best Served With:</b> White rice and sambal</p>
+        <a href="https://adjemz.com/resipi/ikan-bakar-sambal-petai/" target="_blank" class="more-btn">More Info</a>
+      </div>
+      <div class="ingredients">
+        <h3>Ingredients:</h3>
+        <ul>
+          <li>Fresh fish (stingray, mackerel, etc.)</li>
+          <li>Chili paste</li>
+          <li>Petai (stink beans)</li>
+          <li>Turmeric</li>
+          <li>Lime</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Nasi Kebuli -->
+    <section id="nasikebuli" class="food-section" data-name="Nasi Kebuli"
+      data-ingredients="basmati rice,ghee,milk,cinnamon,cloves,cardamom,meat">
+      <div class="slideshow" data-slideshow="nasikebuli">
+        <div class="slides">
+          <img src="Images/State Food/Pahang/nasikebuli1.jpg" class="active" alt="Nasi Kebuli 1"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Pahang/nasikebuli2.jpg" alt="Nasi Kebuli 2"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Pahang/nasikebuli3.jpg" alt="Nasi Kebuli 3"
+            onclick="openImageModal(this.src, this.alt)">
+        </div>
+        <button class="prev" onclick="changeSlideshow('nasikebuli', -1)">❮</button>
+        <button class="next" onclick="changeSlideshow('nasikebuli', 1)">❯</button>
+        <div class="dots" id="dots-nasikebuli">
+          <span class="dot active" onclick="currentSlideshow('nasikebuli', 1)"></span>
+          <span class="dot" onclick="currentSlideshow('nasikebuli', 2)"></span>
+          <span class="dot" onclick="currentSlideshow('nasikebuli', 3)"></span>
+        </div>
+        <div class="zoom-icon">🔍</div>
+      </div>
+      <div class="food-details">
+        <div class="food-header">
+          <h2>Nasi Kebuli 卡布里饭 ⭐⭐⭐⭐☆ (4.5/5)</h2>
+          <button class="favorite-btn" onclick="toggleFavorite('nasikebuli')" data-food-id="nasikebuli">
+            <span class="heart">🤍</span>
+          </button>
+        </div>
+        <p>Nasi Kebuli is a special Pahang rice dish influenced by Middle Eastern cuisine, cooked with ghee, milk, and
+          aromatic spices, usually served with chicken or lamb.</p>
+        <p><b>Normal Price:</b> RM 8.00 - RM 15.00</p>
+        <p><b>Popular in:</b> Pekan, Pahang</p>
+        <p><b>Best Served With:</b> Lamb curry or chicken curry</p>
+        <a href="https://norazlitaaziz.blogspot.com/2011/02/nasi-kebuli.html" target="_blank" class="more-btn">More
+          Info</a>
+      </div>
+      <div class="ingredients">
+        <h3>Ingredients:</h3>
+        <ul>
+          <li>Basmati rice</li>
+          <li>Ghee</li>
+          <li>Milk</li>
+          <li>Cinnamon, cloves, cardamom</li>
+          <li>Meat (lamb or chicken)</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Puding Diraja -->
+    <section id="pudingdiraja" class="food-section" data-name="Puding Diraja"
+      data-ingredients="bananas,prunes,cashew nuts,jala mas,custard">
+      <div class="slideshow" data-slideshow="pudingdiraja">
+        <div class="slides">
+          <img src="Images/State Food/Pahang/pudingdiraja1.jpg" class="active" alt="Puding Diraja 1"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Pahang/pudingdiraja2.jpg" alt="Puding Diraja 2"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Pahang/pudingdiraja3.jpg" alt="Puding Diraja 3"
+            onclick="openImageModal(this.src, this.alt)">
+        </div>
+        <button class="prev" onclick="changeSlideshow('pudingdiraja', -1)">❮</button>
+        <button class="next" onclick="changeSlideshow('pudingdiraja', 1)">❯</button>
+        <div class="dots" id="dots-pudingdiraja">
+          <span class="dot active" onclick="currentSlideshow('pudingdiraja', 1)"></span>
+          <span class="dot" onclick="currentSlideshow('pudingdiraja', 2)"></span>
+          <span class="dot" onclick="currentSlideshow('pudingdiraja', 3)"></span>
+        </div>
+        <div class="zoom-icon">🔍</div>
+      </div>
+      <div class="food-details">
+        <div class="food-header">
+          <h2>Puding Diraja 皇家布丁 ⭐⭐⭐⭐⭐ (4.8/5)</h2>
+          <button class="favorite-btn" onclick="toggleFavorite('pudingdiraja')" data-food-id="pudingdiraja">
+            <span class="heart">🤍</span>
+          </button>
+        </div>
+        <p>Puding Diraja, also known as Royal Pudding, is a famous Pahang dessert made of bananas, prunes, cashews,
+          candied cherries, and jala mas (egg threads).</p>
+        <p><b>Normal Price:</b> RM 5.00 - RM 10.00</p>
+        <p><b>Popular in:</b> Pahang (originated from Pekan)</p>
+        <p><b>Best Served With:</b> Custard sauce</p>
+        <a href="https://rona.my/resepi/puding-diraja/" target="_blank" class="more-btn">More Info</a>
+      </div>
+      <div class="ingredients">
+        <h3>Ingredients:</h3>
+        <ul>
+          <li>Bananas</li>
+          <li>Prunes</li>
+          <li>Cashew nuts</li>
+          <li>Jala mas (egg threads)</li>
+          <li>Custard</li>
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <!-- Auth Modal -->
+  <div class="modal fade" id="authModal" tabindex="-1" aria-hidden="true" aria-labelledby="authTitle">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <form id="authForm">
+          <div class="modal-header">
+            <h5 id="authTitle" class="modal-title">Login</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+
+          <div class="modal-body">
+            <!-- Username (login: 'Username or Email', signup: 'Username') -->
+            <div class="mb-3" id="rowUsername">
+              <label class="form-label" id="labelUsername">Username or Email</label>
+              <input id="authUsername" type="text" class="form-control" minlength="3" required>
+            </div>
+
+            <!-- Email (shown only in signup) -->
+            <div class="mb-3 d-none" id="rowEmail">
+              <label class="form-label">Email</label>
+              <input id="authEmail" type="email" class="form-control">
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Password</label>
+              <input id="authPassword" type="password" class="form-control" minlength="6" required>
+            </div>
+
+            <!-- Confirm password (signup only) -->
+            <div id="rowConfirm" class="mb-3 d-none">
+              <label class="form-label">Confirm Password</label>
+              <input id="authConfirm" type="password" class="form-control" minlength="6">
+            </div>
+
+            <div class="form-check mb-2">
+              <input id="authRemember" class="form-check-input" type="checkbox">
+              <label class="form-check-label" for="authRemember">Remember me</label>
+            </div>
+
+            <div id="authError" class="text-danger small d-none"></div>
+          </div>
+
+          <div class="modal-footer justify-content-between">
+            <div class="small">
+              <span id="authHint">No account?
+                <a href="#" id="linkToSignup">Sign up</a>
+              </span>
+            </div>
+            <button id="authSubmit" class="btn btn-primary" type="submit">Continue</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+  <!-- JS -->
+  <script src="RouYan/location-permission.js"></script>
+  <script src="RouYan/state.js"></script>
+  <script src="main.js"></script>
+  <script src="RouYan/food.js"></script>
+
+</body>
+
+</html>

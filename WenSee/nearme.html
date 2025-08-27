@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Near Me • Malaysia Street Food</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+  <link href="./style.css" rel="stylesheet" />
+</head>
+<body>
+<nav class="navbar navbar-expand-lg fixed-top navbar-light shadow-sm app-navbar">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <i class="fas fa-utensils me-2"></i>MY StreetFood
+      </a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto align-items-lg-center">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="ranking.html">Top Ranking</a></li>
+
+          <!-- Street Food dropdown -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="streetFoodDropdown" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">Street Food</a>
+            <ul class="dropdown-menu" aria-labelledby="streetFoodDropdown">
+              <!-- Link to States page -->
+              <li><a class="dropdown-item" href="state.html"><i class="fas fa-map-marker-alt me-2"></i>States</a></li>
+
+              <!-- Link to Race page -->
+              <li><a class="dropdown-item" href="Race.html"><i class="fas fa-users me-2"></i>Races</a></li>
+            </ul>
+          </li>
+
+          <li class="nav-item"><a class="nav-link text-uppercase" href="blog.html">BLOG</a></li>
+          <li class="nav-item"><a class="nav-link" href="nearme.html">Near Me</a></li>
+          <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
+        </ul>
+
+        <div class="d-flex align-items-center gap-2">
+          <span id="navUser" class="nav-link text-muted small d-none">
+            Hello, <span id="usernameDisplay"></span>
+          </span>
+
+          <!-- Login Button (hidden if logged in) -->
+          <a id="btnLogin" href="login.html" class="btn btn-outline-primary px-3 rounded-pill text-decoration-none">
+            Login
+          </a>
+
+          <!-- Sign Up Button (hidden if logged in) -->
+          <a id="btnSignup" href="signup.html"
+            class="btn btn-primary px-3 rounded-pill text-decoration-none text-white">
+            Sign Up
+          </a>
+
+          <!-- Logout Button (shown if logged in) -->
+          <button id="btnLogout" type="button" class="btn btn-outline-secondary px-3 rounded-pill d-none">
+            Logout
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Weather + Time (rightmost, inside collapse) -->
+    <div class="weather-time-box ms-auto">
+      <div id="local-time" class="small"></div>
+      <div id="local-weather" class="small"></div>
+    </div>
+  </nav>
+
+  <main class="py-5 mt-5">
+    <div class="container">
+      <h1 class="mb-3">Find Street Food Stalls Near Me</h1>
+      <p class="text-muted">We’ll use your location to recommend the nearest food courts, hawker centres, and popular stalls.</p>
+
+      <div class="d-flex flex-wrap gap-2 align-items-center mb-3">
+        <button id="btnUseLocation" class="btn btn-primary">
+          <i class="fas fa-location-arrow me-2"></i>Use My Location
+        </button>
+
+        <label class="ms-2 me-1">Radius:</label>
+        <select id="radiusKm" class="form-select" style="width:120px">
+          <option value="2">2 km</option>
+          <option value="5" selected>5 km</option>
+          <option value="10">10 km</option>
+          <option value="20">20 km</option>
+          <option value="100">100 km</option>
+          <option value="200">200 km</option>
+        </select>
+
+        <label class="ms-2 me-1">Type:</label>
+        <select id="typeFilter" class="form-select" style="width:180px">
+          <option value="All" selected>All</option>
+          <option value="Food Court">Food Court</option>
+          <option value="Hawker Centre">Hawker Centre</option>
+          <option value="Night Market">Night Market</option>
+          <option value="Hawker">Hawker</option>
+          <option value="Restaurant">Restaurant</option>
+        </select>
+
+        <div class="form-check ms-2">
+          <input class="form-check-input" type="checkbox" id="openNow">
+          <label class="form-check-label" for="openNow">Open now</label>
+        </div>
+
+        <a id="openMapsSearch" class="btn btn-outline-primary ms-auto d-none" target="_blank" rel="noopener">
+          <i class="fas fa-map me-2"></i>Open Nearby in Google Maps
+        </a>
+      </div>
+
+      <div id="nearStatus" class="alert alert-info d-none"></div>
+      <div id="nearError" class="alert alert-danger d-none"></div>
+      <div id="nearResults" class="row g-3"></div>
+    </div>
+  </main>
+
+<!-- Vendor JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+  <script src="main.js"></script>
+  <script src="JiaXuan/weather.js"></script>
+  <script>
+    // Initialize Near Me (stalls mode)
+    window.addEventListener('DOMContentLoaded', () => {
+      MSF_NearMe.init('stalls');
+    });
+  </script>
+</body>
+</html>

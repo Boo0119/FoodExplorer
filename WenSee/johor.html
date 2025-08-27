@@ -1,0 +1,410 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Johor Street Food</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="RouYan/state.css">
+  <link rel="stylesheet" href="RouYan/food.css">
+</head>
+
+<body data-state="johor">
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg fixed-top navbar-light shadow-sm app-navbar">
+    <div class="container">
+      <a class="navbar-brand" href="#home">
+        <i class="fas fa-utensils me-2"></i>MY StreetFood
+      </a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <!-- LEFT: order you requested -->
+        <ul class="navbar-nav me-auto align-items-lg-center">
+          <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="#top-ranking">Top Ranking</a></li>
+
+          <!-- Street Food dropdown -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="streetFoodDropdown" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">Street Food</a>
+            <ul class="dropdown-menu" aria-labelledby="streetFoodDropdown">
+              <li><a class="dropdown-item" href="search-states.html"><i
+                    class="fas fa-map-marker-alt me-2"></i>States</a></li>
+              <li><a class="dropdown-item" href="search-races.html"><i class="fas fa-users me-2"></i>Races</a></li>
+            </ul>
+          </li>
+
+          <li class="nav-item"><a class="nav-link text-uppercase" href="blog.html">BLOG</a></li>
+          <li class="nav-item"><a class="nav-link" href="nearme.html">Near Me</a></li>
+          <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
+        </ul>
+
+        <!-- RIGHT: auth controls -->
+        <div class="d-flex align-items-center gap-2">
+          <button id="btnLogin" type="button" class="btn btn-outline-primary px-3 rounded-pill">Login</button>
+          <button id="btnSignup" type="button" class="btn btn-primary px-3 rounded-pill">Sign Up</button>
+          <button id="btnLogout" type="button"
+            class="btn btn-outline-secondary px-3 rounded-pill d-none">Logout</button>
+          <span id="navUser" class="nav-link text-muted small d-none"></span>
+        </div>
+      </div>
+    </div>
+    <!-- Weather Widget -->
+    <div class="weather-widget">
+      <h3 id="weather-location">Loading...</h3>
+      <p id="weather-temp"></p>
+      <img id="weather-icon" src="" alt="Weather Icon">
+    </div>
+  </nav>
+
+  <!-- Header -->
+  <header>
+    <h1>Johor Street Food</h1>
+    <p>Experience the unique fusion of Johor’s iconic street foods</p>
+    <a href="#search-section" class="btn">Start the Journey</a>
+  </header>
+
+  <!-- Search and Controls Section -->
+  <section id="search-section" class="search-controls-section">
+    <div class="search-container">
+      <div class="search-bar-container">
+        <div class="search-bar">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="search-input" placeholder="Search by name, ingredients, or description..." />
+          <button id="clear-search" class="clear-btn" style="display: none;">✕</button>
+        </div>
+        <div id="search-results" class="search-results" style="display: none;"></div>
+      </div>
+      <div class="controls-row">
+        <div class="sort-container">
+          <span class="sort-label">Sort by:</span>
+          <button class="sort-btn" onclick="sortFoodItems('asc')">A-Z</button>
+          <button class="sort-btn" onclick="sortFoodItems('desc')">Z-A</button>
+          <button class="sort-btn reset-btn" onclick="resetOrder()">Original Order</button>
+        </div>
+        <div class="favorites-container">
+          <button id="favorites-btn" class="favorites-btn">
+            <span class="heart-icon">❤️</span>
+            <span>My Favorites</span>
+            <span id="favorites-count" class="favorites-count">0</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Food Sections Container -->
+  <div id="food-container">
+
+    <!-- Bak Kut Teh -->
+    <section id="bakkutteh" class="food-section" data-name="Bak Kut Teh"
+      data-ingredients="pork ribs,chinese herbs,garlic,soy sauce,star anise">
+      <div class="slideshow" data-slideshow="bakkutteh">
+        <div class="slides">
+          <img src="Images/State Food/Johor/bakkutteh1.jpg" class="active" alt="Bak Kut Teh 1"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Johor/bakkutteh2.jpg" alt="Bak Kut Teh 2"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Johor/bakkutteh3.jpg" alt="Bak Kut Teh 3"
+            onclick="openImageModal(this.src, this.alt)">
+        </div>
+        <button class="prev" onclick="changeSlideshow('bakkutteh', -1)">❮</button>
+        <button class="next" onclick="changeSlideshow('bakkutteh', 1)">❯</button>
+        <div class="dots" id="dots-bakkutteh">
+          <span class="dot active" onclick="currentSlideshow('bakkutteh', 1)"></span>
+          <span class="dot" onclick="currentSlideshow('bakkutteh', 2)"></span>
+          <span class="dot" onclick="currentSlideshow('bakkutteh', 3)"></span>
+        </div>
+        <div class="zoom-icon">🔍</div>
+      </div>
+      <div class="food-details">
+        <div class="food-header">
+          <h2>Bak Kut Teh 肉骨茶 ⭐⭐⭐⭐☆ (4.6/5)</h2>
+          <button class="favorite-btn" onclick="toggleFavorite('bakkutteh')" data-food-id="bakkutteh">
+            <span class="heart">🤍</span>
+          </button>
+        </div>
+        <p>Bak Kut Teh is a beloved Johor dish featuring pork ribs simmered in a fragrant broth of Chinese herbs,
+          garlic, soy sauce, and star anise, offering a rich and comforting flavor popular in Johor’s food
+          scene.</p>
+        <p><b>Normal Price:</b> RM 12.00 - RM 18.00</p>
+        <p><b>Popular in:</b> Johor Bahru, Malaysia</p>
+        <p><b>Best Served With:</b> Rice & You Tiao</p>
+        <a href="https://en.wikipedia.org/wiki/Bak_kut_teh" target="_blank" class="more-btn">More Info</a>
+      </div>
+      <div class="ingredients">
+        <h3>Ingredients:</h3>
+        <ul>
+          <li>Pork ribs</li>
+          <li>Chinese herbs</li>
+          <li>Garlic</li>
+          <li>Soy sauce</li>
+          <li>Star anise</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Kway Chap -->
+    <section id="kwaychap" class="food-section" data-name="Kway Chap"
+      data-ingredients="flat rice noodles,soy-braised broth,pork belly,tofu,boiled egg">
+      <div class="slideshow" data-slideshow="kwaychap">
+        <div class="slides">
+          <img src="Images/State Food/Johor/kwaychap1.jpg" class="active" alt="Kway Chap 1"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Johor/kwaychap2.jpg" alt="Kway Chap 2"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Johor/kwaychap3.jpg" alt="Kway Chap 3"
+            onclick="openImageModal(this.src, this.alt)">
+        </div>
+        <button class="prev" onclick="changeSlideshow('kwaychap', -1)">❮</button>
+        <button class="next" onclick="changeSlideshow('kwaychap', 1)">❯</button>
+        <div class="dots" id="dots-kwaychap">
+          <span class="dot active" onclick="currentSlideshow('kwaychap', 1)"></span>
+          <span class="dot" onclick="currentSlideshow('kwaychap', 2)"></span>
+          <span class="dot" onclick="currentSlideshow('kwaychap', 3)"></span>
+        </div>
+        <div class="zoom-icon">🔍</div>
+      </div>
+      <div class="food-details">
+        <div class="food-header">
+          <h2>Kway Chap 粿汁 ⭐⭐⭐⭐☆ (4.5/5)</h2>
+          <button class="favorite-btn" onclick="toggleFavorite('kwaychap')" data-food-id="kwaychap">
+            <span class="heart">🤍</span>
+          </button>
+        </div>
+        <p>Kway Chap is a Teochew specialty featuring flat rice noodles in a savory soy-braised broth, served with
+          tender pork belly, tofu, boiled eggs, and offal, a favorite in Johor Bahru’s hawker stalls.</p>
+        <p><b>Normal Price:</b> RM 8.00 - RM 15.00</p>
+        <p><b>Popular in:</b> Johor Bahru, Malaysia</p>
+        <p><b>Best Served With:</b> Braised Pork Belly & Eggs</p>
+        <a href="https://en.wikipedia.org/wiki/Kway_chap" target="_blank" class="more-btn">More Info</a>
+      </div>
+      <div class="ingredients">
+        <h3>Ingredients:</h3>
+        <ul>
+          <li>Flat rice noodles</li>
+          <li>Soy-braised broth</li>
+          <li>Pork belly</li>
+          <li>Tofu</li>
+          <li>Boiled egg</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Lei Cha -->
+    <section id="leicha" class="food-section" data-name="Lei Cha"
+      data-ingredients="rice,vegetables,peanuts,green tea soup,tofu">
+      <div class="slideshow" data-slideshow="leicha">
+        <div class="slides">
+          <img src="Images/State Food/Johor/leicha1.jpg" class="active" alt="Lei Cha 1"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Johor/leicha2.jpg" alt="Lei Cha 2" onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Johor/leicha3.jpg" alt="Lei Cha 3" onclick="openImageModal(this.src, this.alt)">
+        </div>
+        <button class="prev" onclick="changeSlideshow('leicha', -1)">❮</button>
+        <button class="next" onclick="changeSlideshow('leicha', 1)">❯</button>
+        <div class="dots" id="dots-leicha">
+          <span class="dot active" onclick="currentSlideshow('leicha', 1)"></span>
+          <span class="dot" onclick="currentSlideshow('leicha', 2)"></span>
+          <span class="dot" onclick="currentSlideshow('leicha', 3)"></span>
+        </div>
+        <div class="zoom-icon">🔍</div>
+      </div>
+      <div class="food-details">
+        <div class="food-header">
+          <h2>Lei Cha 擂茶 ⭐⭐⭐⭐☆ (4.4/5)</h2>
+          <button class="favorite-btn" onclick="toggleFavorite('leicha')" data-food-id="leicha">
+            <span class="heart">🤍</span>
+          </button>
+        </div>
+        <p>Lei Cha, or Thunder Tea Rice, is a Hakka dish featuring rice topped with a variety of vegetables, peanuts,
+          and tofu, served with a unique green herbal tea soup, celebrated in Johor’s culinary culture.</p>
+        <p><b>Normal Price:</b> RM 6.00 - RM 10.00</p>
+        <p><b>Popular in:</b> Johor, Malaysia</p>
+        <p><b>Best Served With:</b> Pickled Vegetables</p>
+        <a href="https://en.wikipedia.org/wiki/Lei_cha" target="_blank" class="more-btn">More Info</a>
+      </div>
+      <div class="ingredients">
+        <h3>Ingredients:</h3>
+        <ul>
+          <li>Rice</li>
+          <li>Vegetables</li>
+          <li>Peanuts</li>
+          <li>Green tea soup</li>
+          <li>Tofu</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Mee Rebus -->
+    <section id="meerebus" class="food-section" data-name="Mee Rebus"
+      data-ingredients="yellow noodles,sweet potato-based gravy,dried shrimp,peanuts,hard-boiled egg">
+      <div class="slideshow" data-slideshow="meerebus">
+        <div class="slides">
+          <img src="Images/State Food/Johor/meerebus1.jpg" class="active" alt="Mee Rebus 1"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Johor/meerebus2.jpg" alt="Mee Rebus 2"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Johor/meerebus3.jpg" alt="Mee Rebus 3"
+            onclick="openImageModal(this.src, this.alt)">
+        </div>
+        <button class="prev" onclick="changeSlideshow('meerebus', -1)">❮</button>
+        <button class="next" onclick="changeSlideshow('meerebus', 1)">❯</button>
+        <div class="dots" id="dots-meerebus">
+          <span class="dot active" onclick="currentSlideshow('meerebus', 1)"></span>
+          <span class="dot" onclick="currentSlideshow('meerebus', 2)"></span>
+          <span class="dot" onclick="currentSlideshow('meerebus', 3)"></span>
+        </div>
+        <div class="zoom-icon">🔍</div>
+      </div>
+      <div class="food-details">
+        <div class="food-header">
+          <h2>Mee Rebus 面煮 ⭐⭐⭐⭐⭐ (4.8/5)</h2>
+          <button class="favorite-btn" onclick="toggleFavorite('meerebus')" data-food-id="meerebus">
+            <span class="heart">🤍</span>
+          </button>
+        </div>
+        <p>Mee Rebus is a flavorful noodle dish with yellow noodles smothered in a thick, savory gravy made from sweet
+          potatoes, curry powder, dried shrimp, and peanuts, garnished with a hard-boiled egg in Johor’s street food
+          stalls.</p>
+        <p><b>Normal Price:</b> RM 5.00 - RM 8.00</p>
+        <p><b>Popular in:</b> Johor, Malaysia</p>
+        <p><b>Best Served With:</b> Lime & Green Chili</p>
+        <a href="https://en.wikipedia.org/wiki/Mee_rebus" target="_blank" class="more-btn">More Info</a>
+      </div>
+      <div class="ingredients">
+        <h3>Ingredients:</h3>
+        <ul>
+          <li>Yellow noodles</li>
+          <li>Sweet potato-based gravy</li>
+          <li>Dried shrimp</li>
+          <li>Peanuts</li>
+          <li>Hard-boiled egg</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Otak-Otak -->
+    <section id="otakotak" class="food-section" data-name="Otak-Otak"
+      data-ingredients="fish paste,coconut milk,chili paste,turmeric,banana leaves">
+      <div class="slideshow" data-slideshow="otakotak">
+        <div class="slides">
+          <img src="Images/State Food/Johor/otakotak1.jpg" class="active" alt="Otak-Otak 1"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Johor/otakotak2.jpg" alt="Otak-Otak 2"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Johor/otakotak3.jpg" alt="Otak-Otak 3"
+            onclick="openImageModal(this.src, this.alt)">
+        </div>
+        <button class="prev" onclick="changeSlideshow('otakotak', -1)">❮</button>
+        <button class="next" onclick="changeSlideshow('otakotak', 1)">❯</button>
+        <div class="dots" id="dots-otakotak">
+          <span class="dot active" onclick="currentSlideshow('otakotak', 1)"></span>
+          <span class="dot" onclick="currentSlideshow('otakotak', 2)"></span>
+          <span class="dot" onclick="currentSlideshow('otakotak', 3)"></span>
+        </div>
+        <div class="zoom-icon">🔍</div>
+      </div>
+      <div class="food-details">
+        <div class="food-header">
+          <h2>Otak-Otak 乌达 ⭐⭐⭐⭐⭐ (4.7/5)</h2>
+          <button class="favorite-btn" onclick="toggleFavorite('otakotak')" data-food-id="otakotak">
+            <span class="heart">🤍</span>
+          </button>
+        </div>
+        <p>Otak-Otak is a fragrant grilled fish cake made from ground fish meat blended with coconut milk, chili paste,
+          and turmeric, wrapped in banana leaves and grilled to perfection, a specialty in Muar, Johor.</p>
+        <p><b>Normal Price:</b> RM 1.50 - RM 3.00 per piece</p>
+        <p><b>Popular in:</b> Muar, Johor</p>
+        <p><b>Best Served With:</b> Rice & As a Snack</p>
+        <a href="https://en.wikipedia.org/wiki/Otak-otak" target="_blank" class="more-btn">More Info</a>
+      </div>
+      <div class="ingredients">
+        <h3>Ingredients:</h3>
+        <ul>
+          <li>Fish paste</li>
+          <li>Coconut milk</li>
+          <li>Chili paste</li>
+          <li>Turmeric</li>
+          <li>Banana leaves</li>
+        </ul>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Auth Modal -->
+  <div class="modal fade" id="authModal" tabindex="-1" aria-hidden="true" aria-labelledby="authTitle">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <form id="authForm">
+          <div class="modal-header">
+            <h5 id="authTitle" class="modal-title">Login</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+
+          <div class="modal-body">
+            <!-- Username (login: 'Username or Email', signup: 'Username') -->
+            <div class="mb-3" id="rowUsername">
+              <label class="form-label" id="labelUsername">Username or Email</label>
+              <input id="authUsername" type="text" class="form-control" minlength="3" required>
+            </div>
+
+            <!-- Email (shown only in signup) -->
+            <div class="mb-3 d-none" id="rowEmail">
+              <label class="form-label">Email</label>
+              <input id="authEmail" type="email" class="form-control">
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Password</label>
+              <input id="authPassword" type="password" class="form-control" minlength="6" required>
+            </div>
+
+            <!-- Confirm password (signup only) -->
+            <div id="rowConfirm" class="mb-3 d-none">
+              <label class="form-label">Confirm Password</label>
+              <input id="authConfirm" type="password" class="form-control" minlength="6">
+            </div>
+
+            <div class="form-check mb-2">
+              <input id="authRemember" class="form-check-input" type="checkbox">
+              <label class="form-check-label" for="authRemember">Remember me</label>
+            </div>
+
+            <div id="authError" class="text-danger small d-none"></div>
+          </div>
+
+          <div class="modal-footer justify-content-between">
+            <div class="small">
+              <span id="authHint">No account?
+                <a href="#" id="linkToSignup">Sign up</a>
+              </span>
+            </div>
+            <button id="authSubmit" class="btn btn-primary" type="submit">Continue</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+  <!-- JS -->
+  <script src="RouYan/location-permission.js"></script>
+  <script src="RouYan/state.js"></script>
+  <script src="main.js"></script>
+  <script src="RouYan/food.js"></script>
+
+</body>
+
+</html>

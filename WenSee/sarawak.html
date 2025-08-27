@@ -1,0 +1,510 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sarawak Street Food</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="RouYan/state.css">
+  <link rel="stylesheet" href="RouYan/food.css">
+</head>
+
+<body data-state="sarawak">
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg fixed-top navbar-light shadow-sm app-navbar">
+    <div class="container">
+      <a class="navbar-brand" href="#home">
+        <i class="fas fa-utensils me-2"></i>MY StreetFood
+      </a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <!-- LEFT: order you requested -->
+        <ul class="navbar-nav me-auto align-items-lg-center">
+          <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="#top-ranking">Top Ranking</a></li>
+
+          <!-- Street Food dropdown -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="streetFoodDropdown" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">Street Food</a>
+            <ul class="dropdown-menu" aria-labelledby="streetFoodDropdown">
+              <li><a class="dropdown-item" href="search-states.html"><i
+                    class="fas fa-map-marker-alt me-2"></i>States</a></li>
+              <li><a class="dropdown-item" href="search-races.html"><i class="fas fa-users me-2"></i>Races</a></li>
+            </ul>
+          </li>
+
+          <li class="nav-item"><a class="nav-link text-uppercase" href="blog.html">BLOG</a></li>
+          <li class="nav-item"><a class="nav-link" href="nearme.html">Near Me</a></li>
+          <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
+        </ul>
+
+        <!-- RIGHT: auth controls -->
+        <div class="d-flex align-items-center gap-2">
+          <button id="btnLogin" type="button" class="btn btn-outline-primary px-3 rounded-pill">Login</button>
+          <button id="btnSignup" type="button" class="btn btn-primary px-3 rounded-pill">Sign Up</button>
+          <span id="navUser" class="nav-link text-muted small d-none"></span>
+          <button id="btnLogout" type="button"
+            class="btn btn-outline-secondary px-3 rounded-pill d-none">Logout</button>
+        </div>
+      </div>
+    </div>
+    <!-- Weather Widget -->
+    <div class="weather-widget">
+      <h3 id="weather-location">Loading...</h3>
+      <p id="weather-temp"></p>
+      <img id="weather-icon" src="" alt="Weather Icon">
+    </div>
+  </nav>
+
+  <!-- Header -->
+  <header>
+    <h1>Sarawak Street Food</h1>
+    <p>Discover the unique street foods of Sarawak, Malaysia</p>
+    <a href="#search-section" class="btn">Start the Journey</a>
+  </header>
+
+  <!-- Search and Controls Section -->
+  <section id="search-section" class="search-controls-section">
+    <div class="search-container">
+      <!-- Search Bar -->
+      <div class="search-bar-container">
+        <div class="search-bar">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="search-input" placeholder="Search by name, ingredients, or description..." />
+          <button id="clear-search" class="clear-btn" style="display: none;">✕</button>
+        </div>
+        <div id="search-results" class="search-results" style="display: none;"></div>
+      </div>
+      <!-- Controls Row -->
+      <div class="controls-row">
+        <!-- Sort Controls -->
+        <div class="sort-container">
+          <span class="sort-label">Sort by:</span>
+          <button class="sort-btn" onclick="sortFoodItems('asc')">A-Z</button>
+          <button class="sort-btn" onclick="sortFoodItems('desc')">Z-A</button>
+          <button class="sort-btn reset-btn" onclick="resetOrder()">Original Order</button>
+        </div>
+        <!-- Favorites Button -->
+        <div class="favorites-container">
+          <button id="favorites-btn" class="favorites-btn">
+            <span class="heart-icon">❤️</span>
+            <span>My Favorites</span>
+            <span id="favorites-count" class="favorites-count">0</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Food Sections Container -->
+  <div id="food-container">
+    <!-- Kek Lapis -->
+    <section id="keklapis" class="food-section" data-name="Kek Lapis"
+      data-ingredients="butter,eggs,flour,condensed milk,food coloring,flavorings">
+      <div class="slideshow" data-slideshow="keklapis">
+        <div class="slides">
+          <img src="Images/State Food/Sarawak/keklapis1.jpg" class="active" alt="Kek Lapis 1"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Sarawak/keklapis2.jpg" alt="Kek Lapis 2"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Sarawak/keklapis3.jpg" alt="Kek Lapis 3"
+            onclick="openImageModal(this.src, this.alt)">
+        </div>
+        <button class="prev" onclick="changeSlideshow('keklapis', -1)">❮</button>
+        <button class="next" onclick="changeSlideshow('keklapis', 1)">❯</button>
+        <div class="dots" id="dots-keklapis">
+          <span class="dot active" onclick="currentSlideshow('keklapis', 1)"></span>
+          <span class="dot" onclick="currentSlideshow('keklapis', 2)"></span>
+          <span class="dot" onclick="currentSlideshow('keklapis', 3)"></span>
+        </div>
+        <div class="zoom-icon">🔍</div>
+      </div>
+      <div class="food-details">
+        <div class="food-header">
+          <h2>Kek Lapis 砂拉越千层蛋糕 ⭐⭐⭐⭐⭐ (4.9/5)</h2>
+          <button class="favorite-btn" onclick="toggleFavorite('keklapis')" data-food-id="keklapis">
+            <span class="heart">🤍</span>
+          </button>
+        </div>
+        <p>Kek Lapis Sarawak is a colorful layered cake, famous for its beautiful designs and rich flavors. It is often
+          served during celebrations and is a symbol of Sarawak hospitality.</p>
+        <p><b>Normal Price:</b> RM 25.00 - RM 50.00 (per loaf)</p>
+        <p><b>Popular in:</b> Kuching, Sarawak</p>
+        <p><b>Best Served With:</b> Tea or coffee</p>
+        <a href="https://en.wikipedia.org/wiki/Kek_lapis_Sarawak" target="_blank" class="more-btn">More Info</a>
+      </div>
+      <div class="ingredients">
+        <h3>Ingredients:</h3>
+        <ul>
+          <li>Butter</li>
+          <li>Eggs</li>
+          <li>Flour</li>
+          <li>Condensed milk</li>
+          <li>Food coloring & flavorings</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Kolo Mee -->
+    <section id="kolomee" class="food-section" data-name="Kolo Mee"
+      data-ingredients="egg noodles,soy sauce,lard,garlic oil,char siu,minced pork,vegetables">
+      <div class="slideshow" data-slideshow="kolomee">
+        <div class="slides">
+          <img src="Images/State Food/Sarawak/kolomee1.jpg" class="active" alt="Kolo Mee 1"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Sarawak/kolomee2.jpg" alt="Kolo Mee 2"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Sarawak/kolomee3.jpg" alt="Kolo Mee 3"
+            onclick="openImageModal(this.src, this.alt)">
+        </div>
+        <button class="prev" onclick="changeSlideshow('kolomee', -1)">❮</button>
+        <button class="next" onclick="changeSlideshow('kolomee', 1)">❯</button>
+        <div class="dots" id="dots-kolomee">
+          <span class="dot active" onclick="currentSlideshow('kolomee', 1)"></span>
+          <span class="dot" onclick="currentSlideshow('kolomee', 2)"></span>
+          <span class="dot" onclick="currentSlideshow('kolomee', 3)"></span>
+        </div>
+        <div class="zoom-icon">🔍</div>
+      </div>
+      <div class="food-details">
+        <div class="food-header">
+          <h2>Kolo Mee 砂拉越干拌面 ⭐⭐⭐⭐⭐ (4.8/5)</h2>
+          <button class="favorite-btn" onclick="toggleFavorite('kolomee')" data-food-id="kolomee">
+            <span class="heart">🤍</span>
+          </button>
+        </div>
+        <p>Kolo Mee is a beloved noodle dish of Sarawak. Served with springy noodles tossed in lard, soy sauce, and
+          garlic oil, it’s topped with char siu, minced pork, and vegetables.</p>
+        <p><b>Normal Price:</b> RM 5.00 - RM 8.00</p>
+        <p><b>Popular in:</b> Kuching and Sibu</p>
+        <p><b>Best Served With:</b> Pickled chilies</p>
+        <a href="https://en.wikipedia.org/wiki/Kolo_mee" target="_blank" class="more-btn">More Info</a>
+      </div>
+      <div class="ingredients">
+        <h3>Ingredients:</h3>
+        <ul>
+          <li>Egg noodles</li>
+          <li>Soy sauce</li>
+          <li>Lard or garlic oil</li>
+          <li>Char siu & minced pork</li>
+          <li>Vegetables</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Mee Jawa Rabak -->
+    <section id="meejawarabak" class="food-section" data-name="Mee Jawa Rabak"
+      data-ingredients="yellow noodles,tomato-based gravy,prawns,chicken,boiled eggs,sambal belacan">
+      <div class="slideshow" data-slideshow="meejawarabak">
+        <div class="slides">
+          <img src="Images/State Food/Sarawak/meejawarabak1.jpg" class="active" alt="Mee Jawa Rabak 1"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Sarawak/meejawarabak2.jpg" alt="Mee Jawa Rabak 2"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Sarawak/meejawarabak3.jpg" alt="Mee Jawa Rabak 3"
+            onclick="openImageModal(this.src, this.alt)">
+        </div>
+        <button class="prev" onclick="changeSlideshow('meejawarabak', -1)">❮</button>
+        <button class="next" onclick="changeSlideshow('meejawarabak', 1)">❯</button>
+        <div class="dots" id="dots-meejawarabak">
+          <span class="dot active" onclick="currentSlideshow('meejawarabak', 1)"></span>
+          <span class="dot" onclick="currentSlideshow('meejawarabak', 2)"></span>
+          <span class="dot" onclick="currentSlideshow('meejawarabak', 3)"></span>
+        </div>
+        <div class="zoom-icon">🔍</div>
+      </div>
+      <div class="food-details">
+        <div class="food-header">
+          <h2>Mee Jawa Rabak 爪哇面 ⭐⭐⭐⭐☆ (4.5/5)</h2>
+          <button class="favorite-btn" onclick="toggleFavorite('meejawarabak')" data-food-id="meejawarabak">
+            <span class="heart">🤍</span>
+          </button>
+        </div>
+        <p>Mee Jawa Rabak is a hearty Sarawak-style noodle dish with a sweet-spicy tomato gravy, served with boiled
+          eggs, prawns, and fried chicken for extra flavor.</p>
+        <p><b>Normal Price:</b> RM 7.00 - RM 12.00</p>
+        <p><b>Popular in:</b> Kuching</p>
+        <p><b>Best Served With:</b> Sambal belacan</p>
+        <a href="https://www.malaysia.travel/explore/exploring-sarawak-one-bite-at-a-time-a-foodie-s-guide"
+          target="_blank" class="more-btn">More Info</a>
+      </div>
+      <div class="ingredients">
+        <h3>Ingredients:</h3>
+        <ul>
+          <li>Yellow noodles</li>
+          <li>Tomato-based gravy</li>
+          <li>Prawns & chicken</li>
+          <li>Boiled eggs</li>
+          <li>Sambal belacan</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Nasi Aruk -->
+    <section id="nasiaruk" class="food-section" data-name="Nasi Aruk"
+      data-ingredients="rice,anchovies,garlic,onions,soy sauce,egg">
+      <div class="slideshow" data-slideshow="nasiaruk">
+        <div class="slides">
+          <img src="Images/State Food/Sarawak/nasiaruk1.jpg" class="active" alt="Nasi Aruk 1"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Sarawak/nasiaruk2.jpg" alt="Nasi Aruk 2"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Sarawak/nasiaruk3.jpg" alt="Nasi Aruk 3"
+            onclick="openImageModal(this.src, this.alt)">
+        </div>
+        <button class="prev" onclick="changeSlideshow('nasiaruk', -1)">❮</button>
+        <button class="next" onclick="changeSlideshow('nasiaruk', 1)">❯</button>
+        <div class="dots" id="dots-nasiaruk">
+          <span class="dot active" onclick="currentSlideshow('nasiaruk', 1)"></span>
+          <span class="dot" onclick="currentSlideshow('nasiaruk', 2)"></span>
+          <span class="dot" onclick="currentSlideshow('nasiaruk', 3)"></span>
+        </div>
+        <div class="zoom-icon">🔍</div>
+      </div>
+      <div class="food-details">
+        <div class="food-header">
+          <h2>Nasi Aruk 干炒饭 ⭐⭐⭐⭐☆ (4.4/5)</h2>
+          <button class="favorite-btn" onclick="toggleFavorite('nasiaruk')" data-food-id="nasiaruk">
+            <span class="heart">🤍</span>
+          </button>
+        </div>
+        <p>Nasi Aruk is a traditional Sarawak fried rice cooked without oil, relying instead on natural flavors from
+          garlic, onion, and anchovies for its signature taste.</p>
+        <p><b>Normal Price:</b> RM 4.00 - RM 6.00</p>
+        <p><b>Popular in:</b> Rural Sarawak</p>
+        <p><b>Best Served With:</b> Fried egg or sambal</p>
+        <a href="https://www.malaysia.travel/explore/exploring-sarawak-one-bite-at-a-time-a-foodie-s-guide"
+          target="_blank" class="more-btn">More Info</a>
+      </div>
+      <div class="ingredients">
+        <h3>Ingredients:</h3>
+        <ul>
+          <li>Rice</li>
+          <li>Anchovies</li>
+          <li>Garlic & onions</li>
+          <li>Soy sauce</li>
+          <li>Egg (optional)</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Nasi Goreng Dabai -->
+    <section id="nasigorengdabai" class="food-section" data-name="Nasi Goreng Dabai"
+      data-ingredients="dabai fruit,rice,soy sauce,onions,garlic,salted fish,anchovies">
+      <div class="slideshow" data-slideshow="nasigorengdabai">
+        <div class="slides">
+          <img src="Images/State Food/Sarawak/nasigorengdabai1.jpg" class="active" alt="Nasi Goreng Dabai 1"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Sarawak/nasigorengdabai2.jpg" alt="Nasi Goreng Dabai 2"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Sarawak/nasigorengdabai3.jpg" alt="Nasi Goreng Dabai 3"
+            onclick="openImageModal(this.src, this.alt)">
+        </div>
+        <button class="prev" onclick="changeSlideshow('nasigorengdabai', -1)">❮</button>
+        <button class="next" onclick="changeSlideshow('nasigorengdabai', 1)">❯</button>
+        <div class="dots" id="dots-nasigorengdabai">
+          <span class="dot active" onclick="currentSlideshow('nasigorengdabai', 1)"></span>
+          <span class="dot" onclick="currentSlideshow('nasigorengdabai', 2)"></span>
+          <span class="dot" onclick="currentSlideshow('nasigorengdabai', 3)"></span>
+        </div>
+        <div class="zoom-icon">🔍</div>
+      </div>
+      <div class="food-details">
+        <div class="food-header">
+          <h2>Nasi Goreng Dabai 达拜炒饭 ⭐⭐⭐⭐☆ (4.6/5)</h2>
+          <button class="favorite-btn" onclick="toggleFavorite('nasigorengdabai')" data-food-id="nasigorengdabai">
+            <span class="heart">🤍</span>
+          </button>
+        </div>
+        <p>Nasi Goreng Dabai uses the unique dabai fruit (often called Sarawak olive) to create a creamy and savory
+          fried rice dish distinct to Sarawak.</p>
+        <p><b>Normal Price:</b> RM 6.00 - RM 10.00</p>
+        <p><b>Popular in:</b> Central Sarawak</p>
+        <p><b>Best Served With:</b> Fried chicken or salted fish</p>
+        <a href="https://www.malaysia.travel/explore/exploring-sarawak-one-bite-at-a-time-a-foodie-s-guide"
+          target="_blank" class="more-btn">More Info</a>
+      </div>
+      <div class="ingredients">
+        <h3>Ingredients:</h3>
+        <ul>
+          <li>Dabai fruit</li>
+          <li>Rice</li>
+          <li>Soy sauce</li>
+          <li>Onions & garlic</li>
+          <li>Salted fish or anchovies</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Oyster Pancake -->
+    <section id="oysterpancake" class="food-section" data-name="Oyster Pancake"
+      data-ingredients="oysters,eggs,potato starch,garlic,chili sauce">
+      <div class="slideshow" data-slideshow="oysterpancake">
+        <div class="slides">
+          <img src="Images/State Food/Sarawak/oysterpancake1.jpg" class="active" alt="Oyster Pancake 1"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Sarawak/oysterpancake2.jpg" alt="Oyster Pancake 2"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Sarawak/oysterpancake3.jpg" alt="Oyster Pancake 3"
+            onclick="openImageModal(this.src, this.alt)">
+        </div>
+        <button class="prev" onclick="changeSlideshow('oysterpancake', -1)">❮</button>
+        <button class="next" onclick="changeSlideshow('oysterpancake', 1)">❯</button>
+        <div class="dots" id="dots-oysterpancake">
+          <span class="dot active" onclick="currentSlideshow('oysterpancake', 1)"></span>
+          <span class="dot" onclick="currentSlideshow('oysterpancake', 2)"></span>
+          <span class="dot" onclick="currentSlideshow('oysterpancake', 3)"></span>
+        </div>
+        <div class="zoom-icon">🔍</div>
+      </div>
+      <div class="food-details">
+        <div class="food-header">
+          <h2>Oyster Pancake 蚝煎 ⭐⭐⭐⭐☆ (4.5/5)</h2>
+          <button class="favorite-btn" onclick="toggleFavorite('oysterpancake')" data-food-id="oysterpancake">
+            <span class="heart">🤍</span>
+          </button>
+        </div>
+        <p>Oyster Pancake is a crispy omelette mixed with oysters, starch, and eggs, pan-fried to perfection and served
+          with chili sauce.</p>
+        <p><b>Normal Price:</b> RM 8.00 - RM 15.00</p>
+        <p><b>Popular in:</b> Kuching and Sibu</p>
+        <p><b>Best Served With:</b> Chili sauce</p>
+        <a href="https://en.wikipedia.org/wiki/Oyster_omelette" target="_blank" class="more-btn">More Info</a>
+      </div>
+      <div class="ingredients">
+        <h3>Ingredients:</h3>
+        <ul>
+          <li>Fresh oysters</li>
+          <li>Eggs</li>
+          <li>Potato starch</li>
+          <li>Garlic</li>
+          <li>Chili sauce</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Sarawak Laksa -->
+    <section id="sarawaklaksa" class="food-section" data-name="Sarawak Laksa"
+      data-ingredients="rice vermicelli,sambal belacan,coconut milk,prawns,chicken,omelette strips">
+      <div class="slideshow" data-slideshow="sarawaklaksa">
+        <div class="slides">
+          <img src="Images/State Food/Sarawak/sarawaklaksa1.jpg" class="active" alt="Sarawak Laksa 1"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Sarawak/sarawaklaksa2.jpg" alt="Sarawak Laksa 2"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Sarawak/sarawaklaksa3.jpg" alt="Sarawak Laksa 3"
+            onclick="openImageModal(this.src, this.alt)">
+        </div>
+        <button class="prev" onclick="changeSlideshow('sarawaklaksa', -1)">❮</button>
+        <button class="next" onclick="changeSlideshow('sarawaklaksa', 1)">❯</button>
+        <div class="dots" id="dots-sarawaklaksa">
+          <span class="dot active" onclick="currentSlideshow('sarawaklaksa', 1)"></span>
+          <span class="dot" onclick="currentSlideshow('sarawaklaksa', 2)"></span>
+          <span class="dot" onclick="currentSlideshow('sarawaklaksa', 3)"></span>
+        </div>
+        <div class="zoom-icon">🔍</div>
+      </div>
+      <div class="food-details">
+        <div class="food-header">
+          <h2>Sarawak Laksa 砂拉越叻沙 ⭐⭐⭐⭐⭐ (4.9/5)</h2>
+          <button class="favorite-btn" onclick="toggleFavorite('sarawaklaksa')" data-food-id="sarawaklaksa">
+            <span class="heart">🤍</span>
+          </button>
+        </div>
+        <p>Sarawak Laksa is an iconic dish of Sarawak, with a unique broth made from sambal belacan, tamarind, coconut
+          milk, and spices, topped with prawns, shredded chicken, and omelette strips.</p>
+        <p><b>Normal Price:</b> RM 8.00 - RM 15.00</p>
+        <p><b>Popular in:</b> Kuching</p>
+        <p><b>Best Served With:</b> Sambal belacan and lime</p>
+        <a href="https://www.malaysia.travel/explore/exploring-sarawak-one-bite-at-a-time-a-foodie-s-guide"
+          target="_blank" class="more-btn">More Info</a>
+      </div>
+      <div class="ingredients">
+        <h3>Ingredients:</h3>
+        <ul>
+          <li>Rice vermicelli</li>
+          <li>Sambal belacan paste</li>
+          <li>Coconut milk</li>
+          <li>Prawns & chicken</li>
+          <li>Omelette strips</li>
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <!-- Auth Modal -->
+  <div class="modal fade" id="authModal" tabindex="-1" aria-hidden="true" aria-labelledby="authTitle">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <form id="authForm">
+          <div class="modal-header">
+            <h5 id="authTitle" class="modal-title">Login</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+
+          <div class="modal-body">
+            <!-- Username (login: 'Username or Email', signup: 'Username') -->
+            <div class="mb-3" id="rowUsername">
+              <label class="form-label" id="labelUsername">Username or Email</label>
+              <input id="authUsername" type="text" class="form-control" minlength="3" required>
+            </div>
+
+            <!-- Email (shown only in signup) -->
+            <div class="mb-3 d-none" id="rowEmail">
+              <label class="form-label">Email</label>
+              <input id="authEmail" type="email" class="form-control">
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Password</label>
+              <input id="authPassword" type="password" class="form-control" minlength="6" required>
+            </div>
+
+            <!-- Confirm password (signup only) -->
+            <div id="rowConfirm" class="mb-3 d-none">
+              <label class="form-label">Confirm Password</label>
+              <input id="authConfirm" type="password" class="form-control" minlength="6">
+            </div>
+
+            <div class="form-check mb-2">
+              <input id="authRemember" class="form-check-input" type="checkbox">
+              <label class="form-check-label" for="authRemember">Remember me</label>
+            </div>
+
+            <div id="authError" class="text-danger small d-none"></div>
+          </div>
+
+          <div class="modal-footer justify-content-between">
+            <div class="small">
+              <span id="authHint">No account?
+                <a href="#" id="linkToSignup">Sign up</a>
+              </span>
+            </div>
+            <button id="authSubmit" class="btn btn-primary" type="submit">Continue</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+  <!-- JS -->
+  <script src="RouYan/location-permission.js"></script>
+  <script src="RouYan/state.js"></script>
+  <script src="main.js"></script>
+  <script src="RouYan/food.js"></script>
+
+</body>
+
+</html>

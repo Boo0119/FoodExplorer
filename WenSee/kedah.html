@@ -1,0 +1,457 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kedah Street Food</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="RouYan/state.css">
+  <link rel="stylesheet" href="RouYan/food.css">
+</head>
+
+<body data-state="kedah">
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg fixed-top navbar-light shadow-sm app-navbar">
+    <div class="container">
+      <a class="navbar-brand" href="#home">
+        <i class="fas fa-utensils me-2"></i>MY StreetFood
+      </a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <!-- LEFT: order you requested -->
+        <ul class="navbar-nav me-auto align-items-lg-center">
+          <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="#top-ranking">Top Ranking</a></li>
+
+          <!-- Street Food dropdown -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="streetFoodDropdown" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">Street Food</a>
+            <ul class="dropdown-menu" aria-labelledby="streetFoodDropdown">
+              <li><a class="dropdown-item" href="search-states.html"><i
+                    class="fas fa-map-marker-alt me-2"></i>States</a></li>
+              <li><a class="dropdown-item" href="search-races.html"><i class="fas fa-users me-2"></i>Races</a></li>
+            </ul>
+          </li>
+
+          <li class="nav-item"><a class="nav-link text-uppercase" href="blog.html">BLOG</a></li>
+          <li class="nav-item"><a class="nav-link" href="nearme.html">Near Me</a></li>
+          <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
+        </ul>
+
+        <!-- RIGHT: auth controls -->
+        <div class="d-flex align-items-center gap-2">
+          <button id="btnLogin" type="button" class="btn btn-outline-primary px-3 rounded-pill">Login</button>
+          <button id="btnSignup" type="button" class="btn btn-primary px-3 rounded-pill">Sign Up</button>
+          <button id="btnLogout" type="button"
+            class="btn btn-outline-secondary px-3 rounded-pill d-none">Logout</button>
+          <span id="navUser" class="nav-link text-muted small d-none"></span>
+        </div>
+      </div>
+    </div>
+    <!-- Weather Widget -->
+    <div class="weather-widget">
+      <h3 id="weather-location">Loading...</h3>
+      <p id="weather-temp"></p>
+      <img id="weather-icon" src="" alt="Weather Icon">
+    </div>
+  </nav>
+
+  <!-- Header -->
+  <header>
+    <h1>Kedah Street Food</h1>
+    <p>Discover the iconic street foods of Kedah, Malaysia</p>
+    <a href="#search-section" class="btn">Start the Journey</a>
+  </header>
+
+  <!-- Search and Controls Section -->
+  <section id="search-section" class="search-controls-section">
+    <div class="search-container">
+      <!-- Search Bar -->
+      <div class="search-bar-container">
+        <div class="search-bar">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="search-input" placeholder="Search by name, ingredients, or description..." />
+          <button id="clear-search" class="clear-btn" style="display: none;">✕</button>
+        </div>
+        <div id="search-results" class="search-results" style="display: none;"></div>
+      </div>
+      <!-- Controls Row -->
+      <div class="controls-row">
+        <!-- Sort Controls -->
+        <div class="sort-container">
+          <span class="sort-label">Sort by:</span>
+          <button class="sort-btn" onclick="sortFoodItems('asc')">A-Z</button>
+          <button class="sort-btn" onclick="sortFoodItems('desc')">Z-A</button>
+          <button class="sort-btn reset-btn" onclick="resetOrder()">Original Order</button>
+        </div>
+        <!-- Favorites Button -->
+        <div class="favorites-container">
+          <button id="favorites-btn" class="favorites-btn">
+            <span class="heart-icon">❤️</span>
+            <span>My Favorites</span>
+            <span id="favorites-count" class="favorites-count">0</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Food Sections Container -->
+  <div id="food-container">
+    <!-- Kuih Karas -->
+    <section id="kuihkaras" class="food-section" data-name="Kuih Karas" data-ingredients="rice flour,sugar,cooking oil">
+      <div class="slideshow" data-slideshow="kuihkaras">
+        <div class="slides">
+          <img src="Images/State Food/Kedah/kuihkaras1.jpg" class="active" alt="Kuih Karas 1"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Kedah/kuihkaras2.jpg" alt="Kuih Karas 2"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Kedah/kuihkaras3.jpg" alt="Kuih Karas 3"
+            onclick="openImageModal(this.src, this.alt)">
+        </div>
+        <button class="prev" onclick="changeSlideshow('kuihkaras', -1)">❮</button>
+        <button class="next" onclick="changeSlideshow('kuihkaras', 1)">❯</button>
+        <div class="dots" id="dots-kuihkaras">
+          <span class="dot active" onclick="currentSlideshow('kuihkaras', 1)"></span>
+          <span class="dot" onclick="currentSlideshow('kuihkaras', 2)"></span>
+          <span class="dot" onclick="currentSlideshow('kuihkaras', 3)"></span>
+        </div>
+        <div class="zoom-icon">🔍</div>
+      </div>
+      <div class="food-details">
+        <div class="food-header">
+          <h2>Kuih Karas 米花糕 ⭐⭐⭐⭐☆ (4.4/5)</h2>
+          <button class="favorite-btn" onclick="toggleFavorite('kuihkaras')" data-food-id="kuihkaras">
+            <span class="heart">🤍</span>
+          </button>
+        </div>
+        <p>Kuih Karas is a sweet and crunchy traditional snack made from rice flour and sugar, deep-fried into lace-like
+          crisps. It is popular during festive seasons in Kedah.</p>
+        <p><b>Normal Price:</b> RM 2.00 - RM 5.00 per pack</p>
+        <p><b>Popular in:</b> Kedah</p>
+        <p><b>Best Served With:</b> Tea or coffee</p>
+        <a href="https://ms.wikipedia.org/wiki/Kuih_karas" target="_blank" class="more-btn">More Info</a>
+      </div>
+      <div class="ingredients">
+        <h3>Ingredients:</h3>
+        <ul>
+          <li>Rice flour</li>
+          <li>Sugar</li>
+          <li>Cooking oil</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Laksa Kedah -->
+    <section id="laksa" class="food-section" data-name="Laksa Kedah"
+      data-ingredients="rice noodles,mackerel fish,tamarind,onions,garlic,fresh herbs">
+      <div class="slideshow" data-slideshow="laksa">
+        <div class="slides">
+          <img src="Images/State Food/Kedah/laksa1.jpg" class="active" alt="Laksa Kedah 1"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Kedah/laksa2.jpg" alt="Laksa Kedah 2"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Kedah/laksa3.jpg" alt="Laksa Kedah 3"
+            onclick="openImageModal(this.src, this.alt)">
+        </div>
+        <button class="prev" onclick="changeSlideshow('laksa', -1)">❮</button>
+        <button class="next" onclick="changeSlideshow('laksa', 1)">❯</button>
+        <div class="dots" id="dots-laksa">
+          <span class="dot active" onclick="currentSlideshow('laksa', 1)"></span>
+          <span class="dot" onclick="currentSlideshow('laksa', 2)"></span>
+          <span class="dot" onclick="currentSlideshow('laksa', 3)"></span>
+        </div>
+        <div class="zoom-icon">🔍</div>
+      </div>
+      <div class="food-details">
+        <div class="food-header">
+          <h2>Laksa Kedah 叻沙 ⭐⭐⭐⭐⭐ (4.7/5)</h2>
+          <button class="favorite-btn" onclick="toggleFavorite('laksa')" data-food-id="laksa">
+            <span class="heart">🤍</span>
+          </button>
+        </div>
+        <p>Laksa Kedah is a traditional noodle dish made with rice noodles, served with a rich fish-based gravy and
+          garnished with vegetables and herbs.</p>
+        <p><b>Normal Price:</b> RM 4.00 - RM 7.00</p>
+        <p><b>Popular in:</b> Kedah</p>
+        <p><b>Best Served With:</b> Hard-boiled egg and sambal</p>
+        <a href="https://en.wikipedia.org/wiki/Laksa" target="_blank" class="more-btn">More Info</a>
+      </div>
+      <div class="ingredients">
+        <h3>Ingredients:</h3>
+        <ul>
+          <li>Rice noodles</li>
+          <li>Mackerel fish</li>
+          <li>Tamarind</li>
+          <li>Onions and garlic</li>
+          <li>Fresh herbs</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Mee Rebus -->
+    <section id="meerebus" class="food-section" data-name="Mee Rebus"
+      data-ingredients="yellow noodles,sweet potato gravy,tofu,boiled egg,bean sprouts">
+      <div class="slideshow" data-slideshow="meerebus">
+        <div class="slides">
+          <img src="Images/State Food/Kedah/meerebus1.jpg" class="active" alt="Mee Rebus 1"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Kedah/meerebus2.jpg" alt="Mee Rebus 2"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Kedah/meerebus3.jpg" alt="Mee Rebus 3"
+            onclick="openImageModal(this.src, this.alt)">
+        </div>
+        <button class="prev" onclick="changeSlideshow('meerebus', -1)">❮</button>
+        <button class="next" onclick="changeSlideshow('meerebus', 1)">❯</button>
+        <div class="dots" id="dots-meerebus">
+          <span class="dot active" onclick="currentSlideshow('meerebus', 1)"></span>
+          <span class="dot" onclick="currentSlideshow('meerebus', 2)"></span>
+          <span class="dot" onclick="currentSlideshow('meerebus', 3)"></span>
+        </div>
+        <div class="zoom-icon">🔍</div>
+      </div>
+      <div class="food-details">
+        <div class="food-header">
+          <h2>Mee Rebus 杂锦面 ⭐⭐⭐⭐☆ (4.5/5)</h2>
+          <button class="favorite-btn" onclick="toggleFavorite('meerebus')" data-food-id="meerebus">
+            <span class="heart">🤍</span>
+          </button>
+        </div>
+        <p>Mee Rebus is a noodle dish served in a thick, slightly sweet potato-based gravy with bean sprouts, boiled
+          eggs, and tofu.</p>
+        <p><b>Normal Price:</b> RM 5.00 - RM 8.00</p>
+        <p><b>Popular in:</b> Kedah & Northern Malaysia</p>
+        <p><b>Best Served With:</b> Fried shallots and lime</p>
+        <a href="https://en.wikipedia.org/wiki/Mee_rebus" target="_blank" class="more-btn">More Info</a>
+      </div>
+      <div class="ingredients">
+        <h3>Ingredients:</h3>
+        <ul>
+          <li>Yellow noodles</li>
+          <li>Sweet potato gravy</li>
+          <li>Tofu</li>
+          <li>Boiled egg</li>
+          <li>Bean sprouts</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Mee Udang -->
+    <section id="meeudang" class="food-section" data-name="Mee Udang"
+      data-ingredients="yellow noodles,prawns,prawn broth,egg,vegetables">
+      <div class="slideshow" data-slideshow="meeudang">
+        <div class="slides">
+          <img src="Images/State Food/Kedah/meeudang1.jpg" class="active" alt="Mee Udang 1"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Kedah/meeudang2.jpg" alt="Mee Udang 2"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Kedah/meeudang3.jpg" alt="Mee Udang 3"
+            onclick="openImageModal(this.src, this.alt)">
+        </div>
+        <button class="prev" onclick="changeSlideshow('meeudang', -1)">❮</button>
+        <button class="next" onclick="changeSlideshow('meeudang', 1)">❯</button>
+        <div class="dots" id="dots-meeudang">
+          <span class="dot active" onclick="currentSlideshow('meeudang', 1)"></span>
+          <span class="dot" onclick="currentSlideshow('meeudang', 2)"></span>
+          <span class="dot" onclick="currentSlideshow('meeudang', 3)"></span>
+        </div>
+        <div class="zoom-icon">🔍</div>
+      </div>
+      <div class="food-details">
+        <div class="food-header">
+          <h2>Mee Udang 虾面 ⭐⭐⭐⭐⭐ (4.8/5)</h2>
+          <button class="favorite-btn" onclick="toggleFavorite('meeudang')" data-food-id="meeudang">
+            <span class="heart">🤍</span>
+          </button>
+        </div>
+        <p>Mee Udang is a prawn noodle dish served with a flavorful prawn-based broth, fresh prawns, and a variety of
+          condiments.</p>
+        <p><b>Normal Price:</b> RM 8.00 - RM 15.00</p>
+        <p><b>Popular in:</b> Kedah (especially Kuala Sepetang)</p>
+        <p><b>Best Served With:</b> Sambal and lime</p>
+        <a href="https://resepichenom.com/resepi/mee-udang" target="_blank" class="more-btn">More Info</a>
+      </div>
+      <div class="ingredients">
+        <h3>Ingredients:</h3>
+        <ul>
+          <li>Yellow noodles</li>
+          <li>Prawns</li>
+          <li>Prawn broth</li>
+          <li>Egg</li>
+          <li>Vegetables</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Nasi Lemak Royale -->
+    <section id="nasilemakroyale" class="food-section" data-name="Nasi Lemak Royale"
+      data-ingredients="coconut milk rice,yellow curry gravy,fried chicken,sambal,boiled egg">
+      <div class="slideshow" data-slideshow="nasilemakroyale">
+        <div class="slides">
+          <img src="Images/State Food/Kedah/nasilemakroyale1.jpg" class="active" alt="Nasi Lemak Royale 1"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Kedah/nasilemakroyale2.jpg" alt="Nasi Lemak Royale 2"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Kedah/nasilemakroyale3.jpg" alt="Nasi Lemak Royale 3"
+            onclick="openImageModal(this.src, this.alt)">
+        </div>
+        <button class="prev" onclick="changeSlideshow('nasilemakroyale', -1)">❮</button>
+        <button class="next" onclick="changeSlideshow('nasilemakroyale', 1)">❯</button>
+        <div class="dots" id="dots-nasilemakroyale">
+          <span class="dot active" onclick="currentSlideshow('nasilemakroyale', 1)"></span>
+          <span class="dot" onclick="currentSlideshow('nasilemakroyale', 2)"></span>
+          <span class="dot" onclick="currentSlideshow('nasilemakroyale', 3)"></span>
+        </div>
+        <div class="zoom-icon">🔍</div>
+      </div>
+      <div class="food-details">
+        <div class="food-header">
+          <h2>Nasi Lemak Royale 皇家咖喱饭 ⭐⭐⭐⭐⭐ (4.9/5)</h2>
+          <button class="favorite-btn" onclick="toggleFavorite('nasilemakroyale')" data-food-id="nasilemakroyale">
+            <span class="heart">🤍</span>
+          </button>
+        </div>
+        <p>Nasi Lemak Royale is a famous Kedah dish where fragrant rice is served with a special yellow curry gravy,
+          fried chicken, and spicy sambal.</p>
+        <p><b>Normal Price:</b> RM 6.00 - RM 12.00</p>
+        <p><b>Popular in:</b> Alor Setar, Kedah</p>
+        <p><b>Best Served With:</b> Fried chicken and sambal sotong</p>
+        <a href="https://negara.my/resepi-set-lengkap-nasi-lemak-ala-royale-kedah/" target="_blank"
+          class="more-btn">More Info</a>
+      </div>
+      <div class="ingredients">
+        <h3>Ingredients:</h3>
+        <ul>
+          <li>Coconut milk rice</li>
+          <li>Yellow curry gravy</li>
+          <li>Fried chicken</li>
+          <li>Sambal</li>
+          <li>Boiled egg</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Roti Canai -->
+    <section id="roticanai" class="food-section" data-name="Roti Canai"
+      data-ingredients="flour,egg,water,salt,ghee,oil">
+      <div class="slideshow" data-slideshow="roticanai">
+        <div class="slides">
+          <img src="Images/State Food/Kedah/roticanai1.jpg" class="active" alt="Roti Canai 1"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Kedah/roticanai2.jpg" alt="Roti Canai 2"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Kedah/roticanai3.jpg" alt="Roti Canai 3"
+            onclick="openImageModal(this.src, this.alt)">
+        </div>
+        <button class="prev" onclick="changeSlideshow('roticanai', -1)">❮</button>
+        <button class="next" onclick="changeSlideshow('roticanai', 1)">❯</button>
+        <div class="dots" id="dots-roticanai">
+          <span class="dot active" onclick="currentSlideshow('roticanai', 1)"></span>
+          <span class="dot" onclick="currentSlideshow('roticanai', 2)"></span>
+          <span class="dot" onclick="currentSlideshow('roticanai', 3)"></span>
+        </div>
+        <div class="zoom-icon">🔍</div>
+      </div>
+      <div class="food-details">
+        <div class="food-header">
+          <h2>Roti Canai 印度煎饼 ⭐⭐⭐⭐☆ (4.6/5)</h2>
+          <button class="favorite-btn" onclick="toggleFavorite('roticanai')" data-food-id="roticanai">
+            <span class="heart">🤍</span>
+          </button>
+        </div>
+        <p>Roti Canai is a flaky, crispy flatbread that is pan-fried and served with dhal curry, chicken curry, or
+          sambal. A staple breakfast in Kedah and all of Malaysia.</p>
+        <p><b>Normal Price:</b> RM 1.50 - RM 4.00</p>
+        <p><b>Popular in:</b> Kedah & Malaysia</p>
+        <p><b>Best Served With:</b> Dhal curry or chicken curry</p>
+        <a href="https://en.wikipedia.org/wiki/Roti_canai" target="_blank" class="more-btn">More Info</a>
+      </div>
+      <div class="ingredients">
+        <h3>Ingredients:</h3>
+        <ul>
+          <li>Flour</li>
+          <li>Egg</li>
+          <li>Water</li>
+          <li>Salt</li>
+          <li>Ghee or oil</li>
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <!-- Auth Modal -->
+  <div class="modal fade" id="authModal" tabindex="-1" aria-hidden="true" aria-labelledby="authTitle">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <form id="authForm">
+          <div class="modal-header">
+            <h5 id="authTitle" class="modal-title">Login</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+
+          <div class="modal-body">
+            <!-- Username (login: 'Username or Email', signup: 'Username') -->
+            <div class="mb-3" id="rowUsername">
+              <label class="form-label" id="labelUsername">Username or Email</label>
+              <input id="authUsername" type="text" class="form-control" minlength="3" required>
+            </div>
+
+            <!-- Email (shown only in signup) -->
+            <div class="mb-3 d-none" id="rowEmail">
+              <label class="form-label">Email</label>
+              <input id="authEmail" type="email" class="form-control">
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Password</label>
+              <input id="authPassword" type="password" class="form-control" minlength="6" required>
+            </div>
+
+            <!-- Confirm password (signup only) -->
+            <div id="rowConfirm" class="mb-3 d-none">
+              <label class="form-label">Confirm Password</label>
+              <input id="authConfirm" type="password" class="form-control" minlength="6">
+            </div>
+
+            <div class="form-check mb-2">
+              <input id="authRemember" class="form-check-input" type="checkbox">
+              <label class="form-check-label" for="authRemember">Remember me</label>
+            </div>
+
+            <div id="authError" class="text-danger small d-none"></div>
+          </div>
+
+          <div class="modal-footer justify-content-between">
+            <div class="small">
+              <span id="authHint">No account?
+                <a href="#" id="linkToSignup">Sign up</a>
+              </span>
+            </div>
+            <button id="authSubmit" class="btn btn-primary" type="submit">Continue</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+  <!-- JS -->
+  <script src="RouYan/location-permission.js"></script>
+  <script src="RouYan/state.js"></script>
+  <script src="main.js"></script>
+  <script src="RouYan/food.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,502 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kelantan Street Food</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="RouYan/state.css">
+  <link rel="stylesheet" href="RouYan/food.css">
+</head>
+
+<body data-state="kelantan">
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg fixed-top navbar-light shadow-sm app-navbar">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <i class="fas fa-utensils me-2"></i>MY StreetFood
+      </a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <!-- LEFT: order you requested -->
+        <ul class="navbar-nav me-auto align-items-lg-center">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="ranking.html">Top Ranking</a></li>
+
+          <!-- Street Food dropdown -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="streetFoodDropdown" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">Street Food</a>
+            <ul class="dropdown-menu" aria-labelledby="streetFoodDropdown">
+              <li><a class="dropdown-item" href="search-states.html"><i
+                    class="fas fa-map-marker-alt me-2"></i>States</a></li>
+              <li><a class="dropdown-item" href="search-races.html"><i class="fas fa-users me-2"></i>Races</a></li>
+            </ul>
+          </li>
+
+          <li class="nav-item"><a class="nav-link text-uppercase" href="blog.html">BLOG</a></li>
+          <li class="nav-item"><a class="nav-link" href="nearme.html">Near Me</a></li>
+          <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
+        </ul>
+
+        <!-- RIGHT: auth controls -->
+        <div class="d-flex align-items-center gap-2">
+          <button id="btnLogin" type="button" class="btn btn-outline-primary px-3 rounded-pill">Login</button>
+          <button id="btnSignup" type="button" class="btn btn-primary px-3 rounded-pill">Sign Up</button>
+          <button id="btnLogout" type="button"
+            class="btn btn-outline-secondary px-3 rounded-pill d-none">Logout</button>
+          <span id="navUser" class="nav-link text-muted small d-none"></span>
+        </div>
+      </div>
+    </div>
+    <div class="weather-widget">
+      <h3 id="weather-location">Loading...</h3>
+      <p id="weather-temp"></p>
+      <img id="weather-icon" src="" alt="Weather Icon">
+    </div>
+  </nav>
+
+  <!-- Header -->
+  <header>
+    <h1>Kelantan Street Food</h1>
+    <p>Experience the traditional street foods of Kelantan</p>
+    <a href="#search-section" class="btn">Start the Journey</a>
+  </header>
+
+  <!-- Search and Controls Section -->
+  <section id="search-section" class="search-controls-section">
+    <div class="search-container">
+      <div class="search-bar-container">
+        <div class="search-bar">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="search-input" placeholder="Search by name, ingredients, or description..." />
+          <button id="clear-search" class="clear-btn" style="display: none;">✕</button>
+        </div>
+        <div id="search-results" class="search-results" style="display: none;"></div>
+      </div>
+      <div class="controls-row">
+        <div class="sort-container">
+          <span class="sort-label">Sort by:</span>
+          <button class="sort-btn" onclick="sortFoodItems('asc')">A-Z</button>
+          <button class="sort-btn" onclick="sortFoodItems('desc')">Z-A</button>
+          <button class="sort-btn reset-btn" onclick="resetOrder()">Original Order</button>
+        </div>
+        <div class="favorites-container">
+          <button id="favorites-btn" class="favorites-btn">
+            <span class="heart-icon">❤️</span>
+            <span>My Favorites</span>
+            <span id="favorites-count" class="favorites-count">0</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Food Sections Container -->
+  <div id="food-container">
+
+    <!-- Ayam Percik -->
+    <section id="ayampercik" class="food-section" data-name="Ayam Percik"
+      data-ingredients="chicken,coconut milk,chili paste,garlic,ginger,spices">
+      <div class="slideshow" data-slideshow="ayampercik">
+        <div class="slides">
+          <img src="Images/State Food/Kelantan/ayampercik1.jpg" class="active" alt="Ayam Percik 1"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Kelantan/ayampercik2.jpg" alt="Ayam Percik 2"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Kelantan/ayampercik3.jpg" alt="Ayam Percik 3"
+            onclick="openImageModal(this.src, this.alt)">
+        </div>
+        <button class="prev" onclick="changeSlideshow('ayampercik', -1)">❮</button>
+        <button class="next" onclick="changeSlideshow('ayampercik', 1)">❯</button>
+        <div class="dots" id="dots-ayampercik">
+          <span class="dot active" onclick="currentSlideshow('ayampercik', 1)"></span>
+          <span class="dot" onclick="currentSlideshow('ayampercik', 2)"></span>
+          <span class="dot" onclick="currentSlideshow('ayampercik', 3)"></span>
+        </div>
+        <div class="zoom-icon">🔍</div>
+      </div>
+      <div class="food-details">
+        <div class="food-header">
+          <h2>Ayam Percik ⭐⭐⭐⭐☆ (4.7/5)</h2>
+          <button class="favorite-btn" onclick="toggleFavorite('ayampercik')" data-food-id="ayampercik">
+            <span class="heart">🤍</span>
+          </button>
+        </div>
+        <p>Ayam Percik is grilled chicken marinated in spices and coconut milk, then basted with a rich, spicy sauce.
+        </p>
+        <p><b>Normal Price:</b> RM 5.00 - RM 10.00 per piece</p>
+        <p><b>Popular in:</b> Kelantan, Malaysia</p>
+        <p><b>Best Served With:</b> Nasi putih or nasi kerabu</p>
+        <a href="https://rona.my/resepi/ayam-percik-kelantan/" target="_blank" class="more-btn">More Info</a>
+      </div>
+      <div class="ingredients">
+        <h3>Ingredients:</h3>
+        <ul>
+          <li>Chicken</li>
+          <li>Coconut milk</li>
+          <li>Chili paste</li>
+          <li>Garlic & ginger</li>
+          <li>Spices</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Kuih Akok -->
+    <section id="kuihakok" class="food-section" data-name="Kuih Akok"
+      data-ingredients="eggs,coconut milk,sugar,flour,pandan leaves">
+      <div class="slideshow" data-slideshow="kuihakok">
+        <div class="slides">
+          <img src="Images/State Food/Kelantan/kuihakok1.jpg" class="active" alt="Kuih Akok 1"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Kelantan/kuihakok2.jpg" alt="Kuih Akok 2"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Kelantan/kuihakok3.jpg" alt="Kuih Akok 3"
+            onclick="openImageModal(this.src, this.alt)">
+        </div>
+        <button class="prev" onclick="changeSlideshow('kuihakok', -1)">❮</button>
+        <button class="next" onclick="changeSlideshow('kuihakok', 1)">❯</button>
+        <div class="dots" id="dots-kuihakok">
+          <span class="dot active" onclick="currentSlideshow('kuihakok', 1)"></span>
+          <span class="dot" onclick="currentSlideshow('kuihakok', 2)"></span>
+          <span class="dot" onclick="currentSlideshow('kuihakok', 3)"></span>
+        </div>
+        <div class="zoom-icon">🔍</div>
+      </div>
+      <div class="food-details">
+        <div class="food-header">
+          <h2>Kuih Akok ⭐⭐⭐⭐☆ (4.5/5)</h2>
+          <button class="favorite-btn" onclick="toggleFavorite('kuihakok')" data-food-id="kuihakok">
+            <span class="heart">🤍</span>
+          </button>
+        </div>
+        <p>Kuih Akok is a sweet, custard-like traditional kuih made with eggs, flour, sugar, and coconut milk.</p>
+        <p><b>Normal Price:</b> RM 0.50 - RM 1.50 per piece</p>
+        <p><b>Popular in:</b> Kelantan, Malaysia</p>
+        <p><b>Best Served With:</b> Afternoon tea</p>
+        <a href="https://ms.wikipedia.org/wiki/Akok" target="_blank" class="more-btn">More Info</a>
+      </div>
+      <div class="ingredients">
+        <h3>Ingredients:</h3>
+        <ul>
+          <li>Eggs</li>
+          <li>Coconut milk</li>
+          <li>Sugar</li>
+          <li>Flour</li>
+          <li>Pandan leaves</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Nasi Dagang -->
+    <section id="nasidagang" class="food-section" data-name="Nasi Dagang"
+      data-ingredients="rice,coconut milk,fish curry,pickled vegetables,spices">
+      <div class="slideshow" data-slideshow="nasidagang">
+        <div class="slides">
+          <img src="Images/State Food/Kelantan/nasidagang1.jpg" class="active" alt="Nasi Dagang 1"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Kelantan/nasidagang2.jpg" alt="Nasi Dagang 2"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Kelantan/nasidagang3.jpg" alt="Nasi Dagang 3"
+            onclick="openImageModal(this.src, this.alt)">
+        </div>
+        <button class="prev" onclick="changeSlideshow('nasidagang', -1)">❮</button>
+        <button class="next" onclick="changeSlideshow('nasidagang', 1)">❯</button>
+        <div class="dots" id="dots-nasidagang">
+          <span class="dot active" onclick="currentSlideshow('nasidagang', 1)"></span>
+          <span class="dot" onclick="currentSlideshow('nasidagang', 2)"></span>
+          <span class="dot" onclick="currentSlideshow('nasidagang', 3)"></span>
+        </div>
+        <div class="zoom-icon">🔍</div>
+      </div>
+      <div class="food-details">
+        <div class="food-header">
+          <h2>Nasi Dagang ⭐⭐⭐⭐⭐ (4.8/5)</h2>
+          <button class="favorite-btn" onclick="toggleFavorite('nasidagang')" data-food-id="nasidagang">
+            <span class="heart">🤍</span>
+          </button>
+        </div>
+        <p>Nasi Dagang is a dish of steamed rice mixed with coconut milk, usually served with fish curry and pickles.
+        </p>
+        <p><b>Normal Price:</b> RM 5.00 - RM 12.00</p>
+        <p><b>Popular in:</b> Kelantan & Terengganu</p>
+        <p><b>Best Served With:</b> Gulai ikan tongkol</p>
+        <a href="https://en.wikipedia.org/wiki/Nasi_dagang" target="_blank" class="more-btn">More Info</a>
+      </div>
+      <div class="ingredients">
+        <h3>Ingredients:</h3>
+        <ul>
+          <li>Rice</li>
+          <li>Coconut milk</li>
+          <li>Fish curry</li>
+          <li>Pickled vegetables</li>
+          <li>Spices</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Nasi Kerabu -->
+    <section id="nasikerabu" class="food-section" data-name="Nasi Kerabu"
+      data-ingredients="blue rice,herbs,fried fish,chicken,crackers,salted egg">
+      <div class="slideshow" data-slideshow="nasikerabu">
+        <div class="slides">
+          <img src="Images/State Food/Kelantan/nasikerabu1.jpg" class="active" alt="Nasi Kerabu 1"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Kelantan/nasikerabu2.jpg" alt="Nasi Kerabu 2"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Kelantan/nasikerabu3.jpg" alt="Nasi Kerabu 3"
+            onclick="openImageModal(this.src, this.alt)">
+        </div>
+        <button class="prev" onclick="changeSlideshow('nasikerabu', -1)">❮</button>
+        <button class="next" onclick="changeSlideshow('nasikerabu', 1)">❯</button>
+        <div class="dots" id="dots-nasikerabu">
+          <span class="dot active" onclick="currentSlideshow('nasikerabu', 1)"></span>
+          <span class="dot" onclick="currentSlideshow('nasikerabu', 2)"></span>
+          <span class="dot" onclick="currentSlideshow('nasikerabu', 3)"></span>
+        </div>
+        <div class="zoom-icon">🔍</div>
+      </div>
+      <div class="food-details">
+        <div class="food-header">
+          <h2>Nasi Kerabu ⭐⭐⭐⭐⭐ (4.9/5)</h2>
+          <button class="favorite-btn" onclick="toggleFavorite('nasikerabu')" data-food-id="nasikerabu">
+            <span class="heart">🤍</span>
+          </button>
+        </div>
+        <p>Nasi Kerabu is a blue-colored rice dish served with herbs, fried fish or chicken, crackers, and a variety of
+          side dishes.</p>
+        <p><b>Normal Price:</b> RM 5.00 - RM 12.00</p>
+        <p><b>Popular in:</b> Kelantan, Malaysia</p>
+        <p><b>Best Served With:</b> Salted egg and solok lada</p>
+        <a href="https://en.wikipedia.org/wiki/Nasi_kerabu" target="_blank" class="more-btn">More Info</a>
+      </div>
+      <div class="ingredients">
+        <h3>Ingredients:</h3>
+        <ul>
+          <li>Blue rice (butterfly pea flower)</li>
+          <li>Fresh herbs</li>
+          <li>Fried fish or chicken</li>
+          <li>Crackers</li>
+          <li>Salted egg</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Nasi Tumpang -->
+    <section id="nasitumpang" class="food-section" data-name="Nasi Tumpang"
+      data-ingredients="rice,banana leaf,fish curry,chicken curry,meat floss,vegetables">
+      <div class="slideshow" data-slideshow="nasitumpang">
+        <div class="slides">
+          <img src="Images/State Food/Kelantan/nasitumpang1.jpg" class="active" alt="Nasi Tumpang 1"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Kelantan/nasitumpang2.jpg" alt="Nasi Tumpang 2"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Kelantan/nasitumpang3.jpg" alt="Nasi Tumpang 3"
+            onclick="openImageModal(this.src, this.alt)">
+        </div>
+        <button class="prev" onclick="changeSlideshow('nasitumpang', -1)">❮</button>
+        <button class="next" onclick="changeSlideshow('nasitumpang', 1)">❯</button>
+        <div class="dots" id="dots-nasitumpang">
+          <span class="dot active" onclick="currentSlideshow('nasitumpang', 1)"></span>
+          <span class="dot" onclick="currentSlideshow('nasitumpang', 2)"></span>
+          <span class="dot" onclick="currentSlideshow('nasitumpang', 3)"></span>
+        </div>
+        <div class="zoom-icon">🔍</div>
+      </div>
+      <div class="food-details">
+        <div class="food-header">
+          <h2>Nasi Tumpang ⭐⭐⭐⭐☆ (4.6/5)</h2>
+          <button class="favorite-btn" onclick="toggleFavorite('nasitumpang')" data-food-id="nasitumpang">
+            <span class="heart">🤍</span>
+          </button>
+        </div>
+        <p>Nasi Tumpang is rice layered with curry, meat floss, and other dishes, wrapped in a cone-shaped banana leaf.
+        </p>
+        <p><b>Normal Price:</b> RM 3.00 - RM 6.00</p>
+        <p><b>Popular in:</b> Kelantan, Malaysia</p>
+        <p><b>Best Served With:</b> Fish or chicken curry</p>
+        <a href="https://en.wikipedia.org/wiki/Nasi_tumpang" target="_blank" class="more-btn">More Info</a>
+      </div>
+      <div class="ingredients">
+        <h3>Ingredients:</h3>
+        <ul>
+          <li>Rice</li>
+          <li>Banana leaf wrap</li>
+          <li>Fish or chicken curry</li>
+          <li>Meat floss</li>
+          <li>Vegetables</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Mee Celup -->
+    <section id="meecelup" class="food-section" data-name="Mee Celup"
+      data-ingredients="noodles,beef broth,bean sprouts,herbs,chili paste">
+      <div class="slideshow" data-slideshow="meecelup">
+        <div class="slides">
+          <img src="Images/State Food/Kelantan/meecelup1.jpg" class="active" alt="Mee Celup 1"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Kelantan/meecelup2.jpg" alt="Mee Celup 2"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Kelantan/meecelup3.jpg" alt="Mee Celup 3"
+            onclick="openImageModal(this.src, this.alt)">
+        </div>
+        <button class="prev" onclick="changeSlideshow('meecelup', -1)">❮</button>
+        <button class="next" onclick="changeSlideshow('meecelup', 1)">❯</button>
+        <div class="dots" id="dots-meecelup">
+          <span class="dot active" onclick="currentSlideshow('meecelup', 1)"></span>
+          <span class="dot" onclick="currentSlideshow('meecelup', 2)"></span>
+          <span class="dot" onclick="currentSlideshow('meecelup', 3)"></span>
+        </div>
+        <div class="zoom-icon">🔍</div>
+      </div>
+      <div class="food-details">
+        <div class="food-header">
+          <h2>Mee Celup ⭐⭐⭐⭐☆ (4.6/5)</h2>
+          <button class="favorite-btn" onclick="toggleFavorite('meecelup')" data-food-id="meecelup">
+            <span class="heart">🤍</span>
+          </button>
+        </div>
+        <p>Mee Celup is a Kelantanese noodle dish served in a flavorful beef broth, topped with bean sprouts, herbs, and
+          chili paste.</p>
+        <p><b>Normal Price:</b> RM 4.00 - RM 7.00</p>
+        <p><b>Popular in:</b> Kelantan, Malaysia</p>
+        <p><b>Best Served With:</b> Chili paste</p>
+        <a href="https://www.malaysia.travel/explore/18-unique-dishes-you-must-try-in-kelantan" target="_blank"
+          class="more-btn">More Info</a>
+      </div>
+      <div class="ingredients">
+        <h3>Ingredients:</h3>
+        <ul>
+          <li>Noodles</li>
+          <li>Beef broth</li>
+          <li>Bean sprouts</li>
+          <li>Fresh herbs</li>
+          <li>Chili paste</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Nasi Ulam -->
+    <section id="nasiulam" class="food-section" data-name="Nasi Ulam"
+      data-ingredients="rice,fresh herbs,vegetables,salted fish,chili">
+      <div class="slideshow" data-slideshow="nasiulam">
+        <div class="slides">
+          <img src="Images/State Food/Kelantan/nasiulam1.jpg" class="active" alt="Nasi Ulam 1"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Kelantan/nasiulam2.jpg" alt="Nasi Ulam 2"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Kelantan/nasiulam3.jpg" alt="Nasi Ulam 3"
+            onclick="openImageModal(this.src, this.alt)">
+        </div>
+        <button class="prev" onclick="changeSlideshow('nasiulam', -1)">❮</button>
+        <button class="next" onclick="changeSlideshow('nasiulam', 1)">❯</button>
+        <div class="dots" id="dots-nasiulam">
+          <span class="dot active" onclick="currentSlideshow('nasiulam', 1)"></span>
+          <span class="dot" onclick="currentSlideshow('nasiulam', 2)"></span>
+          <span class="dot" onclick="currentSlideshow('nasiulam', 3)"></span>
+        </div>
+        <div class="zoom-icon">🔍</div>
+      </div>
+      <div class="food-details">
+        <div class="food-header">
+          <h2>Nasi Ulam ⭐⭐⭐⭐☆ (4.5/5)</h2>
+          <button class="favorite-btn" onclick="toggleFavorite('nasiulam')" data-food-id="nasiulam">
+            <span class="heart">🤍</span>
+          </button>
+        </div>
+        <p>Nasi Ulam is rice mixed with a variety of fresh herbs, vegetables, and sometimes salted fish or grilled meat,
+          refreshing and aromatic.</p>
+        <p><b>Normal Price:</b> RM 4.00 - RM 8.00</p>
+        <p><b>Popular in:</b> Kelantan, Malaysia</p>
+        <p><b>Best Served With:</b> Salted fish or fried chicken</p>
+        <a href="https://en.wikipedia.org/wiki/Nasi_ulam" target="_blank" class="more-btn">More Info</a>
+      </div>
+      <div class="ingredients">
+        <h3>Ingredients:</h3>
+        <ul>
+          <li>Rice</li>
+          <li>Fresh herbs</li>
+          <li>Vegetables</li>
+          <li>Salted fish</li>
+          <li>Chili</li>
+        </ul>
+      </div>
+    </section>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+    <!-- JS -->
+    <!-- Auth Modal -->
+    <div class="modal fade" id="authModal" tabindex="-1" aria-hidden="true" aria-labelledby="authTitle">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <form id="authForm">
+            <div class="modal-header">
+              <h5 id="authTitle" class="modal-title">Login</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+              <!-- Username (login: 'Username or Email', signup: 'Username') -->
+              <div class="mb-3" id="rowUsername">
+                <label class="form-label" id="labelUsername">Username or Email</label>
+                <input id="authUsername" type="text" class="form-control" minlength="3" required>
+              </div>
+
+              <!-- Email (shown only in signup) -->
+              <div class="mb-3 d-none" id="rowEmail">
+                <label class="form-label">Email</label>
+                <input id="authEmail" type="email" class="form-control">
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Password</label>
+                <input id="authPassword" type="password" class="form-control" minlength="6" required>
+              </div>
+
+              <!-- Confirm password (signup only) -->
+              <div id="rowConfirm" class="mb-3 d-none">
+                <label class="form-label">Confirm Password</label>
+                <input id="authConfirm" type="password" class="form-control" minlength="6">
+              </div>
+
+              <div class="form-check mb-2">
+                <input id="authRemember" class="form-check-input" type="checkbox">
+                <label class="form-check-label" for="authRemember">Remember me</label>
+              </div>
+
+              <div id="authError" class="text-danger small d-none"></div>
+            </div>
+
+            <div class="modal-footer justify-content-between">
+              <div class="small">
+                <span id="authHint">No account?
+                  <a href="#" id="linkToSignup">Sign up</a>
+                </span>
+              </div>
+              <button id="authSubmit" class="btn btn-primary" type="submit">Continue</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+  <script src="RouYan/location-permission.js"></script>
+  <script src="RouYan/state.js"></script>
+  <script src="main.js"></script>
+  <script src="RouYan/food.js"></script>
+
+
+</body>
+
+</html>

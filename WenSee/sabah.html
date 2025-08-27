@@ -1,0 +1,367 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sabah Street Food</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="RouYan/state.css">
+  <link rel="stylesheet" href="RouYan/food.css">
+</head>
+
+<body data-state="sabah">
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg fixed-top navbar-light shadow-sm app-navbar">
+    <div class="container">
+      <a class="navbar-brand" href="#home">
+        <i class="fas fa-utensils me-2"></i>MY StreetFood
+      </a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <!-- LEFT: order you requested -->
+        <ul class="navbar-nav me-auto align-items-lg-center">
+          <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="#top-ranking">Top Ranking</a></li>
+
+          <!-- Street Food dropdown -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="streetFoodDropdown" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">Street Food</a>
+            <ul class="dropdown-menu" aria-labelledby="streetFoodDropdown">
+              <li><a class="dropdown-item" href="search-states.html"><i
+                    class="fas fa-map-marker-alt me-2"></i>States</a></li>
+              <li><a class="dropdown-item" href="search-races.html"><i class="fas fa-users me-2"></i>Races</a></li>
+            </ul>
+          </li>
+
+          <li class="nav-item"><a class="nav-link text-uppercase" href="blog.html">BLOG</a></li>
+          <li class="nav-item"><a class="nav-link" href="nearme.html">Near Me</a></li>
+          <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
+        </ul>
+
+        <!-- RIGHT: auth controls -->
+        <div class="d-flex align-items-center gap-2">
+          <button id="btnLogin" type="button" class="btn btn-outline-primary px-3 rounded-pill">Login</button>
+          <button id="btnSignup" type="button" class="btn btn-primary px-3 rounded-pill">Sign Up</button>
+          <span id="navUser" class="nav-link text-muted small d-none"></span>
+          <button id="btnLogout" type="button"
+            class="btn btn-outline-secondary px-3 rounded-pill d-none">Logout</button>
+        </div>
+      </div>
+    </div>
+    <!-- Weather Widget -->
+    <div class="weather-widget">
+      <h3 id="weather-location">Loading...</h3>
+      <p id="weather-temp"></p>
+      <img id="weather-icon" src="" alt="Weather Icon">
+    </div>
+  </nav>
+
+  <!-- Header -->
+  <header>
+    <h1>Sabah Street Food</h1>
+    <p>Experience the authentic flavors of Sabah, Malaysia</p>
+    <a href="#search-section" class="btn">Start the Journey</a>
+  </header>
+
+  <!-- Search and Controls Section -->
+  <section id="search-section" class="search-controls-section">
+    <div class="search-container">
+      <!-- Search Bar -->
+      <div class="search-bar-container">
+        <div class="search-bar">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="search-input" placeholder="Search by name, ingredients, or description..." />
+          <button id="clear-search" class="clear-btn" style="display: none;">✕</button>
+        </div>
+        <div id="search-results" class="search-results" style="display: none;"></div>
+      </div>
+      <!-- Controls Row -->
+      <div class="controls-row">
+        <!-- Sort Controls -->
+        <div class="sort-container">
+          <span class="sort-label">Sort by:</span>
+          <button class="sort-btn" onclick="sortFoodItems('asc')">A-Z</button>
+          <button class="sort-btn" onclick="sortFoodItems('desc')">Z-A</button>
+          <button class="sort-btn reset-btn" onclick="resetOrder()">Original Order</button>
+        </div>
+        <!-- Favorites Button -->
+        <div class="favorites-container">
+          <button id="favorites-btn" class="favorites-btn">
+            <span class="heart-icon">❤️</span>
+            <span>My Favorites</span>
+            <span id="favorites-count" class="favorites-count">0</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Food Sections Container -->
+  <div id="food-container">
+    <!-- Hinava -->
+    <section id="hinava" class="food-section" data-name="Hinava"
+      data-ingredients="raw mackerel,lime juice,ginger,onion,chili,bitter gourd">
+      <div class="slideshow" data-slideshow="hinava">
+        <div class="slides">
+          <img src="Images/State Food/Sabah/hinava1.jpg" class="active" alt="Hinava 1"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Sabah/hinava2.jpg" alt="Hinava 2" onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Sabah/hinava3.jpg" alt="Hinava 3" onclick="openImageModal(this.src, this.alt)">
+        </div>
+        <button class="prev" onclick="changeSlideshow('hinava', -1)">❮</button>
+        <button class="next" onclick="changeSlideshow('hinava', 1)">❯</button>
+        <div class="dots" id="dots-hinava">
+          <span class="dot active" onclick="currentSlideshow('hinava', 1)"></span>
+          <span class="dot" onclick="currentSlideshow('hinava', 2)"></span>
+          <span class="dot" onclick="currentSlideshow('hinava', 3)"></span>
+        </div>
+        <div class="zoom-icon">🔍</div>
+      </div>
+      <div class="food-details">
+        <div class="food-header">
+          <h2>Hinava 生鱼沙拉 ⭐⭐⭐⭐⭐ (4.8/5)</h2>
+          <button class="favorite-btn" onclick="toggleFavorite('hinava')" data-food-id="hinava">
+            <span class="heart">🤍</span>
+          </button>
+        </div>
+        <p>Hinava is a traditional Kadazan-Dusun raw fish salad marinated with lime juice, ginger, onions, chili, and
+          bitter gourd. It is often served during festive occasions and is a symbol of Sabah’s rich indigenous
+          heritage.</p>
+        <p><b>Normal Price:</b> RM 15.00 - RM 25.00</p>
+        <p><b>Popular in:</b> Kadazan-Dusun communities</p>
+        <p><b>Best Served With:</b> Steamed rice</p>
+        <a href="https://en.wikipedia.org/wiki/Hinava" target="_blank" class="more-btn">More Info</a>
+      </div>
+      <div class="ingredients">
+        <h3>Ingredients:</h3>
+        <ul>
+          <li>Raw mackerel</li>
+          <li>Lime juice</li>
+          <li>Ginger</li>
+          <li>Onion</li>
+          <li>Chili & bitter gourd</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Ngiu Chap -->
+    <section id="ngiuchap" class="food-section" data-name="Ngiu Chap"
+      data-ingredients="beef slices,beef offal,beef balls,chinese herbs,rice noodles,soy sauce,chili">
+      <div class="slideshow" data-slideshow="ngiuchap">
+        <div class="slides">
+          <img src="Images/State Food/Sabah/ngiuchap1.jpg" class="active" alt="Ngiu Chap 1"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Sabah/ngiuchap2.jpg" alt="Ngiu Chap 2"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Sabah/ngiuchap3.jpg" alt="Ngiu Chap 3"
+            onclick="openImageModal(this.src, this.alt)">
+        </div>
+        <button class="prev" onclick="changeSlideshow('ngiuchap', -1)">❮</button>
+        <button class="next" onclick="changeSlideshow('ngiuchap', 1)">❯</button>
+        <div class="dots" id="dots-ngiuchap">
+          <span class="dot active" onclick="currentSlideshow('ngiuchap', 1)"></span>
+          <span class="dot" onclick="currentSlideshow('ngiuchap', 2)"></span>
+          <span class="dot" onclick="currentSlideshow('ngiuchap', 3)"></span>
+        </div>
+        <div class="zoom-icon">🔍</div>
+      </div>
+      <div class="food-details">
+        <div class="food-header">
+          <h2>Ngiu Chap 牛杂面 ⭐⭐⭐⭐⭐ (4.9/5)</h2>
+          <button class="favorite-btn" onclick="toggleFavorite('ngiuchap')" data-food-id="ngiuchap">
+            <span class="heart">🤍</span>
+          </button>
+        </div>
+        <p>Ngiu Chap is a hearty beef noodle soup consisting of beef slices, beef balls, and assorted offal simmered in
+          a rich herbal broth. A comfort food for Sabahans.</p>
+        <p><b>Normal Price:</b> RM 8.00 - RM 15.00</p>
+        <p><b>Popular in:</b> Kota Kinabalu</p>
+        <p><b>Best Served With:</b> Chili sauce</p>
+        <a href="https://www.mysabah.com/wordpress/the-best-ngiu-chap-beef-noodle-of-sabah/" target="_blank"
+          class="more-btn">More Info</a>
+      </div>
+      <div class="ingredients">
+        <h3>Ingredients:</h3>
+        <ul>
+          <li>Beef slices & offal</li>
+          <li>Beef balls</li>
+          <li>Chinese herbs</li>
+          <li>Rice noodles</li>
+          <li>Soy sauce & chili</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Sang Nyuk Mian -->
+    <section id="sangnyukmian" class="food-section" data-name="Sang Nyuk Mian"
+      data-ingredients="pork slices,pork liver,pork intestines,soy sauce,garlic oil,rice noodles">
+      <div class="slideshow" data-slideshow="sangnyukmian">
+        <div class="slides">
+          <img src="Images/State Food/Sabah/sangnyukmian1.jpg" class="active" alt="Sang Nyuk Mian 1"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Sabah/sangnyukmian2.jpg" alt="Sang Nyuk Mian 2"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Sabah/sangnyukmian3.jpg" alt="Sang Nyuk Mian 3"
+            onclick="openImageModal(this.src, this.alt)">
+        </div>
+        <button class="prev" onclick="changeSlideshow('sangnyukmian', -1)">❮</button>
+        <button class="next" onclick="changeSlideshow('sangnyukmian', 1)">❯</button>
+        <div class="dots" id="dots-sangnyukmian">
+          <span class="dot active" onclick="currentSlideshow('sangnyukmian', 1)"></span>
+          <span class="dot" onclick="currentSlideshow('sangnyukmian', 2)"></span>
+          <span class="dot" onclick="currentSlideshow('sangnyukmian', 3)"></span>
+        </div>
+        <div class="zoom-icon">🔍</div>
+      </div>
+      <div class="food-details">
+        <div class="food-header">
+          <h2>Sang Nyuk Mian é²œè‚‰é¢ ⭐⭐⭐⭐☆ (4.7/5)</h2>
+          <button class="favorite-btn" onclick="toggleFavorite('sangnyukmian')" data-food-id="sangnyukmian">
+            <span class="heart">🤍</span>
+          </button>
+        </div>
+        <p>Sang Nyuk Mian, meaning “fresh pork noodles,” is a well-loved dish in Sabah, featuring thin slices of
+          pork and pork innards served in either soup or dry style with soy sauce.</p>
+        <p><b>Normal Price:</b> RM 7.00 - RM 12.00</p>
+        <p><b>Popular in:</b> Kota Kinabalu</p>
+        <p><b>Best Served With:</b> Chili sauce with lime</p>
+        <a href="https://www.bangsarbabe.com/2019/03/village-sang-nyuk-noodle-kuchai-lama.html" target="_blank"
+          class="more-btn">More Info</a>
+      </div>
+      <div class="ingredients">
+        <h3>Ingredients:</h3>
+        <ul>
+          <li>Pork slices</li>
+          <li>Pork liver & intestines</li>
+          <li>Soy sauce</li>
+          <li>Garlic oil</li>
+          <li>Rice noodles</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Tuaran Mee -->
+    <section id="tuaranmee" class="food-section" data-name="Tuaran Mee"
+      data-ingredients="egg noodles,char siu,egg rolls,vegetables,soy sauce">
+      <div class="slideshow" data-slideshow="tuaranmee">
+        <div class="slides">
+          <img src="Images/State Food/Sabah/tuaranmee1.jpg" class="active" alt="Tuaran Mee 1"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Sabah/tuaranmee2.jpg" alt="Tuaran Mee 2"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Sabah/tuaranmee3.jpg" alt="Tuaran Mee 3"
+            onclick="openImageModal(this.src, this.alt)">
+        </div>
+        <button class="prev" onclick="changeSlideshow('tuaranmee', -1)">❮</button>
+        <button class="next" onclick="changeSlideshow('tuaranmee', 1)">❯</button>
+        <div class="dots" id="dots-tuaranmee">
+          <span class="dot active" onclick="currentSlideshow('tuaranmee', 1)"></span>
+          <span class="dot" onclick="currentSlideshow('tuaranmee', 2)"></span>
+          <span class="dot" onclick="currentSlideshow('tuaranmee', 3)"></span>
+        </div>
+        <div class="zoom-icon">🔍</div>
+      </div>
+      <div class="food-details">
+        <div class="food-header">
+          <h2>Tuaran Mee 斗亚兰炒面 ⭐⭐⭐⭐⭐ (4.9/5)</h2>
+          <button class="favorite-btn" onclick="toggleFavorite('tuaranmee')" data-food-id="tuaranmee">
+            <span class="heart">🤍</span>
+          </button>
+        </div>
+        <p>Tuaran Mee is Sabah’s signature noodle dish from the town of Tuaran. It is made from homemade egg noodles,
+          stir-fried until slightly crispy, and topped with char siu, vegetables, and egg rolls.</p>
+        <p><b>Normal Price:</b> RM 6.00 - RM 10.00</p>
+        <p><b>Popular in:</b> Tuaran, Kota Kinabalu</p>
+        <p><b>Best Served With:</b> Pickled chili</p>
+        <a href="https://jackiem.com.au/2022/02/06/how-to-cook-sabah-mee-tuaran-non-pork-version/" target="_blank"
+          class="more-btn">More Info</a>
+      </div>
+      <div class="ingredients">
+        <h3>Ingredients:</h3>
+        <ul>
+          <li>Egg noodles</li>
+          <li>Char siu (barbecue pork)</li>
+          <li>Egg rolls</li>
+          <li>Vegetables</li>
+          <li>Soy sauce</li>
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <!-- Auth Modal -->
+  <div class="modal fade" id="authModal" tabindex="-1" aria-hidden="true" aria-labelledby="authTitle">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <form id="authForm">
+          <div class="modal-header">
+            <h5 id="authTitle" class="modal-title">Login</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+
+          <div class="modal-body">
+            <!-- Username (login: 'Username or Email', signup: 'Username') -->
+            <div class="mb-3" id="rowUsername">
+              <label class="form-label" id="labelUsername">Username or Email</label>
+              <input id="authUsername" type="text" class="form-control" minlength="3" required>
+            </div>
+
+            <!-- Email (shown only in signup) -->
+            <div class="mb-3 d-none" id="rowEmail">
+              <label class="form-label">Email</label>
+              <input id="authEmail" type="email" class="form-control">
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Password</label>
+              <input id="authPassword" type="password" class="form-control" minlength="6" required>
+            </div>
+
+            <!-- Confirm password (signup only) -->
+            <div id="rowConfirm" class="mb-3 d-none">
+              <label class="form-label">Confirm Password</label>
+              <input id="authConfirm" type="password" class="form-control" minlength="6">
+            </div>
+
+            <div class="form-check mb-2">
+              <input id="authRemember" class="form-check-input" type="checkbox">
+              <label class="form-check-label" for="authRemember">Remember me</label>
+            </div>
+
+            <div id="authError" class="text-danger small d-none"></div>
+          </div>
+
+          <div class="modal-footer justify-content-between">
+            <div class="small">
+              <span id="authHint">No account?
+                <a href="#" id="linkToSignup">Sign up</a>
+              </span>
+            </div>
+            <button id="authSubmit" class="btn btn-primary" type="submit">Continue</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+  <!-- JS -->
+  <script src="RouYan/location-permission.js"></script>
+  <script src="RouYan/state.js"></script>
+  <script src="main.js"></script>
+  <script src="RouYan/food.js"></script>
+
+</body>
+
+</html>
