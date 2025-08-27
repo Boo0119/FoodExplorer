@@ -112,7 +112,7 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>
         <div class="post-actions">
           <button class="like-btn"><i class="fa-regular fa-heart"></i></button>
-          <span class="like-count">3z likes</span>
+          <span class="like-count">38 likes</span>
           <button class="comment-btn"><i class="fa-regular fa-comment"></i></button>
           <span class="comment-count">1 comment</span>
           <button class="share-btn"><i class="fa-solid fa-share"></i></button>
@@ -435,3 +435,4 @@ scrollTopBtn.addEventListener("click", () => {
     behavior: "smooth"
   });
 });
+
