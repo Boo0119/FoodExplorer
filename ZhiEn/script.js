@@ -246,7 +246,7 @@ function updateDots(carouselId, carouselContainer) {
 const carouselIntervals = {};
 
 // Function to start auto-sliding images
-function startAutoSlide(carouselId, interval = 3500) {
+function startAutoSlide(carouselId, interval = 5000) {
     if (carouselIntervals[carouselId]) {
         clearInterval(carouselIntervals[carouselId]);
     }
@@ -261,7 +261,7 @@ function startAutoSlide(carouselId, interval = 3500) {
 document.addEventListener("DOMContentLoaded", () => {
     const carousels = document.querySelectorAll(".carousel");
     carousels.forEach(carousel => {
-        startAutoSlide(carousel.id, 3500); 
+        startAutoSlide(carousel.id, 5000); 
     });
 });
 
@@ -616,3 +616,4 @@ document.getElementById('fullscreenModal').addEventListener('click', function(ev
 });
 
  
+
