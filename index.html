@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Malaysia Street Food Explorer</title>
+  <!-- Vendor CSS -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+  <!-- App CSS (single file) -->
+  <link href="./style.css" rel="stylesheet" />
+  <link rel="stylesheet" href="JiaXuan/blog.css">
+  <link rel="stylesheet" href="JiaXuan/ranking.css" />
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="ZhiEn/zhien.css">
+  <!-- Google Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap"
+    rel="stylesheet">
+</head>
+
+<body>
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg fixed-top navbar-light shadow-sm app-navbar">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <i class="fas fa-utensils me-2"></i>MY StreetFood
+      </a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto align-items-lg-center">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="ranking.html">Top Ranking</a></li>
+
+          <!-- Street Food dropdown -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="streetFoodDropdown" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">Street Food</a>
+            <ul class="dropdown-menu" aria-labelledby="streetFoodDropdown">
+              <!-- Link to States page -->
+              <li><a class="dropdown-item" href="state.html"><i class="fas fa-map-marker-alt me-2"></i>States</a></li>
+
+              <!-- Link to Race page -->
+              <li><a class="dropdown-item" href="Race.html"><i class="fas fa-users me-2"></i>Races</a></li>
+            </ul>
+          </li>
+
+          <li class="nav-item"><a class="nav-link text-uppercase" href="blog.html">BLOG</a></li>
+          <li class="nav-item"><a class="nav-link" href="nearme.html">Near Me</a></li>
+          <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
+        </ul>
+
+        <div class="d-flex align-items-center gap-2">
+          <span id="navUser" class="nav-link text-muted small d-none">
+            Hello, <span id="usernameDisplay"></span>
+          </span>
+
+          <!-- Login Button (hidden if logged in) -->
+          <a id="btnLogin" href="login.html" class="btn btn-outline-primary px-3 rounded-pill text-decoration-none">
+            Login
+          </a>
+
+          <!-- Sign Up Button (hidden if logged in) -->
+          <a id="btnSignup" href="signup.html"
+            class="btn btn-primary px-3 rounded-pill text-decoration-none text-white">
+            Sign Up
+          </a>
+
+          <!-- Logout Button (shown if logged in) -->
+          <button id="btnLogout" type="button" class="btn btn-outline-secondary px-3 rounded-pill d-none">
+            Logout
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Weather + Time (rightmost, inside collapse) -->
+    <div class="weather-time-box ms-auto">
+      <div id="local-time" class="small"></div>
+      <div id="local-weather" class="small"></div>
+    </div>
+  </nav>
+
+  <!-- Hero Section with Search Bar -->
+  <section class="hero-section" id="home" role="banner" aria-label="Discover Malaysia's Street Food">
+    <div class="container">
+      <div class="hero-content text-center text-white">
+        <h1>Discover Malaysia's Street Food</h1>
+        <p>From bustling night markets to roadside stalls, explore the authentic flavours of Malaysian street cuisine.
+        </p>
+
+        <!-- Start Exploring Button -->
+        <a href="#features" class="btn btn-explore text-white">Start Exploring</a>
+
+        <!-- Search Bar placed right below the button -->
+        <div class="search-container mt-4">
+          <input type="text" id="foodSearch" class="form-control" placeholder="Search for food, states, or races..." />
+          <button class="btn btn-explore text-white" onclick="searchFood()">Search</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Search Results Container -->
+  <div id="searchResults" class="search-results-container">
+    <!-- Results will be displayed here -->
+  </div>
+
+  <section id="blog-preview" class="py-5">
+    <div class="container">
+      <div class="blog-header">
+        <h2>Latest Blog Posts</h2>
+        <p>Check out the latest posts about Malaysian street food</p>
+      </div>
+
+      <div class="row g-4">
+        <!-- Blog Post 1 -->
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="blog-card">
+            <div class="blog-image">
+              <img src="JiaXuan/images/cendol.jpg" alt="Cendol">
+            </div>
+            <div class="blog-content">
+              <h3 class="blog-title">Sweet Escape – Cendol on a Hot Day</h3>
+              <p class="blog-author">By Connie | Aug 20, 2025</p>
+              <p class="blog-excerpt">Shaved ice, creamy coconut milk, pandan noodles, and gula melaka syrup. Cendol is
+                Malaysia's sweetest way to cool down.</p>
+              <div class="blog-footer">
+                <a href="blog.html" class="btn btn-outline-primary rounded-pill">Read More</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Blog Post 2 -->
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="blog-card">
+            <div class="blog-image">
+              <img src="JiaXuan/images/nasilemak.jpg" alt="Nasi Lemak">
+            </div>
+            <div class="blog-content">
+              <h3 class="blog-title">The Breakfast of Champions – Nasi Lemak!</h3>
+              <p class="blog-author">By Raj | Aug 18, 2025</p>
+              <p class="blog-excerpt">Malaysia's national dish 🇲🇾 — Nasi Lemak with sambal, fried anchovies, and
+                boiled egg. Truly the ultimate way to kickstart the morning!</p>
+              <div class="blog-footer">
+                <a href="blog.html" class="btn btn-outline-primary rounded-pill">Read More</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Blog Post 3 -->
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="blog-card">
+            <div class="blog-image">
+              <img src="JiaXuan/images/laksa.jpg" alt="Penang Laksa">
+            </div>
+            <div class="blog-content">
+              <h3 class="blog-title">Sour, Spicy & Addictive – Penang Laksa Love</h3>
+              <p class="blog-author">By Mei Ling | Aug 15, 2025</p>
+              <p class="blog-excerpt">Tangy tamarind soup, fresh herbs, and thick rice noodles. Penang Laksa is a bowl
+                of pure Malaysian soul food.</p>
+              <div class="blog-footer">
+                <a href="blog.html" class="btn btn-outline-primary rounded-pill">Read More</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="blog-cta">
+        <a href="blog.html">View All Blog Posts</a>
+      </div>
+    </div>
+  </section>
+
+  <!---Explore Street Food-->
+<section id="features" class="py-5">
+  <div class="container">
+    <div class="features-header text-center mb-5">
+      <h2>Explore Street Food Your Way</h2>
+      <p>Discover Malaysia's diverse street food culture through multiple options</p>
+    </div>
+
+    <div class="row g-4">
+      <!-- Street Food Card -->
+      <div class="col-12 col-md-6 col-lg-4">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-utensils"></i>
+          </div>
+          <div class="feature-content">
+            <h3 class="feature-title">Street Food</h3>
+            <p class="feature-description">Browse Malaysian foods by States or by Races</p>
+            <div class="feature-actions">
+              <a href="state.html" class="feature-btn">States</a>
+                              <a href="Race.html" class="feature-btn">Races</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Near Me Card -->
+      <div class="col-12 col-md-6 col-lg-4">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-location-arrow"></i>
+          </div>
+          <div class="feature-content">
+            <h3 class="feature-title">Near Me</h3>
+            <p class="feature-description">Find the best street food stalls closest to your location</p>
+            <div class="feature-actions">
+              <a href="nearme.html" class="feature-btn">Find Nearby</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Top Rankings Card -->
+      <div class="col-12 col-md-6 col-lg-4">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-trophy"></i>
+          </div>
+          <div class="feature-content">
+            <h3 class="feature-title">Top Rankings</h3>
+            <p class="feature-description">Check out the most popular and highly-rated street foods</p>
+            <div class="feature-actions">
+              <a href="#top-ranking" class="feature-btn">See Rankings</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <!-- Top Ranking -->
+  <section id="top-ranking" class="ranking-section">
+    <div class="container">
+      <div class="ranking-header">
+        <h2>Top Malaysian Street Foods</h2>
+        <p>Discover the most beloved street foods that define Malaysia's rich culinary heritage, ranked by food
+          enthusiasts nationwide.</p>
+      </div>
+
+      <div class="row g-4">
+        <!-- Rank 1 -->
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="ranking-card">
+            <div class="rank-badge top-1">1</div>
+            <div class="card-image">
+              <img src="JiaXuan/images/nasilemak.jpg" alt="Nasi Lemak">
+            </div>
+            <div class="card-content">
+              <h3 class="food-title">Nasi Lemak</h3>
+              <div class="food-tags">
+                <span class="food-tag">Rice</span>
+                <span class="food-tag">Breakfast</span>
+              </div>
+              <p class="food-description">A fragrant coconut rice dish served with sambal, crispy anchovies, roasted
+                peanuts, and hard-boiled egg.</p>
+              <div class="card-footer">
+                <div class="rating">
+                  <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                  </div>
+                  <span class="rating-value">4.8</span>
+                  <span class="votes">(1250 votes)</span>
+                </div>
+                <button class="view-details-btn">View Details</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Rank 2 -->
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="ranking-card">
+            <div class="rank-badge top-2">2</div>
+            <div class="card-image">
+              <img src="JiaXuan/images/char-kway-teow.jpg" alt="Char Kway Teow">
+            </div>
+            <div class="card-content">
+              <h3 class="food-title">Char Kway Teow</h3>
+              <div class="food-tags">
+                <span class="food-tag">Noodles</span>
+                <span class="food-tag">Stir-fried</span>
+              </div>
+              <p class="food-description">Stir-fried rice noodles with prawns, bloody cockles, Chinese sausage, eggs,
+                and bean sprouts in dark soy sauce.</p>
+              <div class="card-footer">
+                <div class="rating">
+                  <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                  </div>
+                  <span class="rating-value">4.7</span>
+                  <span class="votes">(1100 votes)</span>
+                </div>
+                <button class="view-details-btn">View Details</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Rank 3 -->
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="ranking-card">
+            <div class="rank-badge top-3">3</div>
+            <div class="card-image">
+              <img src="JiaXuan/images/roticanai.jpg" alt="Roti Canai">
+            </div>
+            <div class="card-content">
+              <h3 class="food-title">Roti Canai</h3>
+              <div class="food-tags">
+                <span class="food-tag">Bread</span>
+                <span class="food-tag">Breakfast</span>
+              </div>
+              <p class="food-description">Flaky, crispy flatbread served with flavorful dhal or curry sauce, a Malaysian
+                breakfast favorite.</p>
+              <div class="card-footer">
+                <div class="rating">
+                  <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                  </div>
+                  <span class="rating-value">4.7</span>
+                  <span class="votes">(1540 votes)</span>
+                </div>
+                <button class="view-details-btn">View Details</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ranking-cta">
+        <a href="ranking.html">View Full Rankings</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats -->
+  <section class="stats-section">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-6 col-md-3 stat-item">
+          <span class="stat-number" data-count="500">0</span>
+          <span>Street Food Stalls</span>
+        </div>
+        <div class="col-6 col-md-3 stat-item">
+          <span class="stat-number" data-count="13">0</span>
+          <span>States Covered</span>
+        </div>
+        <div class="col-6 col-md-3 stat-item">
+          <span class="stat-number" data-count="50">0</span>
+          <span>Food Categories</span>
+        </div>
+        <div class="col-6 col-md-3 stat-item">
+          <span class="stat-number" data-count="1000">0</span>
+          <span>Happy Foodies</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-md-4">
+          <h5><i class="fas fa-utensils me-2"></i>MY StreetFood</h5>
+          <p>Your ultimate guide to authentic Malaysian street food experiences.</p>
+        </div>
+        <div class="col-md-2">
+          <h6>Quick Links</h6>
+          <ul class="list-unstyled">
+            <li><a href="#home" class="text-light">Home</a></li>
+            <li><a href="#features" class="text-light">Explore</a></li>
+            <li><a href="contact.html" class="text-light">Contact</a></li>
+          </ul>
+        </div>
+        <div class="col-md-3">
+          <h6>Explore</h6>
+          <ul class="list-unstyled">
+            <li><a href="#top-ranking" class="text-light">Top Ranking</a></li>
+            <li><a href="nearme.html" class="text-light">Near Me</a></li>
+            <li><a href="#" class="text-light" onclick="document.getElementById('streetFoodDropdown').click()">Street
+                Food</a></li>
+          </ul>
+        </div>
+        <div class="col-md-3">
+          <h6>Follow Us</h6>
+          <div class="social-links">
+            <a href="#" class="text-light me-3"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="text-light me-3"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="text-light me-3"><i class="fab fa-twitter"></i></a>
+          </div>
+        </div>
+      </div>
+      <hr class="my-4 border-secondary" />
+      <div class="text-center">
+        <p class="mb-0">&copy; <span id="year"></span> Malaysia Street Food Explorer. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- Auth Modal -->
+  <div class="modal fade" id="authModal" tabindex="-1" aria-hidden="true" aria-labelledby="authTitle">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <form id="authForm">
+          <div class="modal-header">
+            <h5 id="authTitle" class="modal-title">Login</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+
+          <div class="modal-body">
+            <!-- Username (login: 'Username or Email', signup: 'Username') -->
+            <div class="mb-3" id="rowUsername">
+              <label class="form-label" id="labelUsername">Username or Email</label>
+              <input id="authUsername" type="text" class="form-control" minlength="3" required>
+            </div>
+
+            <!-- Email (shown only in signup) -->
+            <div class="mb-3 d-none" id="rowEmail">
+              <label class="form-label">Email</label>
+              <input id="authEmail" type="email" class="form-control">
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Password</label>
+              <input id="authPassword" type="password" class="form-control" minlength="6" required>
+            </div>
+
+            <!-- Confirm password (signup only) -->
+            <div id="rowConfirm" class="mb-3 d-none">
+              <label class="form-label">Confirm Password</label>
+              <input id="authConfirm" type="password" class="form-control" minlength="6">
+            </div>
+
+            <div class="form-check mb-2">
+              <input id="authRemember" class="form-check-input" type="checkbox">
+              <label class="form-check-label" for="authRemember">Remember me</label>
+            </div>
+
+            <div id="authError" class="text-danger small d-none"></div>
+          </div>
+
+          <div class="modal-footer justify-content-between">
+            <div class="small">
+              <span id="authHint">No account?
+                <a href="#" id="linkToSignup">Sign up</a>
+              </span>
+            </div>
+            <button id="authSubmit" class="btn btn-primary" type="submit">Continue</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAB -->
+  <button class="floating-action" type="button" data-action="scrolltop" aria-label="Scroll to top">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+
+  <!-- Vendor JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+  <!-- App JS -->
+  <script src="main.js"></script>
+  <script src="JiaXuan/blog.js"></script>
+  <script src="JiaXuan/ranking.js"></script>
+  <script src="JiaXuan/about.js"></script>
+  <script src="JiaXuan/weather.js"></script>
+  <script src="ZhiEn/script.js"></script>
+  <script src="RouYan/food.js"></script>
+  <script src="RouYan/location-permission.js"></script>
+  <script src="RouYan/state.js"></script>
+</body>
+
+</html>

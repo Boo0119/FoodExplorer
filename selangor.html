@@ -1,0 +1,421 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Selangor Street Food</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="RouYan/state.css">
+  <link rel="stylesheet" href="RouYan/food.css">
+</head>
+
+<body data-state="selangor">
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg fixed-top navbar-light shadow-sm app-navbar">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <i class="fas fa-utensils me-2"></i>MY StreetFood
+      </a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <!-- LEFT: order you requested -->
+        <ul class="navbar-nav me-auto align-items-lg-center">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="ranking.html">Top Ranking</a></li>
+
+          <!-- Street Food dropdown -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="streetFoodDropdown" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">Street Food</a>
+            <ul class="dropdown-menu" aria-labelledby="streetFoodDropdown">
+              <li><a class="dropdown-item" href="state.html"><i
+                    class="fas fa-map-marker-alt me-2"></i>States</a></li>
+              <li><a class="dropdown-item" href="Race.html"><i class="fas fa-users me-2"></i>Races</a></li>
+            </ul>
+          </li>
+
+          <li class="nav-item"><a class="nav-link text-uppercase" href="blog.html">BLOG</a></li>
+          <li class="nav-item"><a class="nav-link" href="nearme.html">Near Me</a></li>
+          <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
+        </ul>
+
+        <div class="d-flex align-items-center gap-2">
+          <span id="navUser" class="nav-link text-muted small d-none">
+            Hello, <span id="usernameDisplay"></span>
+          </span>
+
+          <!-- Login Button (hidden if logged in) -->
+          <a id="btnLogin" href="login.html" class="btn btn-outline-primary px-3 rounded-pill text-decoration-none">
+            Login
+          </a>
+
+          <!-- Sign Up Button (hidden if logged in) -->
+          <a id="btnSignup" href="signup.html"
+            class="btn btn-primary px-3 rounded-pill text-decoration-none text-white">
+            Sign Up
+          </a>
+
+          <!-- Logout Button (shown if logged in) -->
+          <button id="btnLogout" type="button" class="btn btn-outline-secondary px-3 rounded-pill d-none">
+            Logout
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- Weather + Time (rightmost, inside collapse) -->
+    <div class="weather-time-box ms-auto">
+      <div id="local-time" class="small"></div>
+      <div id="local-weather" class="small"></div>
+    </div>
+  </nav>
+
+  <!-- Header -->
+  <header>
+    <h1>Selangor Street Food</h1>
+    <p>Discover the famous street foods of Selangor</p>
+    <a href="#search-section" class="btn">Start the Journey</a>
+  </header>
+
+  <!-- Search and Controls Section -->
+  <section id="search-section" class="search-controls-section">
+    <div class="search-container">
+      <!-- Search Bar -->
+      <div class="search-bar-container">
+        <div class="search-bar">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="search-input" placeholder="Search by name, ingredients, or description..." />
+          <button id="clear-search" class="clear-btn" style="display: none;">✕</button>
+        </div>
+        <div id="search-results" class="search-results" style="display: none;"></div>
+      </div>
+      <!-- Controls Row -->
+      <div class="controls-row">
+        <!-- Sort Controls -->
+        <div class="sort-container">
+          <span class="sort-label">Sort by:</span>
+          <button class="sort-btn" onclick="sortFoodItems('asc')">A-Z</button>
+          <button class="sort-btn" onclick="sortFoodItems('desc')">Z-A</button>
+          <button class="sort-btn reset-btn" onclick="resetOrder()">Original Order</button>
+        </div>
+        <!-- Favorites Button -->
+        <div class="favorites-container">
+          <button id="favorites-btn" class="favorites-btn">
+            <span class="heart-icon">❤️</span>
+            <span>My Favorites</span>
+            <span id="favorites-count" class="favorites-count">0</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Food Sections Container -->
+  <div id="food-container">
+    <!-- Apom Manis -->
+    <section id="apommanis" class="food-section" data-name="Apom Manis"
+      data-ingredients="rice flour,coconut milk,sugar,yeast,water">
+      <div class="slideshow" data-slideshow="apommanis">
+        <div class="slides">
+          <img src="Images/State Food/Selangor/apommanis1.jpg" class="active" alt="Apom Manis 1"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Selangor/apommanis2.jpg" alt="Apom Manis 2"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Selangor/apommanis3.jpg" alt="Apom Manis 3"
+            onclick="openImageModal(this.src, this.alt)">
+        </div>
+        <button class="prev" onclick="changeSlideshow('apommanis', -1)">❮</button>
+        <button class="next" onclick="changeSlideshow('apommanis', 1)">❯</button>
+        <div class="dots" id="dots-apommanis">
+          <span class="dot active" onclick="currentSlideshow('apommanis', 1)"></span>
+          <span class="dot" onclick="currentSlideshow('apommanis', 2)"></span>
+          <span class="dot" onclick="currentSlideshow('apommanis', 3)"></span>
+        </div>
+        <div class="zoom-icon">🔍</div>
+      </div>
+      <div class="food-details">
+        <div class="food-header">
+          <h2>Apom Manis 甜薄饼 ⭐⭐⭐⭐☆ (4.3/5)</h2>
+          <button class="favorite-btn" onclick="toggleFavorite('apommanis')" data-food-id="apommanis">
+            <span class="heart">🤍</span>
+          </button>
+        </div>
+        <p>Apom Manis is a thin and crispy pancake, slightly sweet, and often eaten as a light snack in Malaysia.</p>
+        <p><b>Normal Price:</b> RM 0.50 - RM 1.00 per piece</p>
+        <p><b>Popular in:</b> Selangor, Malaysia</p>
+        <p><b>Best Served With:</b> Tea or Coffee</p>
+        <a href="https://en.wikipedia.org/wiki/Appam" target="_blank" class="more-btn">More Info</a>
+      </div>
+      <div class="ingredients">
+        <h3>Ingredients:</h3>
+        <ul>
+          <li>Rice flour</li>
+          <li>Coconut milk</li>
+          <li>Sugar</li>
+          <li>Yeast</li>
+          <li>Water</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Claypot Chicken Rice -->
+    <section id="claypotchickenrice" class="food-section" data-name="Claypot Chicken Rice"
+      data-ingredients="rice,chicken,chinese sausage,soy sauce,ginger">
+      <div class="slideshow" data-slideshow="claypotchickenrice">
+        <div class="slides">
+          <img src="Images/State Food/Selangor/claypotchickenrice1.jpg" class="active" alt="Claypot Chicken Rice 1"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Selangor/claypotchickenrice2.jpg" alt="Claypot Chicken Rice 2"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Selangor/claypotchickenrice3.jpg" alt="Claypot Chicken Rice 3"
+            onclick="openImageModal(this.src, this.alt)">
+        </div>
+        <button class="prev" onclick="changeSlideshow('claypotchickenrice', -1)">❮</button>
+        <button class="next" onclick="changeSlideshow('claypotchickenrice', 1)">❯</button>
+        <div class="dots" id="dots-claypotchickenrice">
+          <span class="dot active" onclick="currentSlideshow('claypotchickenrice', 1)"></span>
+          <span class="dot" onclick="currentSlideshow('claypotchickenrice', 2)"></span>
+          <span class="dot" onclick="currentSlideshow('claypotchickenrice', 3)"></span>
+        </div>
+        <div class="zoom-icon">🔍</div>
+      </div>
+      <div class="food-details">
+        <div class="food-header">
+          <h2>Claypot Chicken Rice 砂锅鸡饭 ⭐⭐⭐⭐☆ (4.5/5)</h2>
+          <button class="favorite-btn" onclick="toggleFavorite('claypotchickenrice')" data-food-id="claypotchickenrice">
+            <span class="heart">🤍</span>
+          </button>
+        </div>
+        <p>Claypot Chicken Rice is a flavorful rice dish cooked with marinated chicken, Chinese sausages, and soy sauce
+          in a claypot.</p>
+        <p><b>Normal Price:</b> RM 8.00 - RM 15.00</p>
+        <p><b>Popular in:</b> Selangor, Malaysia</p>
+        <p><b>Best Served With:</b> Salted fish</p>
+        <a href="https://en.wikipedia.org/wiki/Claypot_chicken_rice" target="_blank" class="more-btn">More Info</a>
+      </div>
+      <div class="ingredients">
+        <h3>Ingredients:</h3>
+        <ul>
+          <li>Rice</li>
+          <li>Chicken</li>
+          <li>Chinese sausage</li>
+          <li>Soy sauce</li>
+          <li>Ginger</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Ramly Burger -->
+    <section id="ramlyburger" class="food-section" data-name="Ramly Burger"
+      data-ingredients="beef patty,chicken patty,burger bun,egg,cheese,chili sauce,mayonnaise">
+      <div class="slideshow" data-slideshow="ramlyburger">
+        <div class="slides">
+          <img src="Images/State Food/Selangor/ramlyburger1.jpg" class="active" alt="Ramly Burger 1"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Selangor/ramlyburger2.jpg" alt="Ramly Burger 2"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Selangor/ramlyburger3.jpg" alt="Ramly Burger 3"
+            onclick="openImageModal(this.src, this.alt)">
+        </div>
+        <button class="prev" onclick="changeSlideshow('ramlyburger', -1)">❮</button>
+        <button class="next" onclick="changeSlideshow('ramlyburger', 1)">❯</button>
+        <div class="dots" id="dots-ramlyburger">
+          <span class="dot active" onclick="currentSlideshow('ramlyburger', 1)"></span>
+          <span class="dot" onclick="currentSlideshow('ramlyburger', 2)"></span>
+          <span class="dot" onclick="currentSlideshow('ramlyburger', 3)"></span>
+        </div>
+        <div class="zoom-icon">🔍</div>
+      </div>
+      <div class="food-details">
+        <div class="food-header">
+          <h2>Ramly Burger 兰利汉堡 ⭐⭐⭐⭐☆ (4.7/5)</h2>
+          <button class="favorite-btn" onclick="toggleFavorite('ramlyburger')" data-food-id="ramlyburger">
+            <span class="heart">🤍</span>
+          </button>
+        </div>
+        <p>The Ramly Burger is a popular Malaysian street burger, often wrapped with an egg omelette and filled with
+          sauces.</p>
+        <p><b>Normal Price:</b> RM 4.00 - RM 8.00</p>
+        <p><b>Popular in:</b> Selangor, Malaysia</p>
+        <p><b>Best Served With:</b> Chili sauce and mayonnaise</p>
+        <a href="https://en.wikipedia.org/wiki/Ramly_Burger" target="_blank" class="more-btn">More Info</a>
+      </div>
+      <div class="ingredients">
+        <h3>Ingredients:</h3>
+        <ul>
+          <li>Beef or chicken patty</li>
+          <li>Burger bun</li>
+          <li>Egg</li>
+          <li>Cheese</li>
+          <li>Chili sauce & mayonnaise</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Satay -->
+    <section id="satay" class="food-section" data-name="Satay"
+      data-ingredients="chicken,beef,lamb,bamboo skewers,spices,peanut sauce,rice cakes">
+      <div class="slideshow" data-slideshow="satay">
+        <div class="slides">
+          <img src="Images/State Food/Selangor/satay1.jpg" class="active" alt="Satay 1"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Selangor/satay2.jpg" alt="Satay 2" onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Selangor/satay3.jpg" alt="Satay 3" onclick="openImageModal(this.src, this.alt)">
+        </div>
+        <button class="prev" onclick="changeSlideshow('satay', -1)">❮</button>
+        <button class="next" onclick="changeSlideshow('satay', 1)">❯</button>
+        <div class="dots" id="dots-satay">
+          <span class="dot active" onclick="currentSlideshow('satay', 1)"></span>
+          <span class="dot" onclick="currentSlideshow('satay', 2)"></span>
+          <span class="dot" onclick="currentSlideshow('satay', 3)"></span>
+        </div>
+        <div class="zoom-icon">🔍</div>
+      </div>
+      <div class="food-details">
+        <div class="food-header">
+          <h2>Satay 沙爹 ⭐⭐⭐⭐⭐ (4.8/5)</h2>
+          <button class="favorite-btn" onclick="toggleFavorite('satay')" data-food-id="satay">
+            <span class="heart">🤍</span>
+          </button>
+        </div>
+        <p>Satay consists of skewered and grilled meat, usually served with peanut sauce, rice cakes, and cucumber.</p>
+        <p><b>Normal Price:</b> RM 1.00 - RM 2.00 per stick</p>
+        <p><b>Popular in:</b> Selangor, Malaysia</p>
+        <p><b>Best Served With:</b> Peanut sauce and ketupat</p>
+        <a href="https://en.wikipedia.org/wiki/Satay" target="_blank" class="more-btn">More Info</a>
+      </div>
+      <div class="ingredients">
+        <h3>Ingredients:</h3>
+        <ul>
+          <li>Chicken / Beef / Lamb</li>
+          <li>Bamboo skewers</li>
+          <li>Spices & herbs</li>
+          <li>Peanut sauce</li>
+          <li>Rice cakes</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Yong Tau Foo -->
+    <section id="yongtaufoo" class="food-section" data-name="Yong Tau Foo"
+      data-ingredients="tofu,fish paste,vegetables,soy sauce,soup stock">
+      <div class="slideshow" data-slideshow="yongtaufoo">
+        <div class="slides">
+          <img src="Images/State Food/Selangor/yongtaufoo1.jpg" class="active" alt="Yong Tau Foo 1"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Selangor/yongtaufoo2.jpg" alt="Yong Tau Foo 2"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Selangor/yongtaufoo3.jpg" alt="Yong Tau Foo 3"
+            onclick="openImageModal(this.src, this.alt)">
+        </div>
+        <button class="prev" onclick="changeSlideshow('yongtaufoo', -1)">❮</button>
+        <button class="next" onclick="changeSlideshow('yongtaufoo', 1)">❯</button>
+        <div class="dots" id="dots-yongtaufoo">
+          <span class="dot active" onclick="currentSlideshow('yongtaufoo', 1)"></span>
+          <span class="dot" onclick="currentSlideshow('yongtaufoo', 2)"></span>
+          <span class="dot" onclick="currentSlideshow('yongtaufoo', 3)"></span>
+        </div>
+        <div class="zoom-icon">🔍</div>
+      </div>
+      <div class="food-details">
+        <div class="food-header">
+          <h2>Yong Tau Foo 酿豆腐 ⭐⭐⭐⭐☆ (4.4/5)</h2>
+          <button class="favorite-btn" onclick="toggleFavorite('yongtaufoo')" data-food-id="yongtaufoo">
+            <span class="heart">🤍</span>
+          </button>
+        </div>
+        <p>Yong Tau Foo is a dish of tofu and vegetables stuffed with fish paste, served in soup or deep-fried with
+          sauce.</p>
+        <p><b>Normal Price:</b> RM 1.00 - RM 3.00 per piece</p>
+        <p><b>Popular in:</b> Selangor, Malaysia</p>
+        <p><b>Best Served With:</b> Chili sauce or sweet bean sauce</p>
+        <a href="https://en.wikipedia.org/wiki/Yong_tau_foo" target="_blank" class="more-btn">More Info</a>
+      </div>
+      <div class="ingredients">
+        <h3>Ingredients:</h3>
+        <ul>
+          <li>Tofu</li>
+          <li>Fish paste</li>
+          <li>Vegetables</li>
+          <li>Soy sauce</li>
+          <li>Soup stock</li>
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Auth Modal -->
+  <div class="modal fade" id="authModal" tabindex="-1" aria-hidden="true" aria-labelledby="authTitle">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <form id="authForm">
+          <div class="modal-header">
+            <h5 id="authTitle" class="modal-title">Login</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+
+          <div class="modal-body">
+            <!-- Username (login: 'Username or Email', signup: 'Username') -->
+            <div class="mb-3" id="rowUsername">
+              <label class="form-label" id="labelUsername">Username or Email</label>
+              <input id="authUsername" type="text" class="form-control" minlength="3" required>
+            </div>
+
+            <!-- Email (shown only in signup) -->
+            <div class="mb-3 d-none" id="rowEmail">
+              <label class="form-label">Email</label>
+              <input id="authEmail" type="email" class="form-control">
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Password</label>
+              <input id="authPassword" type="password" class="form-control" minlength="6" required>
+            </div>
+
+            <!-- Confirm password (signup only) -->
+            <div id="rowConfirm" class="mb-3 d-none">
+              <label class="form-label">Confirm Password</label>
+              <input id="authConfirm" type="password" class="form-control" minlength="6">
+            </div>
+
+            <div class="form-check mb-2">
+              <input id="authRemember" class="form-check-input" type="checkbox">
+              <label class="form-check-label" for="authRemember">Remember me</label>
+            </div>
+
+            <div id="authError" class="text-danger small d-none"></div>
+          </div>
+
+          <div class="modal-footer justify-content-between">
+            <div class="small">
+              <span id="authHint">No account?
+                <a href="#" id="linkToSignup">Sign up</a>
+              </span>
+            </div>
+            <button id="authSubmit" class="btn btn-primary" type="submit">Continue</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- JS -->
+  <script src="RouYan/location-permission.js"></script>
+  <script src="RouYan/state.js"></script>
+  <script src="main.js"></script>
+  <script src="RouYan/food.js"></script>
+  <script src="JiaXuan/weather.js"></script>
+
+</body>
+
+</html>

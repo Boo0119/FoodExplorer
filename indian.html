@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Street Food</title>
+      <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="ZhiEn/zhien.css">
+ </head>
+<body>
+ <!-- Header Section -->
+     <!-- Navigation -->
+<nav class="navbar navbar-expand-lg fixed-top navbar-light shadow-sm app-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="#home">
+      <i class="fas fa-utensils me-2"></i>MY StreetFood
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <!-- LEFT: order you requested -->
+      <ul class="navbar-nav me-auto align-items-lg-center">
+        <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="#top-ranking">Top Ranking</a></li>
+
+        <!-- Street Food dropdown -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="streetFoodDropdown" role="button"
+             data-bs-toggle="dropdown" aria-expanded="false">Street Food</a>
+          <ul class="dropdown-menu" aria-labelledby="streetFoodDropdown">
+            <li><a class="dropdown-item" href="search-states.html"><i class="fas fa-map-marker-alt me-2"></i>States</a></li>
+            <li><a class="dropdown-item" href="search-races.html"><i class="fas fa-users me-2"></i>Races</a></li>
+          </ul>
+        </li>
+
+        <li class="nav-item"><a class="nav-link text-uppercase" href="blog.html">BLOG</a></li>
+        <li class="nav-item"><a class="nav-link" href="nearme.html">Near Me</a></li>
+        <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
+      </ul>
+
+      <!-- RIGHT: auth controls -->
+      <div class="d-flex align-items-center gap-2">
+        <button id="btnLogin"  type="button" class="btn btn-outline-primary px-3 rounded-pill">Login</button>
+        <button id="btnSignup" type="button" class="btn btn-primary px-3 rounded-pill">Sign Up</button>
+        <button id="btnLogout" type="button" class="btn btn-outline-secondary px-3 rounded-pill d-none">Logout</button>
+        <span id="navUser" class="nav-link text-muted small d-none"></span>
+      </div>
+    </div>
+      <div class="weather-time-box ms-auto">
+            <div id="local-time" class="small"></div>
+            <div id="local-weather" class="small"></div>
+        </div>
+  </div>
+</nav> 
+ <div class="font-controls" style="position: fixed; left: 20px; bottom: 50px; z-index: 9999; display:flex; gap:8px;">
+        <button type="button" id="increaseFont" onclick="changeFontSize(2)">A+</button>
+        <button type="button" id="decreaseFont" onclick="changeFontSize(-2)">A-</button>
+        <button id="themeToggle" class="btn btn-sm btn-outline-secondary">🌙</button>
+    </div>
+    <!-- Main Title Section -->
+<section class="race-section"
+        style="background-image: linear-gradient(rgba(14, 14, 14, 0.5), rgba(0,0,0,0.5)), 
+   url('/indianfood/indianfood.jpg');">
+  
+        <div class="race-content">
+    <div class="race_journey-text">
+      <h1>Indian Street Food</h1>
+            <p>Indian street food in Malaysia is vibrant, spicy, and full of character. It celebrates strong flavors, aromatic spices, and hearty cooking, offering a taste of togetherness in every bite.</p>
+      <button id="race_scrollButton" onclick="race_scrollToContent()">Start the Journey</button>
+    </div>
+
+        <!-- Rotating Food Image (Right side) -->
+        <div class="race_journey-image">
+            <img src="/indianfood/IndianRotate.jpg" alt="Chinese Street Food" class="race_rotating-food-image">
+        </div>
+    </section>
+    <!-- Food 1: Vadai (Vada) -->
+    <div id="foodContent" class="food-info">
+        <div class="carousel-container">
+            <button class="carousel-arrow left-arrow" onclick="changeImage('vada', -1)">&#10094;</button>
+            <div class="carousel" id="vada">
+                <img src="/indianfood/Vada1.jpg" alt="Vadai" class="carousel-image" onclick="openFullscreen('vada', 0)">
+                <img src="/indianfood/Vada2.jpg" alt="Vadai 2" class="carousel-image" onclick="openFullscreen('vada', 1)">
+                <img src="/indianfood/Vada3.jpg" alt="Vadai 3" class="carousel-image" onclick="openFullscreen('vada', 2)">
+            </div>
+            <div class="carousel-dots">
+                <span class="dot" onclick="currentImage('vada', 0)"></span>
+                <span class="dot" onclick="currentImage('vada', 1)"></span>
+                <span class="dot" onclick="currentImage('vada', 2)"></span>
+            </div>
+            <button class="carousel-arrow right-arrow" onclick="changeImage('vada', 1)">&#10095;</button>
+        </div>
+
+        <div class="food-description">
+            <h2>Vadai 瓦达
+                <span class="rating-symbol">★★★★★</span>
+                <span class="rating-value">(5/5)</span>
+            </h2>
+            <p>Vadai is a popular Indian snack made from lentils or chickpeas that are ground into a paste, shaped into a doughnut-like form, and deep-fried until golden and crispy. It’s often served with coconut chutney or sambar (lentil stew).
+            <span class="translate-link" data-food-id="vada" onclick="toggleTranslation('vada')">[Translate]</span>
+            </p>
+
+            <div id="translation-vada" class="translation-container"></div>
+            <div class="price-details">
+                <p><strong>Normal Price:</strong> RM 2.00 - RM 4.00</p>
+                <p><strong>Popular In:</strong> Kuala Lumpur, Malaysia</p>
+                <p><strong>Best Served With:</strong> Coconut chutney or sambar</p>
+            </div>
+            <button onclick="window.open('https://rakskitchen.net/medhu-vadai-ulundu-vadai-recipe-with-video/', '_blank')">More Info</button>
+        </div>
+
+        <div class="ingredients-tips">
+            <h3>Ingredients:</h3>
+            <ul>
+                <li>Lentils or chickpeas</li>
+                <li>Onions</li>
+                <li>Chili</li>
+                <li>Curry leaves</li>
+                <li>Mustard seeds</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Food 2: Murtabak -->
+    <div id="foodContent" class="food-info">
+        <div class="carousel-container">
+            <button class="carousel-arrow left-arrow" onclick="changeImage('murtabak', -1)">&#10094;</button>
+            <div class="carousel" id="murtabak">
+                <img src="/indianfood/Murtabak1.jpg" alt="Murtabak" class="carousel-image" onclick="openFullscreen('murtabak', 0)">
+                <img src="/indianfood/Murtabak2.jpg" alt="Murtabak 2" class="carousel-image" onclick="openFullscreen('murtabak', 1)">
+                <img src="/indianfood/Murtabak3.jpg" alt="Murtabak 3" class="carousel-image" onclick="openFullscreen('murtabak', 2)">
+            </div>
+            <div class="carousel-dots">
+                <span class="dot" onclick="currentImage('murtabak', 0)"></span>
+                <span class="dot" onclick="currentImage('murtabak', 1)"></span>
+                <span class="dot" onclick="currentImage('murtabak', 2)"></span>
+            </div>
+            <button class="carousel-arrow right-arrow" onclick="changeImage('murtabak', 1)">&#10095;</button>
+        </div>
+
+        <div class="food-description">
+            <h2>Murtabak 印度馅料煎饼
+                <span class="rating-symbol">★★★★☆</span>
+                <span class="rating-value">(4/5)</span>
+            </h2>
+            <p>Murtabak is a stuffed savory pancake that is filled with minced meat, usually beef or chicken, and sometimes with egg and onions. It is pan-fried to a crispy texture and is usually served with a side of curry sauce.
+            <span class="translate-link" data-food-id="murtabak" onclick="toggleTranslation('murtabak')">[Translate]</span>
+            </p>
+
+            <div id="translation-murtabak" class="translation-container"></div>
+            <div class="price-details">
+                <p><strong>Normal Price:</strong> RM 6.00 - RM 10.00</p>
+                <p><strong>Popular In:</strong> Johor, Malaysia</p>
+                <p><strong>Best Served With:</strong> Curry sauce</p>
+            </div>
+            <button onclick="window.open('https://lizziesrecipes.wordpress.com/2020/07/02/malaysian-style-murtabak/', '_blank')">More Info</button>
+        </div>
+
+        <div class="ingredients-tips">
+            <h3>Ingredients:</h3>
+            <ul>
+                <li>Minced beef or chicken</li>
+                <li>Eggs</li>
+                <li>Onions</li>
+                <li>Wheat flour</li>
+                <li>Spices</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Food 3: Teh Tarik -->
+    <div id="foodContent" class="food-info">
+        <div class="carousel-container">
+            <button class="carousel-arrow left-arrow" onclick="changeImage('teh-tarik', -1)">&#10094;</button>
+            <div class="carousel" id="teh-tarik">
+                <img src="/indianfood/TehTarik1.jpg" alt="Teh Tarik" class="carousel-image" onclick="openFullscreen('teh-tarik', 0)">
+                <img src="/indianfood/TehTarik2.jpg" alt="Teh Tarik 2" class="carousel-image" onclick="openFullscreen('teh-tarik', 1)">
+                <img src="/indianfood/TehTarik3.jpg" alt="Teh Tarik 3" class="carousel-image" onclick="openFullscreen('teh-tarik', 2)">
+            </div>
+            <div class="carousel-dots">
+                <span class="dot" onclick="currentImage('teh-tarik', 0)"></span>
+                <span class="dot" onclick="currentImage('teh-tarik', 1)"></span>
+                <span class="dot" onclick="currentImage('teh-tarik', 2)"></span>
+            </div>
+            <button class="carousel-arrow right-arrow" onclick="changeImage('teh-tarik', 1)">&#10095;</button>
+        </div>
+
+        <div class="food-description">
+            <h2>Teh Tarik 拉茶
+                <span class="rating-symbol">★★★★★</span>
+                <span class="rating-value">(5/5)</span>
+            </h2>
+            <p>Teh Tarik is a popular Malaysian Indian tea that is brewed with strong black tea and sweetened condensed milk, then “pulled” to create a frothy texture. It is often served in local eateries and is enjoyed throughout the day.
+            <span class="translate-link" data-food-id="teh-tarik" onclick="toggleTranslation('teh-tarik')">[Translate]</span>
+            </p>
+
+            <div id="translation-teh-tarik" class="translation-container"></div>
+            <div class="price-details">
+                <p><strong>Normal Price:</strong> RM 2.00 - RM 4.00</p>
+                <p><strong>Popular In:</strong> Penang, Malaysia</p>
+                <p><strong>Best Served With:</strong> Roti Canai or Murtabak</p>
+            </div>
+            <button onclick="window.open('https://www.singaporeanmalaysianrecipes.com/teh-tarik-frothy-milky-tea/', '_blank')">More Info</button>
+        </div>
+
+        <div class="ingredients-tips">
+            <h3>Ingredients:</h3>
+            <ul>
+                <li>Black tea</li>
+                <li>Sweetened condensed milk</li>
+            </ul>
+        </div>
+    </div>
+
+<div id="foodContent" class="food-info">
+        <div class="carousel-container">
+            <button class="carousel-arrow left-arrow" onclick="changeImage('banana-leaf-rice', -1)">&#10094;</button>
+            <div class="carousel" id="banana-leaf-rice">
+                <img src="/indianfood/BananaLeafRice1.jpg" alt="Banana Leaf Rice" class="carousel-image" onclick="openFullscreen('banana-leaf-rice', 0)">
+                <img src="/indianfood/BananaLeafRice2.jpg" alt="Banana Leaf Rice 2" class="carousel-image" onclick="openFullscreen('banana-leaf-rice', 1)">
+                <img src="/indianfood/BananaLeafRice3.jpg" alt="Banana Leaf Rice 3" class="carousel-image" onclick="openFullscreen('banana-leaf-rice', 2)">
+            </div>
+            <div class="carousel-dots">
+                <span class="dot" onclick="currentImage('banana-leaf-rice', 0)"></span>
+                <span class="dot" onclick="currentImage('banana-leaf-rice', 1)"></span>
+                <span class="dot" onclick="currentImage('banana-leaf-rice', 2)"></span>
+            </div>
+            <button class="carousel-arrow right-arrow" onclick="changeImage('banana-leaf-rice', 1)">&#10095;</button>
+        </div>
+
+        <div class="food-description">
+            <h2>Banana Leaf Rice 蕉叶饭
+                <span class="rating-symbol">★★★★☆</span>
+                <span class="rating-value">(4/5)</span>
+            </h2>
+            <p>Banana Leaf Rice is a traditional South Indian dish where rice and various curries, pickles, and vegetables are served on a banana leaf. It is commonly eaten with your hands, allowing the flavors to mix together.
+            <span class="translate-link" data-food-id="banana-leaf-rice" onclick="toggleTranslation('banana-leaf-rice')">[Translate]</span>
+            </p>
+
+            <div id="translation-banana-leaf-rice" class="translation-container"></div>
+            <div class="price-details">
+                <p><strong>Normal Price:</strong> RM 7.00 - RM 12.00</p>
+                <p><strong>Popular In:</strong> Selangor, Malaysia</p>
+                <p><strong>Best Served With:</strong> Sambar, chutney</p>
+            </div>
+            <button onclick="window.open('https://medium.com/@chrislimatwork/banana-leaf-rice-c0ecdf2c391f', '_blank')">More Info</button>
+        </div>
+
+        <div class="ingredients-tips">
+            <h3>Ingredients:</h3>
+            <ul>
+                <li>Rice</li>
+                <li>Sambar (lentil curry)</li>
+                <li>Pickles</li>
+                <li>Vegetables</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Food 5: Pani Puri (Gol Gappa) -->
+    <div id="foodContent" class="food-info">
+        <div class="carousel-container">
+            <button class="carousel-arrow left-arrow" onclick="changeImage('pani-puri', -1)">&#10094;</button>
+            <div class="carousel" id="pani-puri">
+                <img src="/indianfood/PaniPuri1.jpg" alt="Pani Puri" class="carousel-image" onclick="openFullscreen('pani-puri', 0)">
+                <img src="/indianfood/PaniPuri2.jpg" alt="Pani Puri 2" class="carousel-image" onclick="openFullscreen('pani-puri', 1)">
+                <img src="/indianfood/PaniPuri3.jpg" alt="Pani Puri 3" class="carousel-image" onclick="openFullscreen('pani-puri', 2)">
+            </div>
+            <div class="carousel-dots">
+                <span class="dot" onclick="currentImage('pani-puri', 0)"></span>
+                <span class="dot" onclick="currentImage('pani-puri', 1)"></span>
+                <span class="dot" onclick="currentImage('pani-puri', 2)"></span>
+            </div>
+            <button class="carousel-arrow right-arrow" onclick="changeImage('pani-puri', 1)">&#10095;</button>
+        </div>
+
+        <div class="food-description">
+            <h2>Pani Puri 巴尼布里
+                <span class="rating-symbol">★★★★★</span>
+                <span class="rating-value">(5/5)</span>
+            </h2>
+            <p>Pani Puri is a popular street snack consisting of crispy hollow puris filled with a spicy and tangy water (pani), along with potatoes, chickpeas, and tamarind chutney. It is a favorite street food in India and Malaysia alike.
+            <span class="translate-link" data-food-id="pani-puri" onclick="toggleTranslation('pani-puri')">[Translate]</span>
+            </p>
+
+            <div id="translation-pani-puri" class="translation-container"></div>
+            <div class="price-details">
+                <p><strong>Normal Price:</strong> RM 4.00 - RM 8.00</p>
+                <p><strong>Popular In:</strong> Perak & Kuala Lumpur, Malaysia</p>
+                <p><strong>Best Served With:</strong> Mint chutney</p>
+            </div>
+            <button onclick="window.open('https://www.vegrecipesofindia.com/pani-puri-recipe-mumbai-pani-puri-recipe/', '_blank')">More Info</button>
+        </div>
+
+        <div class="ingredients-tips">
+            <h3>Ingredients:</h3>
+            <ul>
+                <li>Semolina (for Puri)</li>
+                <li>Chickpeas</li>
+                <li>Potatoes</li>
+                <li>Spicy tamarind water</li>
+                <li>Chili</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Food 6: Chapati -->
+    <div id="foodContent" class="food-info">
+        <div class="carousel-container">
+            <button class="carousel-arrow left-arrow" onclick="changeImage('chapati', -1)">&#10094;</button>
+            <div class="carousel" id="chapati">
+                <img src="/indianfood/Chapati1.jpg" alt="Chapati" class="carousel-image" onclick="openFullscreen('chapati', 0)">
+                <img src="/indianfood/Chapati2.jpg" alt="Chapati 2" class="carousel-image" onclick="openFullscreen('chapati', 1)">
+                <img src="/indianfood/Chapati3.jpg" alt="Chapati 3" class="carousel-image" onclick="openFullscreen('chapati', 2)">
+            </div>
+            <div class="carousel-dots">
+                <span class="dot" onclick="currentImage('chapati', 0)"></span>
+                <span class="dot" onclick="currentImage('chapati', 1)"></span>
+                <span class="dot" onclick="currentImage('chapati', 2)"></span>
+            </div>
+            <button class="carousel-arrow right-arrow" onclick="changeImage('chapati', 1)">&#10095;</button>
+        </div>
+
+        <div class="food-description">
+            <h2>Chapati 洽帕提
+                <span class="rating-symbol">★★★★☆</span>
+                <span class="rating-value">(4/5)</span>
+            </h2>
+            <p>Chapati is an unleavened flatbread made from whole wheat flour. It is soft, round, and thin, and is often served as an accompaniment to curries or vegetable dishes in Indian meals.
+            <span class="translate-link" data-food-id="chapati" onclick="toggleTranslation('chapati')">[Translate]</span>
+            </p>
+
+            <div id="translation-chapati" class="translation-container"></div>
+            <div class="price-details">
+                <p><strong>Normal Price:</strong> RM 2.00 - RM 4.00</p>
+                <p><strong>Popular In:</strong> Kuala Lumpur, Malaysia</p>
+                <p><strong>Best Served With:</strong> Curry or dal</p>
+            </div>
+            <button onclick="window.open('https://www.britannica.com/topic/chapati', '_blank')">More Info</button>
+        </div>
+
+        <div class="ingredients-tips">
+            <h3>Ingredients:</h3>
+            <ul>
+                <li>Whole wheat flour</li>
+                <li>Water</li>
+                <li>Salt</li>
+            </ul>
+        </div>
+    </div>
+    
+
+           <!-- Food 7: Samosa -->
+    <div id="foodContent" class="food-info">
+        <div class="carousel-container">
+            <button class="carousel-arrow left-arrow" onclick="changeImage('samosa', -1)">&#10094;</button>
+            <div class="carousel" id="samosa">
+                <img src="/indianfood/Samosa1.jpg" alt="Samosa" class="carousel-image" onclick="openFullscreen('samosa', 0)">
+                <img src="/indianfood/Samosa2.jpg" alt="Samosa 2" class="carousel-image" onclick="openFullscreen('samosa', 1)">
+                <img src="/indianfood/Samosa3.jpg" alt="Samosa 3" class="carousel-image" onclick="openFullscreen('samosa', 2)">
+            </div>
+            <div class="carousel-dots">
+                <span class="dot" onclick="currentImage('samosa', 0)"></span>
+                <span class="dot" onclick="currentImage('samosa', 1)"></span>
+                <span class="dot" onclick="currentImage('samosa', 2)"></span>
+            </div>
+            <button class="carousel-arrow right-arrow" onclick="changeImage('samosa', 1)">&#10095;</button>
+        </div>
+
+        <div class="food-description">
+            <h2>Samosa 萨莫萨
+                <span class="rating-symbol">★★★★☆</span>
+                <span class="rating-value">(4/5)</span>
+            </h2>
+            <p>Samosa is a deep-fried pastry filled with spiced potatoes, peas, or meat such as chicken or lamb. It is commonly served with chutney and is a popular snack or appetizer at Indian eateries.
+            <span class="translate-link" data-food-id="samosa" onclick="toggleTranslation('samosa')">[Translate]</span>
+            </p>
+
+            <div id="translation-samosa" class="translation-container"></div>
+            <div class="price-details">
+                <p><strong>Normal Price:</strong> RM 3.00 - RM 6.00</p>
+                <p><strong>Popular In:</strong> Penang & Kuala Lumpur, Malaysia</p>
+                <p><strong>Best Served With:</strong> Mint chutney or tamarind sauce</p>
+            </div>
+            <button onclick="window.open('https://sukhis.com/what-is-a-samosa/', '_blank')">More Info</button>
+        </div>
+
+        <div class="ingredients-tips">
+            <h3>Ingredients:</h3>
+            <ul>
+                <li>Spiced potatoes</li>
+                <li>Peas</li>
+                <li>Chicken or lamb (optional)</li>
+                <li>Pastry dough</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Food 8: Idli -->
+    <div id="foodContent" class="food-info">
+        <div class="carousel-container">
+            <button class="carousel-arrow left-arrow" onclick="changeImage('idli', -1)">&#10094;</button>
+            <div class="carousel" id="idli">
+                <img src="/indianfood/Idli1.jpg" alt="Idli" class="carousel-image" onclick="openFullscreen('idli', 0)">
+                <img src="/indianfood/Idli2.jpg" alt="Idli 2" class="carousel-image" onclick="openFullscreen('idli', 1)">
+                <img src="/indianfood/Idli3.jpg" alt="Idli 3" class="carousel-image" onclick="openFullscreen('idli', 2)">
+            </div>
+            <div class="carousel-dots">
+                <span class="dot" onclick="currentImage('idli', 0)"></span>
+                <span class="dot" onclick="currentImage('idli', 1)"></span>
+                <span class="dot" onclick="currentImage('idli', 2)"></span>
+            </div>
+            <button class="carousel-arrow right-arrow" onclick="changeImage('idli', 1)">&#10095;</button>
+        </div>
+
+        <div class="food-description">
+            <h2>Idli 蒸米浆糕
+                <span class="rating-symbol">★★★★★</span>
+                <span class="rating-value">(5/5)</span>
+            </h2>
+            <p>Idli is a steamed rice cake made from fermented rice and urad dal (black lentils). It is typically served with sambar (lentil curry) and coconut chutney, making it a light and nutritious breakfast dish popular in South India and Malaysia.
+            <span class="translate-link" data-food-id="idli" onclick="toggleTranslation('idli')">[Translate]</span>
+            </p>
+
+            <div id="translation-idli" class="translation-container"></div>
+            <div class="price-details">
+                <p><strong>Normal Price:</strong> RM 5.00 - RM 8.00</p>
+                <p><strong>Popular In:</strong> Kuala Lumpur, Malaysia</p>
+                <p><strong>Best Served With:</strong> Sambar, coconut chutney</p>
+            </div>
+            <button onclick="window.open('https://www.vegrecipesofindia.com/idli-recipe-how-to-make-soft-idlis/', '_blank')">More Info</button>
+        </div>
+
+        <div class="ingredients-tips">
+            <h3>Ingredients:</h3>
+            <ul>
+                <li>Rice</li>
+                <li>Urad dal (black lentils)</li>
+                <li>Coconut chutney</li>
+                <li>Sambar (lentil curry)</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Food 9: Kothu Roti -->
+    <div id="foodContent" class="food-info">
+        <div class="carousel-container">
+            <button class="carousel-arrow left-arrow" onclick="changeImage('kothu-roti', -1)">&#10094;</button>
+            <div class="carousel" id="kothu-roti">
+                <img src="/indianfood/KothuRoti1.jpg" alt="Kothu Roti" class="carousel-image" onclick="openFullscreen('kothu-roti', 0)">
+                <img src="/indianfood/KothuRoti2.jpg" alt="Kothu Roti 2" class="carousel-image" onclick="openFullscreen('kothu-roti', 1)">
+                <img src="/indianfood/KothuRoti3.jpg" alt="Kothu Roti 3" class="carousel-image" onclick="openFullscreen('kothu-roti', 2)">
+            </div>
+            <div class="carousel-dots">
+                <span class="dot" onclick="currentImage('kothu-roti', 0)"></span>
+                <span class="dot" onclick="currentImage('kothu-roti', 1)"></span>
+                <span class="dot" onclick="currentImage('kothu-roti', 2)"></span>
+            </div>
+            <button class="carousel-arrow right-arrow" onclick="changeImage('kothu-roti', 1)">&#10095;</button>
+        </div>
+
+        <div class="food-description">
+            <h2>Kothu Roti 碎面饼
+                <span class="rating-symbol">★★★★☆</span>
+                <span class="rating-value">(4/5)</span>
+            </h2>
+            <p>Kothu Roti is a popular street food made by chopping up roti canai and stir-frying it with curry, vegetables, and sometimes meat like chicken or beef. It's a savory, spicy dish enjoyed as a filling meal or late-night snack.
+            <span class="translate-link" data-food-id="kothu-roti" onclick="toggleTranslation('kothu-roti')">[Translate]</span>
+            </p>
+
+            <div id="translation-kothu-roti" class="translation-container"></div>
+            <div class="price-details">
+                <p><strong>Normal Price:</strong> RM 5.00 - RM 8.00</p>
+                <p><strong>Popular In:</strong> Kuala Lumpur, Malaysia</p>
+                <p><strong>Best Served With:</strong> Chicken or beef curry</p>
+            </div>
+            <button onclick="window.open('https://adventuresofmidlife.com/the-pleasure-of-kothu-roti/', '_blank')">More Info</button>
+        </div>
+
+        <div class="ingredients-tips">
+            <h3>Ingredients:</h3>
+            <ul>
+                <li>Roti canai</li>
+                <li>Curry</li>
+                <li>Vegetables</li>
+                <li>Chicken or beef (optional)</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Food 10: Dosa -->
+    <div id="foodContent" class="food-info">
+        <div class="carousel-container">
+            <button class="carousel-arrow left-arrow" onclick="changeImage('dosa', -1)">&#10094;</button>
+            <div class="carousel" id="dosa">
+                <img src="/indianfood/Dosa1.jpg" alt="Dosa" class="carousel-image" onclick="openFullscreen('dosa', 0)">
+                <img src="/indianfood/Dosa2.jpg" alt="Dosa 2" class="carousel-image" onclick="openFullscreen('dosa', 1)">
+                <img src="/indianfood/Dosa3.jpg" alt="Dosa 3" class="carousel-image" onclick="openFullscreen('dosa', 2)">
+            </div>
+            <div class="carousel-dots">
+                <span class="dot" onclick="currentImage('dosa', 0)"></span>
+                <span class="dot" onclick="currentImage('dosa', 1)"></span>
+                <span class="dot" onclick="currentImage('dosa', 2)"></span>
+            </div>
+            <button class="carousel-arrow right-arrow" onclick="changeImage('dosa', 1)">&#10095;</button>
+        </div>
+
+        <div class="food-description">
+            <h2>Dosa 印度薄饼
+                <span class="rating-symbol">★★★★★</span>
+                <span class="rating-value">(5/5)</span>
+            </h2>
+            <p>Dosa is a thin, crispy pancake made from fermented rice and lentil batter. It is typically served with sambar (lentil curry) and coconut chutney and is a popular breakfast item in Indian households.
+            <span class="translate-link" data-food-id="dosa" onclick="toggleTranslation('dosa')">[Translate]</span>
+            </p>
+
+            <div id="translation-dosa" class="translation-container"></div>
+            <div class="price-details">
+                <p><strong>Normal Price:</strong> RM 4.00 - RM 6.00</p>
+                <p><strong>Popular In:</strong> Kuala Lumpur, Malaysia</p>
+                <p><strong>Best Served With:</strong> Sambar, coconut chutney</p>
+            </div>
+            <button onclick="window.open('https://sukhis.com/what-is-a-dosa-all-about-this-indian-crepe/', '_blank')">More Info</button>
+        </div>
+
+        <div class="ingredients-tips">
+            <h3>Ingredients:</h3>
+            <ul>
+                <li>Rice</li>
+                <li>Lentils</li>
+                <li>Sambar (lentil curry)</li>
+                <li>Coconut chutney</li>
+            </ul>
+        </div>
+    </div>
+<div class="you-may-interest-section">
+    <h3>You May Also Interested...</h3>
+    <div class="foods-category">
+        <div class="category-card">
+            <img src="/Race/Chinese Street Food.jpg" alt="Chinese Food" class="category-image">
+            <p><a href="chinese.html" target="_blank" class="category-link">Chinese food</a></p>
+        </div>
+        <div class="category-card">
+            <img src="/Race/Malay Street Food.jpg" alt="Malay Food" class="category-image">
+            <p><a href="malay.html" target="_blank" class="category-link">Malay Food</a></p>
+        </div>
+        <div class="category-card">
+            <img src="/Race/Other food.jpg" alt="Other Street Food" class="category-image">
+            <p><a href="other.html" target="_blank" class="category-link">Other Food</a></p>
+        </div>
+    </div>
+</div>
+    <div id="fullscreenModal" class="fullscreen-modal">
+    <div class="fullscreen-content">
+        <button class="fullscreen-close" onclick="closeFullscreen()">&times;</button>
+        <button class="fullscreen-nav fullscreen-prev" onclick="navigateFullscreen(-1)">&#10094;</button>
+        <img id="fullscreenImage" class="fullscreen-image" src="" alt="">
+        <button class="fullscreen-nav fullscreen-next" onclick="navigateFullscreen(1)">&#10095;</button>
+        <div class="image-counter" id="imageCounter"></div>
+     </div>
+</div>
+    <!-- "Back to Top" Button -->
+    <button id="scrollToTopBtn" onclick="scrollToTop()">Back to Top ↑</button>
+ 
+<footer>
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-md-4">
+          <h5><i class="fas fa-utensils me-2"></i>Malaysia Street Food</h5>
+          <p>Your ultimate guide to authentic Malaysian street food experiences.</p>
+        </div>
+        <div class="col-md-2">
+          <h6>Quick Links</h6>
+          <ul class="list-unstyled">
+            <li><a href="#home" class="text-light">Home</a></li>
+            <li><a href="#features" class="text-light">Explore</a></li>
+            <li><a href="contact.html" class="text-light">Contact</a></li>
+          </ul>
+        </div>
+        <div class="col-md-3">
+          <h6>Explore</h6>
+          <ul class="list-unstyled">
+            <li><a href="#top-ranking" class="text-light">Top Ranking</a></li>
+            <li><a href="nearme.html" class="text-light">Near Me</a></li>
+            <li><a href="#" class="text-light" onclick="document.getElementById('streetFoodDropdown').click()">Street Food</a></li>
+          </ul>
+        </div>
+        <div class="col-md-3">
+          <h6>Follow Us</h6>
+          <div class="social-links">
+            <a href="#" class="text-light me-3"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="text-light me-3"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="text-light me-3"><i class="fab fa-twitter"></i></a>
+          </div>
+        </div>
+      </div>
+      <hr class="my-4 border-secondary" />
+      <div class="text-center">
+        <p class="mb-0">&copy; <span id="year"></span> Malaysia Street Food Explorer. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script src="ZhiEn/script.js"></script> <!-- Link to external script.js -->
+
+    <script src="main.js"></script>
+  <!-- Vendor JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

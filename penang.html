@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Penang Street Food</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="RouYan/state.css">
+  <link rel="stylesheet" href="RouYan/food.css">
+</head>
+
+<body data-state="penang">
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg fixed-top navbar-light shadow-sm app-navbar">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <i class="fas fa-utensils me-2"></i>MY StreetFood
+      </a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <!-- LEFT: order you requested -->
+        <ul class="navbar-nav me-auto align-items-lg-center">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="ranking.html">Top Ranking</a></li>
+
+          <!-- Street Food dropdown -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="streetFoodDropdown" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">Street Food</a>
+            <ul class="dropdown-menu" aria-labelledby="streetFoodDropdown">
+              <li><a class="dropdown-item" href="state.html"><i
+                    class="fas fa-map-marker-alt me-2"></i>States</a></li>
+              <li><a class="dropdown-item" href="Race.html"><i class="fas fa-users me-2"></i>Races</a></li>
+            </ul>
+          </li>
+
+          <li class="nav-item"><a class="nav-link text-uppercase" href="blog.html">BLOG</a></li>
+          <li class="nav-item"><a class="nav-link" href="nearme.html">Near Me</a></li>
+          <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
+        </ul>
+
+        <div class="d-flex align-items-center gap-2">
+          <span id="navUser" class="nav-link text-muted small d-none">
+            Hello, <span id="usernameDisplay"></span>
+          </span>
+
+          <!-- Login Button (hidden if logged in) -->
+          <a id="btnLogin" href="login.html" class="btn btn-outline-primary px-3 rounded-pill text-decoration-none">
+            Login
+          </a>
+
+          <!-- Sign Up Button (hidden if logged in) -->
+          <a id="btnSignup" href="signup.html"
+            class="btn btn-primary px-3 rounded-pill text-decoration-none text-white">
+            Sign Up
+          </a>
+
+          <!-- Logout Button (shown if logged in) -->
+          <button id="btnLogout" type="button" class="btn btn-outline-secondary px-3 rounded-pill d-none">
+            Logout
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- Weather + Time (rightmost, inside collapse) -->
+    <div class="weather-time-box ms-auto">
+      <div id="local-time" class="small"></div>
+      <div id="local-weather" class="small"></div>
+    </div>
+  </nav>
+
+  <!-- Header -->
+  <header>
+    <h1>Penang Street Food</h1>
+    <p>Explore the iconic street foods of Penang</p>
+    <a href="#search-section" class="btn">Start the Journey</a>
+  </header>
+
+  <!-- Search and Controls Section -->
+  <section id="search-section" class="search-controls-section">
+    <div class="search-container">
+      <!-- Search Bar -->
+      <div class="search-bar-container">
+        <div class="search-bar">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="search-input" placeholder="Search by name, ingredients, or description..." />
+          <button id="clear-search" class="clear-btn" style="display: none;">✕</button>
+        </div>
+        <div id="search-results" class="search-results" style="display: none;"></div>
+      </div>
+      <!-- Controls Row -->
+      <div class="controls-row">
+        <!-- Sort Controls -->
+        <div class="sort-container">
+          <span class="sort-label">Sort by:</span>
+          <button class="sort-btn" onclick="sortFoodItems('asc')">A-Z</button>
+          <button class="sort-btn" onclick="sortFoodItems('desc')">Z-A</button>
+          <button class="sort-btn reset-btn" onclick="resetOrder()">Original Order</button>
+        </div>
+        <!-- Favorites Button -->
+        <div class="favorites-container">
+          <button id="favorites-btn" class="favorites-btn">
+            <span class="heart-icon">❤️</span>
+            <span>My Favorites</span>
+            <span id="favorites-count" class="favorites-count">0</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Food Sections Container -->
+  <div id="food-container">
+    <!-- Char Kway Teow -->
+    <section id="charkueyteow" class="food-section" data-name="Char Kway Teow"
+      data-ingredients="flat rice noodles,prawns,eggs,chinese sausage,bean sprouts,chives,lard">
+      <div class="slideshow" data-slideshow="charkueyteow">
+        <div class="slides">
+          <img src="Images/State Food/Penang/charkueyteow1.jpg" class="active" alt="Char Kway Teow 1"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Penang/charkueyteow2.jpg" alt="Char Kway Teow 2"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Penang/charkueyteow3.jpg" alt="Char Kway Teow 3"
+            onclick="openImageModal(this.src, this.alt)">
+        </div>
+        <button class="prev" onclick="changeSlideshow('charkueyteow', -1)">❮</button>
+        <button class="next" onclick="changeSlideshow('charkueyteow', 1)">❯</button>
+        <div class="dots" id="dots-charkueyteow">
+          <span class="dot active" onclick="currentSlideshow('charkueyteow', 1)"></span>
+          <span class="dot" onclick="currentSlideshow('charkueyteow', 2)"></span>
+          <span class="dot" onclick="currentSlideshow('charkueyteow', 3)"></span>
+        </div>
+        <div class="zoom-icon">🔍</div>
+      </div>
+      <div class="food-details">
+        <div class="food-header">
+          <h2>Char Kway Teow 炒粿條 ⭐⭐⭐⭐⭐ (5/5)</h2>
+          <button class="favorite-btn" onclick="toggleFavorite('charkueyteow')" data-food-id="charkueyteow">
+            <span class="heart">🤍</span>
+          </button>
+        </div>
+        <p>A beloved Malaysian street food, Char Kway Teow is made with stir-fried flat rice noodles, prawns, eggs,
+          Chinese sausage, bean sprouts, and chives, all cooked in a wok with lard.</p>
+        <p><b>Normal Price:</b> RM 6.00 - RM 10.00</p>
+        <p><b>Popular in:</b> Penang, Malaysia</p>
+        <p><b>Best Served With:</b> Iced Lemon Tea</p>
+        <a href="https://en.wikipedia.org/wiki/Char_kway_teow" target="_blank" class="more-btn">More Info</a>
+      </div>
+      <div class="ingredients">
+        <h3>Ingredients:</h3>
+        <ul>
+          <li>Flat rice noodles</li>
+          <li>Prawns</li>
+          <li>Eggs</li>
+          <li>Chinese sausage</li>
+          <li>Bean sprouts</li>
+          <li>Chives</li>
+          <li>Lard</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Hokkien Mee -->
+    <section id="hokkienmee" class="food-section" data-name="Hokkien Mee"
+      data-ingredients="yellow noodles,prawns,pork slices,hard-boiled egg,bean sprouts,chili paste">
+      <div class="slideshow" data-slideshow="hokkienmee">
+        <div class="slides">
+          <img src="Images/State Food/Penang/hokkienmee1.jpg" class="active" alt="Hokkien Mee 1"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Penang/hokkienmee2.jpg" alt="Hokkien Mee 2"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Penang/hokkienmee3.jpg" alt="Hokkien Mee 3"
+            onclick="openImageModal(this.src, this.alt)">
+        </div>
+        <button class="prev" onclick="changeSlideshow('hokkienmee', -1)">❮</button>
+        <button class="next" onclick="changeSlideshow('hokkienmee', 1)">❯</button>
+        <div class="dots" id="dots-hokkienmee">
+          <span class="dot active" onclick="currentSlideshow('hokkienmee', 1)"></span>
+          <span class="dot" onclick="currentSlideshow('hokkienmee', 2)"></span>
+          <span class="dot" onclick="currentSlideshow('hokkienmee', 3)"></span>
+        </div>
+        <div class="zoom-icon">🔍</div>
+      </div>
+      <div class="food-details">
+        <div class="food-header">
+          <h2>Hokkien Mee 福建麵 ⭐⭐⭐⭐⭐ (5/5)</h2>
+          <button class="favorite-btn" onclick="toggleFavorite('hokkienmee')" data-food-id="hokkienmee">
+            <span class="heart">🤍</span>
+          </button>
+        </div>
+        <p>Penang Hokkien Mee is a prawn noodle soup made with a rich and spicy broth from prawn shells and pork ribs,
+          served with yellow noodles, prawns, pork slices, and egg.</p>
+        <p><b>Normal Price:</b> RM 5.00 - RM 8.00</p>
+        <p><b>Popular in:</b> Penang, Malaysia</p>
+        <p><b>Best Served With:</b> Iced Coffee</p>
+        <a href="https://en.wikipedia.org/wiki/Hokkien_mee" target="_blank" class="more-btn">More Info</a>
+      </div>
+      <div class="ingredients">
+        <h3>Ingredients:</h3>
+        <ul>
+          <li>Yellow noodles</li>
+          <li>Prawns</li>
+          <li>Pork slices</li>
+          <li>Hard-boiled egg</li>
+          <li>Bean sprouts</li>
+          <li>Chili paste</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Lor Bak -->
+    <section id="lorbak" class="food-section" data-name="Lor Bak"
+      data-ingredients="pork,soybean sheets,five-spice powder,eggs,chili sauce,starchy gravy">
+      <div class="slideshow" data-slideshow="lorbak">
+        <div class="slides">
+          <img src="Images/State Food/Penang/lorbak1.jpg" class="active" alt="Lor Bak 1"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Penang/lorbak2.jpg" alt="Lor Bak 2" onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Penang/lorbak3.jpg" alt="Lor Bak 3" onclick="openImageModal(this.src, this.alt)">
+        </div>
+        <button class="prev" onclick="changeSlideshow('lorbak', -1)">❮</button>
+        <button class="next" onclick="changeSlideshow('lorbak', 1)">❯</button>
+        <div class="dots" id="dots-lorbak">
+          <span class="dot active" onclick="currentSlideshow('lorbak', 1)"></span>
+          <span class="dot" onclick="currentSlideshow('lorbak', 2)"></span>
+          <span class="dot" onclick="currentSlideshow('lorbak', 3)"></span>
+        </div>
+        <div class="zoom-icon">🔍</div>
+      </div>
+      <div class="food-details">
+        <div class="food-header">
+          <h2>Lor Bak 卤肉 ⭐⭐⭐⭐☆ (4.5/5)</h2>
+          <button class="favorite-btn" onclick="toggleFavorite('lorbak')" data-food-id="lorbak">
+            <span class="heart">🤍</span>
+          </button>
+        </div>
+        <p>Lor Bak consists of marinated pork wrapped in soybean sheets and deep-fried until crispy. It is usually
+          served
+          with chili sauce and a thick starchy gravy.</p>
+        <p><b>Normal Price:</b> RM 5.00 - RM 12.00</p>
+        <p><b>Popular in:</b> Penang, Malaysia</p>
+        <p><b>Best Served With:</b> Chili Sauce & Gravy</p>
+        <a href="https://en.wikipedia.org/wiki/Ngo_hiang" target="_blank" class="more-btn">More Info</a>
+      </div>
+      <div class="ingredients">
+        <h3>Ingredients:</h3>
+        <ul>
+          <li>Pork</li>
+          <li>Soybean sheets</li>
+          <li>Five-spice powder</li>
+          <li>Eggs</li>
+          <li>Chili sauce</li>
+          <li>Starchy gravy</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Cendol -->
+    <section id="cendol" class="food-section" data-name="Cendol"
+      data-ingredients="shaved ice,green rice flour jelly,coconut milk,palm sugar,red beans">
+      <div class="slideshow" data-slideshow="cendol">
+        <div class="slides">
+          <img src="Images/State Food/Penang/cendol1.jpg" class="active" alt="Cendol 1"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Penang/cendol2.jpg" alt="Cendol 2" onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Penang/cendol3.jpg" alt="Cendol 3" onclick="openImageModal(this.src, this.alt)">
+        </div>
+        <button class="prev" onclick="changeSlideshow('cendol', -1)">❮</button>
+        <button class="next" onclick="changeSlideshow('cendol', 1)">❯</button>
+        <div class="dots" id="dots-cendol">
+          <span class="dot active" onclick="currentSlideshow('cendol', 1)"></span>
+          <span class="dot" onclick="currentSlideshow('cendol', 2)"></span>
+          <span class="dot" onclick="currentSlideshow('cendol', 3)"></span>
+        </div>
+        <div class="zoom-icon">🔍</div>
+      </div>
+      <div class="food-details">
+        <div class="food-header">
+          <h2>Cendol 珍多冰 ⭐⭐⭐⭐⭐ (5/5)</h2>
+          <button class="favorite-btn" onclick="toggleFavorite('cendol')" data-food-id="cendol">
+            <span class="heart">🤍</span>
+          </button>
+        </div>
+        <p>Cendol is a refreshing shaved ice dessert with green rice flour jelly, coconut milk, and palm sugar syrup.
+          It's
+          especially popular in Penang on hot days.</p>
+        <p><b>Normal Price:</b> RM 3.00 - RM 5.00</p>
+        <p><b>Popular in:</b> Penang, Malaysia</p>
+        <p><b>Best Served With:</b> Extra Gula Melaka</p>
+        <a href="https://en.wikipedia.org/wiki/Cendol" target="_blank" class="more-btn">More Info</a>
+      </div>
+      <div class="ingredients">
+        <h3>Ingredients:</h3>
+        <ul>
+          <li>Shaved ice</li>
+          <li>Green rice flour jelly</li>
+          <li>Coconut milk</li>
+          <li>Palm sugar (Gula Melaka)</li>
+          <li>Red beans</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Assam Laksa -->
+    <section id="assamlaksa" class="food-section" data-name="Assam Laksa"
+      data-ingredients="thick rice noodles,mackerel fish broth,tamarind,mint leaves,pineapple,cucumber,shrimp paste">
+      <div class="slideshow" data-slideshow="assamlaksa">
+        <div class="slides">
+          <img src="Images/State Food/Penang/assamlaksa1.jpg" class="active" alt="Assam Laksa 1"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Penang/assamlaksa2.jpg" alt="Assam Laksa 2"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Penang/assamlaksa3.jpg" alt="Assam Laksa 3"
+            onclick="openImageModal(this.src, this.alt)">
+        </div>
+        <button class="prev" onclick="changeSlideshow('assamlaksa', -1)">❮</button>
+        <button class="next" onclick="changeSlideshow('assamlaksa', 1)">❯</button>
+        <div class="dots" id="dots-assamlaksa">
+          <span class="dot active" onclick="currentSlideshow('assamlaksa', 1)"></span>
+          <span class="dot" onclick="currentSlideshow('assamlaksa', 2)"></span>
+          <span class="dot" onclick="currentSlideshow('assamlaksa', 3)"></span>
+        </div>
+        <div class="zoom-icon">🔍</div>
+      </div>
+      <div class="food-details">
+        <div class="food-header">
+          <h2>Assam Laksa 亚参叻沙 ⭐⭐⭐⭐⭐ (5/5)</h2>
+          <button class="favorite-btn" onclick="toggleFavorite('assamlaksa')" data-food-id="assamlaksa">
+            <span class="heart">🤍</span>
+          </button>
+        </div>
+        <p>Penang Assam Laksa is a tangy and spicy noodle soup made with tamarind-based fish broth, thick rice noodles,
+          and topped with mint, pineapple, cucumber, and shrimp paste.</p>
+        <p><b>Normal Price:</b> RM 6.00 - RM 8.00</p>
+        <p><b>Popular in:</b> Penang, Malaysia</p>
+        <p><b>Best Served With:</b> Shrimp Paste (Hae Ko)</p>
+        <a href="https://en.wikipedia.org/wiki/Laksa" target="_blank" class="more-btn">More Info</a>
+      </div>
+      <div class="ingredients">
+        <h3>Ingredients:</h3>
+        <ul>
+          <li>Thick rice noodles</li>
+          <li>Mackerel fish broth</li>
+          <li>Tamarind</li>
+          <li>Mint leaves</li>
+          <li>Pineapple</li>
+          <li>Cucumber</li>
+          <li>Shrimp paste</li>
+        </ul>
+      </div>
+    </section>
+
+
+    <!-- Popiah -->
+    <section id="popiah" class="food-section" data-name="Popiah"
+      data-ingredients="popiah skin,jicama,lettuce,egg,tofu,carrots,sweet sauce,chili paste">
+      <div class="slideshow" data-slideshow="popiah">
+        <div class="slides">
+          <img src="Images/State Food/Penang/popiah1.jpg" class="active" alt="Popiah 1"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Penang/popiah2.jpg" alt="Popiah 2" onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Penang/popiah3.jpg" alt="Popiah 3" onclick="openImageModal(this.src, this.alt)">
+        </div>
+        <button class="prev" onclick="changeSlideshow('popiah', -1)">❮</button>
+        <button class="next" onclick="changeSlideshow('popiah', 1)">❯</button>
+        <div class="dots" id="dots-popiah">
+          <span class="dot active" onclick="currentSlideshow('popiah', 1)"></span>
+          <span class="dot" onclick="currentSlideshow('popiah', 2)"></span>
+          <span class="dot" onclick="currentSlideshow('popiah', 3)"></span>
+        </div>
+        <div class="zoom-icon">🔍</div>
+      </div>
+      <div class="food-details">
+        <div class="food-header">
+          <h2>Popiah 薄饼 ⭐⭐⭐⭐☆ (4.5/5)</h2>
+          <button class="favorite-btn" onclick="toggleFavorite('popiah')" data-food-id="popiah">
+            <span class="heart">🤍</span>
+          </button>
+        </div>
+        <p>Popiah is a fresh spring roll filled with julienned vegetables, jicama, lettuce, egg, tofu, and sometimes
+          meat,
+          all wrapped in a thin crepe-like skin. It is usually eaten with sweet sauce and chili paste.</p>
+        <p><b>Normal Price:</b> RM 2.50 - RM 4.00 per roll</p>
+        <p><b>Popular in:</b> Penang, Malaysia</p>
+        <p><b>Best Served With:</b> Chili Sauce & Sweet Sauce</p>
+        <a href="https://en.wikipedia.org/wiki/Popiah" target="_blank" class="more-btn">More Info</a>
+      </div>
+      <div class="ingredients">
+        <h3>Ingredients:</h3>
+        <ul>
+          <li>Popiah skin (thin crepe)</li>
+          <li>Jicama (sengkuang)</li>
+          <li>Lettuce</li>
+          <li>Egg</li>
+          <li>Tofu</li>
+          <li>Carrots</li>
+          <li>Sweet sauce</li>
+          <li>Chili paste</li>
+        </ul>
+      </div>
+    </section>
+
+
+    <!-- Nasi Kandar -->
+    <section id="nasikandar" class="food-section" data-name="Nasi Kandar"
+      data-ingredients="rice,curry gravy,chicken,fish,beef,vegetables,spices">
+      <div class="slideshow" data-slideshow="nasikandar">
+        <div class="slides">
+          <img src="Images/State Food/Penang/nasikandar1.jpg" class="active" alt="Nasi Kandar 1"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Penang/nasikandar2.jpg" alt="Nasi Kandar 2"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Penang/nasikandar3.jpg" alt="Nasi Kandar 3"
+            onclick="openImageModal(this.src, this.alt)">
+        </div>
+        <button class="prev" onclick="changeSlideshow('nasikandar', -1)">❮</button>
+        <button class="next" onclick="changeSlideshow('nasikandar', 1)">❯</button>
+        <div class="dots" id="dots-nasikandar">
+          <span class="dot active" onclick="currentSlideshow('nasikandar', 1)"></span>
+          <span class="dot" onclick="currentSlideshow('nasikandar', 2)"></span>
+          <span class="dot" onclick="currentSlideshow('nasikandar', 3)"></span>
+        </div>
+        <div class="zoom-icon">🔍</div>
+      </div>
+      <div class="food-details">
+        <div class="food-header">
+          <h2>Nasi Kandar ⭐⭐⭐⭐☆ (4.6/5)</h2>
+          <button class="favorite-btn" onclick="toggleFavorite('nasikandar')" data-food-id="nasikandar">
+            <span class="heart">🤍</span>
+          </button>
+        </div>
+        <p>Nasi Kandar is a meal of steamed rice served with a variety of curries and side dishes, influenced by Indian
+          Muslim cuisine.</p>
+        <p><b>Normal Price:</b> RM 8.00 - RM 20.00</p>
+        <p><b>Popular in:</b> Penang, Malaysia</p>
+        <p><b>Best Served With:</b> Curry chicken, fried chicken, or fish</p>
+        <a href="https://en.wikipedia.org/wiki/Nasi_kandar" target="_blank" class="more-btn">More Info</a>
+      </div>
+      <div class="ingredients">
+        <h3>Ingredients:</h3>
+        <ul>
+          <li>Rice</li>
+          <li>Curry gravy</li>
+          <li>Chicken / Fish / Beef</li>
+          <li>Vegetables</li>
+          <li>Spices</li>
+        </ul>
+      </div>
+    </section>
+
+  </div>
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+  <!-- JS -->
+  <script src="RouYan/location-permission.js"></script>
+  <script src="RouYan/state.js"></script>
+  <script src="main.js"></script>
+  <script src="RouYan/food.js"></script>
+  <script src="JiaXuan/weather.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,378 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Malacca Street Food</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="RouYan/state.css">
+  <link rel="stylesheet" href="RouYan/food.css">
+</head>
+
+<body data-state="malacca">
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg fixed-top navbar-light shadow-sm app-navbar">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <i class="fas fa-utensils me-2"></i>MY StreetFood
+      </a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <!-- LEFT: order you requested -->
+        <ul class="navbar-nav me-auto align-items-lg-center">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="ranking.html">Top Ranking</a></li>
+
+          <!-- Street Food dropdown -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="streetFoodDropdown" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">Street Food</a>
+            <ul class="dropdown-menu" aria-labelledby="streetFoodDropdown">
+              <li><a class="dropdown-item" href="state.html"><i
+                    class="fas fa-map-marker-alt me-2"></i>States</a></li>
+              <li><a class="dropdown-item" href="Race.html"><i class="fas fa-users me-2"></i>Races</a></li>
+            </ul>
+          </li>
+
+          <li class="nav-item"><a class="nav-link text-uppercase" href="blog.html">BLOG</a></li>
+          <li class="nav-item"><a class="nav-link" href="nearme.html">Near Me</a></li>
+          <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
+        </ul>
+
+        <div class="d-flex align-items-center gap-2">
+          <span id="navUser" class="nav-link text-muted small d-none">
+            Hello, <span id="usernameDisplay"></span>
+          </span>
+
+          <!-- Login Button (hidden if logged in) -->
+          <a id="btnLogin" href="login.html" class="btn btn-outline-primary px-3 rounded-pill text-decoration-none">
+            Login
+          </a>
+
+          <!-- Sign Up Button (hidden if logged in) -->
+          <a id="btnSignup" href="signup.html"
+            class="btn btn-primary px-3 rounded-pill text-decoration-none text-white">
+            Sign Up
+          </a>
+
+          <!-- Logout Button (shown if logged in) -->
+          <button id="btnLogout" type="button" class="btn btn-outline-secondary px-3 rounded-pill d-none">
+            Logout
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- Weather + Time (rightmost, inside collapse) -->
+    <div class="weather-time-box ms-auto">
+      <div id="local-time" class="small"></div>
+      <div id="local-weather" class="small"></div>
+    </div>
+  </nav>
+
+  <!-- Header -->
+  <header>
+    <h1>Malacca Street Food</h1>
+    <p>Explore the iconic street foods of Malacca</p>
+    <a href="#search-section" class="btn">Start the Journey</a>
+  </header>
+
+  <!-- Search and Controls Section -->
+  <section id="search-section" class="search-controls-section">
+    <div class="search-container">
+      <!-- Search Bar -->
+      <div class="search-bar-container">
+        <div class="search-bar">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="search-input" placeholder="Search by name, ingredients, or description..." />
+          <button id="clear-search" class="clear-btn" style="display: none;">✕</button>
+        </div>
+        <div id="search-results" class="search-results" style="display: none;"></div>
+      </div>
+      <!-- Controls Row -->
+      <div class="controls-row">
+        <!-- Sort Controls -->
+        <div class="sort-container">
+          <span class="sort-label">Sort by:</span>
+          <button class="sort-btn" onclick="sortFoodItems('asc')">A-Z</button>
+          <button class="sort-btn" onclick="sortFoodItems('desc')">Z-A</button>
+          <button class="sort-btn reset-btn" onclick="resetOrder()">Original Order</button>
+        </div>
+        <!-- Favorites Button -->
+        <div class="favorites-container">
+          <button id="favorites-btn" class="favorites-btn">
+            <span class="heart-icon">❤️</span>
+            <span>My Favorites</span>
+            <span id="favorites-count" class="favorites-count">0</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Food Sections Container -->
+  <div id="food-container">
+    <!-- Lok Lok -->
+    <section id="loklok" class="food-section" data-name="Lok Lok"
+      data-ingredients="seafood skewers,meat skewers,vegetables,broth,dipping sauces">
+      <div class="slideshow" data-slideshow="loklok">
+        <div class="slides">
+          <img src="Images/State Food/Malacca/loklok1.jpg" class="active" alt="Lok Lok 1"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Malacca/loklok2.jpg" alt="Lok Lok 2" onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Malacca/loklok3.jpg" alt="Lok Lok 3" onclick="openImageModal(this.src, this.alt)">
+        </div>
+        <button class="prev" onclick="changeSlideshow('loklok', -1)">❮</button>
+        <button class="next" onclick="changeSlideshow('loklok', 1)">❯</button>
+        <div class="dots" id="dots-loklok">
+          <span class="dot active" onclick="currentSlideshow('loklok', 1)"></span>
+          <span class="dot" onclick="currentSlideshow('loklok', 2)"></span>
+          <span class="dot" onclick="currentSlideshow('loklok', 3)"></span>
+        </div>
+        <div class="zoom-icon">🔍</div>
+      </div>
+      <div class="food-details">
+        <div class="food-header">
+          <h2>Lok Lok 乐乐 ⭐⭐⭐⭐☆ (4.5/5)</h2>
+          <button class="favorite-btn" onclick="toggleFavorite('loklok')" data-food-id="loklok">
+            <span class="heart">🤍</span>
+          </button>
+        </div>
+        <p>Lok Lok is a communal dining experience where skewers of meat, seafood, and vegetables are cooked in boiling
+          broth and dipped into a variety of sauces.</p>
+        <p><b>Normal Price:</b> RM 1.00 - RM 5.00 per stick</p>
+        <p><b>Popular in:</b> Malacca, Malaysia</p>
+        <p><b>Best Served With:</b> Satay Sauce / Chili Sauce</p>
+        <a href="https://en.wikipedia.org/wiki/Lok-lok" target="_blank" class="more-btn">More Info</a>
+      </div>
+      <div class="ingredients">
+        <h3>Ingredients:</h3>
+        <ul>
+          <li>Seafood skewers</li>
+          <li>Meat skewers</li>
+          <li>Vegetables</li>
+          <li>Broth for boiling</li>
+          <li>Dipping sauces</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Chicken Rice Balls -->
+    <section id="chicken-rice-balls" class="food-section" data-name="Chicken Rice Balls"
+      data-ingredients="poached chicken,rice balls,ginger sauce,dark soy sauce,cucumber slices">
+      <div class="slideshow" data-slideshow="chicken-rice-balls">
+        <div class="slides">
+          <img src="Images/State Food/Malacca/chickenriceball1.jpg" class="active" alt="Chicken Rice Balls 1"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Malacca/chickenriceball2.jpg" alt="Chicken Rice Balls 2"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Malacca/chickenriceball3.jpg" alt="Chicken Rice Balls 3"
+            onclick="openImageModal(this.src, this.alt)">
+        </div>
+        <button class="prev" onclick="changeSlideshow('chicken-rice-balls', -1)">❮</button>
+        <button class="next" onclick="changeSlideshow('chicken-rice-balls', 1)">❯</button>
+        <div class="dots" id="dots-chicken-rice-balls">
+          <span class="dot active" onclick="currentSlideshow('chicken-rice-balls', 1)"></span>
+          <span class="dot" onclick="currentSlideshow('chicken-rice-balls', 2)"></span>
+          <span class="dot" onclick="currentSlideshow('chicken-rice-balls', 3)"></span>
+        </div>
+        <div class="zoom-icon">🔍</div>
+      </div>
+      <div class="food-details">
+        <div class="food-header">
+          <h2>Chicken Rice Balls 鸡饭团 ⭐⭐⭐⭐⭐ (4.8/5)</h2>
+          <button class="favorite-btn" onclick="toggleFavorite('chicken-rice-balls')" data-food-id="chicken-rice-balls">
+            <span class="heart">🤍</span>
+          </button>
+        </div>
+        <p>A unique Malaccan twist on Hainanese chicken rice, where the rice is molded into balls and served with tender
+          poached chicken and flavorful sauces.</p>
+        <p><b>Normal Price:</b> RM 8.00 - RM 15.00</p>
+        <p><b>Popular in:</b> Malacca, Malaysia</p>
+        <p><b>Best Served With:</b> Ginger sauce / Dark soy sauce</p>
+        <a href="https://en.wikipedia.org/wiki/Hainanese_chicken_rice" target="_blank" class="more-btn">More Info</a>
+      </div>
+      <div class="ingredients">
+        <h3>Ingredients:</h3>
+        <ul>
+          <li>Poached chicken</li>
+          <li>Rice balls</li>
+          <li>Ginger sauce</li>
+          <li>Dark soy sauce</li>
+          <li>Cucumber slices</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Nyonya Laksa -->
+    <section id="nyonya-laksa" class="food-section" data-name="Nyonya Laksa"
+      data-ingredients="rice noodles,coconut milk,prawns,fish cake,bean sprouts,spice paste">
+      <div class="slideshow" data-slideshow="nyonya-laksa">
+        <div class="slides">
+          <img src="Images/State Food/Malacca/nyonyalaksa1.jpg" class="active" alt="Nyonya Laksa 1"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Malacca/nyonyalaksa2.jpg" alt="Nyonya Laksa 2"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Malacca/nyonyalaksa3.jpg" alt="Nyonya Laksa 3"
+            onclick="openImageModal(this.src, this.alt)">
+        </div>
+        <button class="prev" onclick="changeSlideshow('nyonya-laksa', -1)">❮</button>
+        <button class="next" onclick="changeSlideshow('nyonya-laksa', 1)">❯</button>
+        <div class="dots" id="dots-nyonya-laksa">
+          <span class="dot active" onclick="currentSlideshow('nyonya-laksa', 1)"></span>
+          <span class="dot" onclick="currentSlideshow('nyonya-laksa', 2)"></span>
+          <span class="dot" onclick="currentSlideshow('nyonya-laksa', 3)"></span>
+        </div>
+        <div class="zoom-icon">🔍</div>
+      </div>
+      <div class="food-details">
+        <div class="food-header">
+          <h2>Nyonya Laksa 娘惹叻沙 ⭐⭐⭐⭐⭐ (4.7/5)</h2>
+          <button class="favorite-btn" onclick="toggleFavorite('nyonya-laksa')" data-food-id="nyonya-laksa">
+            <span class="heart">🤍</span>
+          </button>
+        </div>
+        <p>A spicy noodle soup that represents the fusion of Chinese and Malay culinary traditions, featuring thick rice
+          noodles in a rich coconut curry broth.</p>
+        <p><b>Normal Price:</b> RM 6.00 - RM 12.00</p>
+        <p><b>Popular in:</b> Malacca, Penang, Singapore</p>
+        <p><b>Best Served With:</b> Sambal belacan / Lime</p>
+        <a href="https://en.wikipedia.org/wiki/Laksa" target="_blank" class="more-btn">More Info</a>
+      </div>
+      <div class="ingredients">
+        <h3>Ingredients:</h3>
+        <ul>
+          <li>Rice noodles</li>
+          <li>Coconut milk</li>
+          <li>Prawns</li>
+          <li>Fish cake</li>
+          <li>Bean sprouts</li>
+          <li>Spice paste</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Satay Celup -->
+    <section id="satay-celup" class="food-section" data-name="Satay Celup"
+      data-ingredients="skewered items,peanut satay sauce,fish balls,tofu,vegetables,seafood">
+      <div class="slideshow" data-slideshow="satay-celup">
+        <div class="slides">
+          <img src="Images/State Food/Malacca/sataycelup1.jpg" class="active" alt="Satay Celup 1"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Malacca/sataycelup2.jpg" alt="Satay Celup 2"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Malacca/sataycelup3.jpg" alt="Satay Celup 3"
+            onclick="openImageModal(this.src, this.alt)">
+        </div>
+        <button class="prev" onclick="changeSlideshow('satay-celup', -1)">❮</button>
+        <button class="next" onclick="changeSlideshow('satay-celup', 1)">❯</button>
+        <div class="dots" id="dots-satay-celup">
+          <span class="dot active" onclick="currentSlideshow('satay-celup', 1)"></span>
+          <span class="dot" onclick="currentSlideshow('satay-celup', 2)"></span>
+          <span class="dot" onclick="currentSlideshow('satay-celup', 3)"></span>
+        </div>
+        <div class="zoom-icon">🔍</div>
+      </div>
+      <div class="food-details">
+        <div class="food-header">
+          <h2>Satay Celup 沙爹浸 ⭐⭐⭐⭐⭐ (4.6/5)</h2>
+          <button class="favorite-btn" onclick="toggleFavorite('satay-celup')" data-food-id="satay-celup">
+            <span class="heart">🤍</span>
+          </button>
+        </div>
+        <p>A unique Malaccan dish similar to lok lok, where skewered ingredients are dipped into a pot of boiling satay
+          sauce. It's like steamboat but with the rich, nutty flavor of peanut sauce.</p>
+        <p><b>Normal Price:</b> RM 0.80 - RM 3.00 per stick</p>
+        <p><b>Popular in:</b> Malacca, Malaysia</p>
+        <p><b>Best Served With:</b> Ketupat / Rice cubes</p>
+        <a href="https://en.wikipedia.org/wiki/Satay_celup" target="_blank" class="more-btn">More Info</a>
+      </div>
+      <div class="ingredients">
+        <h3>Ingredients:</h3>
+        <ul>
+          <li>Various skewered items</li>
+          <li>Peanut satay sauce</li>
+          <li>Fish balls</li>
+          <li>Tofu</li>
+          <li>Vegetables</li>
+          <li>Seafood</li>
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <!-- Auth Modal -->
+  <div class="modal fade" id="authModal" tabindex="-1" aria-hidden="true" aria-labelledby="authTitle">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <form id="authForm">
+          <div class="modal-header">
+            <h5 id="authTitle" class="modal-title">Login</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+
+          <div class="modal-body">
+            <!-- Username (login: 'Username or Email', signup: 'Username') -->
+            <div class="mb-3" id="rowUsername">
+              <label class="form-label" id="labelUsername">Username or Email</label>
+              <input id="authUsername" type="text" class="form-control" minlength="3" required>
+            </div>
+
+            <!-- Email (shown only in signup) -->
+            <div class="mb-3 d-none" id="rowEmail">
+              <label class="form-label">Email</label>
+              <input id="authEmail" type="email" class="form-control">
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Password</label>
+              <input id="authPassword" type="password" class="form-control" minlength="6" required>
+            </div>
+
+            <!-- Confirm password (signup only) -->
+            <div id="rowConfirm" class="mb-3 d-none">
+              <label class="form-label">Confirm Password</label>
+              <input id="authConfirm" type="password" class="form-control" minlength="6">
+            </div>
+
+            <div class="form-check mb-2">
+              <input id="authRemember" class="form-check-input" type="checkbox">
+              <label class="form-check-label" for="authRemember">Remember me</label>
+            </div>
+
+            <div id="authError" class="text-danger small d-none"></div>
+          </div>
+
+          <div class="modal-footer justify-content-between">
+            <div class="small">
+              <span id="authHint">No account?
+                <a href="#" id="linkToSignup">Sign up</a>
+              </span>
+            </div>
+            <button id="authSubmit" class="btn btn-primary" type="submit">Continue</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+  <!-- JS -->
+  <script src="RouYan/location-permission.js"></script>
+  <script src="RouYan/state.js"></script>
+  <script src="main.js"></script>
+  <script src="RouYan/food.js"></script>
+  <script src="JiaXuan/weather.js"></script>
+
+</body>
+
+</html>

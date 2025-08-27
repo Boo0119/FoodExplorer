@@ -1,0 +1,470 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Perak Street Food</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="RouYan/state.css">
+  <link rel="stylesheet" href="RouYan/food.css">
+</head>
+
+<body data-state="perak">
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg fixed-top navbar-light shadow-sm app-navbar">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <i class="fas fa-utensils me-2"></i>MY StreetFood
+      </a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <!-- LEFT: order you requested -->
+        <ul class="navbar-nav me-auto align-items-lg-center">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="ranking.html">Top Ranking</a></li>
+
+          <!-- Street Food dropdown -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="streetFoodDropdown" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">Street Food</a>
+            <ul class="dropdown-menu" aria-labelledby="streetFoodDropdown">
+              <li><a class="dropdown-item" href="state.html"><i
+                    class="fas fa-map-marker-alt me-2"></i>States</a></li>
+              <li><a class="dropdown-item" href="Race.html"><i class="fas fa-users me-2"></i>Races</a></li>
+            </ul>
+          </li>
+
+          <li class="nav-item"><a class="nav-link text-uppercase" href="blog.html">BLOG</a></li>
+          <li class="nav-item"><a class="nav-link" href="nearme.html">Near Me</a></li>
+          <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
+        </ul>
+
+        <div class="d-flex align-items-center gap-2">
+          <span id="navUser" class="nav-link text-muted small d-none">
+            Hello, <span id="usernameDisplay"></span>
+          </span>
+
+          <!-- Login Button (hidden if logged in) -->
+          <a id="btnLogin" href="login.html" class="btn btn-outline-primary px-3 rounded-pill text-decoration-none">
+            Login
+          </a>
+
+          <!-- Sign Up Button (hidden if logged in) -->
+          <a id="btnSignup" href="signup.html"
+            class="btn btn-primary px-3 rounded-pill text-decoration-none text-white">
+            Sign Up
+          </a>
+
+          <!-- Logout Button (shown if logged in) -->
+          <button id="btnLogout" type="button" class="btn btn-outline-secondary px-3 rounded-pill d-none">
+            Logout
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- Weather + Time (rightmost, inside collapse) -->
+    <div class="weather-time-box ms-auto">
+      <div id="local-time" class="small"></div>
+      <div id="local-weather" class="small"></div>
+    </div>
+  </nav>
+
+  <!-- Header -->
+  <header>
+    <h1>Perak Street Food</h1>
+    <p>Discover the iconic street foods of Perak, Malaysia</p>
+    <a href="#search-section" class="btn">Start the Journey</a>
+  </header>
+
+  <!-- Search and Controls Section -->
+  <section id="search-section" class="search-controls-section">
+    <div class="search-container">
+      <!-- Search Bar -->
+      <div class="search-bar-container">
+        <div class="search-bar">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="search-input" placeholder="Search by name, ingredients, or description..." />
+          <button id="clear-search" class="clear-btn" style="display: none;">✕</button>
+        </div>
+        <div id="search-results" class="search-results" style="display: none;"></div>
+      </div>
+      <!-- Controls Row -->
+      <div class="controls-row">
+        <!-- Sort Controls -->
+        <div class="sort-container">
+          <span class="sort-label">Sort by:</span>
+          <button class="sort-btn" onclick="sortFoodItems('asc')">A-Z</button>
+          <button class="sort-btn" onclick="sortFoodItems('desc')">Z-A</button>
+          <button class="sort-btn reset-btn" onclick="resetOrder()">Original Order</button>
+        </div>
+        <!-- Favorites Button -->
+        <div class="favorites-container">
+          <button id="favorites-btn" class="favorites-btn">
+            <span class="heart-icon">❤️</span>
+            <span>My Favorites</span>
+            <span id="favorites-count" class="favorites-count">0</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Food Sections Container -->
+  <div id="food-container">
+    <!-- Chee Cheong Fun -->
+    <section id="cheecheongfun" class="food-section" data-name="Chee Cheong Fun"
+      data-ingredients="rice flour sheets,soy sauce,sesame seeds,chili paste,curry sauce,mushroom sauce">
+      <div class="slideshow" data-slideshow="cheecheongfun">
+        <div class="slides">
+          <img src="Images/State Food/Perak/cheecheongfun1.jpg" class="active" alt="Chee Cheong Fun 1"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Perak/cheecheongfun2.jpg" alt="Chee Cheong Fun 2"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Perak/cheecheongfun3.jpg" alt="Chee Cheong Fun 3"
+            onclick="openImageModal(this.src, this.alt)">
+        </div>
+        <button class="prev" onclick="changeSlideshow('cheecheongfun', -1)">❮</button>
+        <button class="next" onclick="changeSlideshow('cheecheongfun', 1)">❯</button>
+        <div class="dots" id="dots-cheecheongfun">
+          <span class="dot active" onclick="currentSlideshow('cheecheongfun', 1)"></span>
+          <span class="dot" onclick="currentSlideshow('cheecheongfun', 2)"></span>
+          <span class="dot" onclick="currentSlideshow('cheecheongfun', 3)"></span>
+        </div>
+        <div class="zoom-icon">🔍</div>
+      </div>
+      <div class="food-details">
+        <div class="food-header">
+          <h2>Chee Cheong Fun 猪肠粉 ⭐⭐⭐⭐☆ (4.5/5)</h2>
+          <button class="favorite-btn" onclick="toggleFavorite('cheecheongfun')" data-food-id="cheecheongfun">
+            <span class="heart">🤍</span>
+          </button>
+        </div>
+        <p>Chee Cheong Fun is a steamed rice noodle roll, typically served with sweet sauce, chili, and sesame seeds. In
+          Ipoh, it’s often paired with curry or mushroom sauce.</p>
+        <p><b>Normal Price:</b> RM 4.00 - RM 7.00</p>
+        <p><b>Popular in:</b> Ipoh, Perak</p>
+        <p><b>Best Served With:</b> Curry sauce or sweet sauce</p>
+        <a href="https://en.wikipedia.org/wiki/Chee_cheong_fun" target="_blank" class="more-btn">More Info</a>
+      </div>
+      <div class="ingredients">
+        <h3>Ingredients:</h3>
+        <ul>
+          <li>Rice flour sheets</li>
+          <li>Soy sauce</li>
+          <li>Sesame seeds</li>
+          <li>Chili paste</li>
+          <li>Curry or mushroom sauce</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Dim Sum -->
+    <section id="dimsum" class="food-section" data-name="Dim Sum"
+      data-ingredients="pork,chicken,shrimp,vegetables,dumpling wrappers,seasonings">
+      <div class="slideshow" data-slideshow="dimsum">
+        <div class="slides">
+          <img src="Images/State Food/Perak/dimsum1.jpg" class="active" alt="Dim Sum 1"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Perak/dimsum2.jpg" alt="Dim Sum 2" onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Perak/dimsum3.jpg" alt="Dim Sum 3" onclick="openImageModal(this.src, this.alt)">
+        </div>
+        <button class="prev" onclick="changeSlideshow('dimsum', -1)">❮</button>
+        <button class="next" onclick="changeSlideshow('dimsum', 1)">❯</button>
+        <div class="dots" id="dots-dimsum">
+          <span class="dot active" onclick="currentSlideshow('dimsum', 1)"></span>
+          <span class="dot" onclick="currentSlideshow('dimsum', 2)"></span>
+          <span class="dot" onclick="currentSlideshow('dimsum', 3)"></span>
+        </div>
+        <div class="zoom-icon">🔍</div>
+      </div>
+      <div class="food-details">
+        <div class="food-header">
+          <h2>Dim Sum 点心 ⭐⭐⭐⭐⭐ (4.7/5)</h2>
+          <button class="favorite-btn" onclick="toggleFavorite('dimsum')" data-food-id="dimsum">
+            <span class="heart">🤍</span>
+          </button>
+        </div>
+        <p>Dim Sum is a variety of bite-sized dishes traditionally served in bamboo steamers, enjoyed with tea. Ipoh is
+          famous for its authentic Cantonese-style dim sum.</p>
+        <p><b>Normal Price:</b> RM 3.00 - RM 10.00 per basket</p>
+        <p><b>Popular in:</b> Ipoh, Perak</p>
+        <p><b>Best Served With:</b> Chinese tea</p>
+        <a href="https://en.wikipedia.org/wiki/Dim_sum" target="_blank" class="more-btn">More Info</a>
+      </div>
+      <div class="ingredients">
+        <h3>Ingredients:</h3>
+        <ul>
+          <li>Pork or chicken filling</li>
+          <li>Shrimp</li>
+          <li>Vegetables</li>
+          <li>Dumpling wrappers</li>
+          <li>Seasonings</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Bean Sprout Chicken -->
+    <section id="beansproutchicken" class="food-section" data-name="Bean Sprout Chicken"
+      data-ingredients="chicken,bean sprouts,soy sauce,sesame oil,spring onions">
+      <div class="slideshow" data-slideshow="beansproutchicken">
+        <div class="slides">
+          <img src="Images/State Food/Perak/beansproutchicken1.jpg" class="active" alt="Bean Sprout Chicken 1"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Perak/beansproutchicken2.jpg" alt="Bean Sprout Chicken 2"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Perak/beansproutchicken3.jpg" alt="Bean Sprout Chicken 3"
+            onclick="openImageModal(this.src, this.alt)">
+        </div>
+        <button class="prev" onclick="changeSlideshow('beansproutchicken', -1)">❮</button>
+        <button class="next" onclick="changeSlideshow('beansproutchicken', 1)">❯</button>
+        <div class="dots" id="dots-beansproutchicken">
+          <span class="dot active" onclick="currentSlideshow('beansproutchicken', 1)"></span>
+          <span class="dot" onclick="currentSlideshow('beansproutchicken', 2)"></span>
+          <span class="dot" onclick="currentSlideshow('beansproutchicken', 3)"></span>
+        </div>
+        <div class="zoom-icon">🔍</div>
+      </div>
+      <div class="food-details">
+        <div class="food-header">
+          <h2>Bean Sprout Chicken 芽菜鸡 ⭐⭐⭐⭐⭐ (4.8/5)</h2>
+          <button class="favorite-btn" onclick="toggleFavorite('beansproutchicken')" data-food-id="beansproutchicken">
+            <span class="heart">🤍</span>
+          </button>
+        </div>
+        <p>Bean Sprout Chicken, also known as Ipoh Nga Choy Kai, consists of poached chicken served with crunchy bean
+          sprouts and soy-based sauce.</p>
+        <p><b>Normal Price:</b> RM 7.00 - RM 12.00</p>
+        <p><b>Popular in:</b> Ipoh, Perak</p>
+        <p><b>Best Served With:</b> Rice or Hor Fun</p>
+        <a href="https://en.wikipedia.org/wiki/Bean_sprouts_chicken" target="_blank" class="more-btn">More Info</a>
+      </div>
+      <div class="ingredients">
+        <h3>Ingredients:</h3>
+        <ul>
+          <li>Chicken</li>
+          <li>Bean sprouts</li>
+          <li>Soy sauce</li>
+          <li>Sesame oil</li>
+          <li>Spring onions</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Kai Si Hor Fun -->
+    <section id="kaisihorfun" class="food-section" data-name="Kai Si Hor Fun"
+      data-ingredients="flat rice noodles,chicken,prawns,chicken broth,spring onions">
+      <div class="slideshow" data-slideshow="kaisihorfun">
+        <div class="slides">
+          <img src="Images/State Food/Perak/kaisihorfun1.jpg" class="active" alt="Kai Si Hor Fun 1"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Perak/kaisihorfun2.jpg" alt="Kai Si Hor Fun 2"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Perak/kaisihorfun3.jpg" alt="Kai Si Hor Fun 3"
+            onclick="openImageModal(this.src, this.alt)">
+        </div>
+        <button class="prev" onclick="changeSlideshow('kaisihorfun', -1)">❮</button>
+        <button class="next" onclick="changeSlideshow('kaisihorfun', 1)">❯</button>
+        <div class="dots" id="dots-kaisihorfun">
+          <span class="dot active" onclick="currentSlideshow('kaisihorfun', 1)"></span>
+          <span class="dot" onclick="currentSlideshow('kaisihorfun', 2)"></span>
+          <span class="dot" onclick="currentSlideshow('kaisihorfun', 3)"></span>
+        </div>
+        <div class="zoom-icon">🔍</div>
+      </div>
+      <div class="food-details">
+        <div class="food-header">
+          <h2>Kai Si Hor Fun 鸡丝河粉 ⭐⭐⭐⭐☆ (4.6/5)</h2>
+          <button class="favorite-btn" onclick="toggleFavorite('kaisihorfun')" data-food-id="kaisihorfun">
+            <span class="heart">🤍</span>
+          </button>
+        </div>
+        <p>Kai Si Hor Fun is a silky smooth flat rice noodle soup served with shredded chicken, prawns, and a light,
+          flavorful broth.</p>
+        <p><b>Normal Price:</b> RM 6.00 - RM 8.00</p>
+        <p><b>Popular in:</b> Ipoh, Perak</p>
+        <p><b>Best Served With:</b> Pickled green chili</p>
+        <a href="https://beyondnorm.com/2020/04/20/ipoh-kai-see-hor-fun-recipe/" target="_blank" class="more-btn">More
+          Info</a>
+      </div>
+      <div class="ingredients">
+        <h3>Ingredients:</h3>
+        <ul>
+          <li>Flat rice noodles</li>
+          <li>Chicken</li>
+          <li>Prawns</li>
+          <li>Chicken broth</li>
+          <li>Spring onions</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Tau Fu Fah -->
+    <section id="taufufah" class="food-section" data-name="Tau Fu Fah"
+      data-ingredients="soy milk,coagulant,ginger syrup,gula melaka">
+      <div class="slideshow" data-slideshow="taufufah">
+        <div class="slides">
+          <img src="Images/State Food/Perak/taufufah1.jpg" class="active" alt="Tau Fu Fah 1"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Perak/taufufah2.jpg" alt="Tau Fu Fah 2"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Perak/taufufah3.jpg" alt="Tau Fu Fah 3"
+            onclick="openImageModal(this.src, this.alt)">
+        </div>
+        <button class="prev" onclick="changeSlideshow('taufufah', -1)">❮</button>
+        <button class="next" onclick="changeSlideshow('taufufah', 1)">❯</button>
+        <div class="dots" id="dots-taufufah">
+          <span class="dot active" onclick="currentSlideshow('taufufah', 1)"></span>
+          <span class="dot" onclick="currentSlideshow('taufufah', 2)"></span>
+          <span class="dot" onclick="currentSlideshow('taufufah', 3)"></span>
+        </div>
+        <div class="zoom-icon">🔍</div>
+      </div>
+      <div class="food-details">
+        <div class="food-header">
+          <h2>Tau Fu Fah 豆腐花 ⭐⭐⭐⭐⭐ (4.9/5)</h2>
+          <button class="favorite-btn" onclick="toggleFavorite('taufufah')" data-food-id="taufufah">
+            <span class="heart">🤍</span>
+          </button>
+        </div>
+        <p>Tau Fu Fah is a traditional Chinese dessert made from silky soft tofu pudding, usually served with sweet
+          ginger syrup or palm sugar syrup.</p>
+        <p><b>Normal Price:</b> RM 3.00 - RM 5.00</p>
+        <p><b>Popular in:</b> Ipoh, Perak</p>
+        <p><b>Best Served With:</b> Gula Melaka syrup</p>
+        <a href="https://en.wikipedia.org/wiki/Douhua" target="_blank" class="more-btn">More Info</a>
+      </div>
+      <div class="ingredients">
+        <h3>Ingredients:</h3>
+        <ul>
+          <li>Soy milk</li>
+          <li>Coagulant (gypsum or glucono delta-lactone)</li>
+          <li>Ginger syrup</li>
+          <li>Gula Melaka</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Yim Kuk Kai -->
+    <section id="yimkukkai" class="food-section" data-name="Yim Kuk Kai"
+      data-ingredients="whole chicken,chinese herbs,coarse salt,paper wrapping">
+      <div class="slideshow" data-slideshow="yimkukkai">
+        <div class="slides">
+          <img src="Images/State Food/Perak/yimkukkai1.jpg" class="active" alt="Yim Kuk Kai 1"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Perak/yimkukkai2.jpg" alt="Yim Kuk Kai 2"
+            onclick="openImageModal(this.src, this.alt)">
+          <img src="Images/State Food/Perak/yimkukkai3.jpg" alt="Yim Kuk Kai 3"
+            onclick="openImageModal(this.src, this.alt)">
+        </div>
+        <button class="prev" onclick="changeSlideshow('yimkukkai', -1)">❮</button>
+        <button class="next" onclick="changeSlideshow('yimkukkai', 1)">❯</button>
+        <div class="dots" id="dots-yimkukkai">
+          <span class="dot active" onclick="currentSlideshow('yimkukkai', 1)"></span>
+          <span class="dot" onclick="currentSlideshow('yimkukkai', 2)"></span>
+          <span class="dot" onclick="currentSlideshow('yimkukkai', 3)"></span>
+        </div>
+        <div class="zoom-icon">🔍</div>
+      </div>
+      <div class="food-details">
+        <div class="food-header">
+          <h2>Yim Kuk Kai (Salt-Baked Chicken) 盐焗鸡 ⭐⭐⭐⭐☆ (4.7/5)</h2>
+          <button class="favorite-btn" onclick="toggleFavorite('yimkukkai')" data-food-id="yimkukkai">
+            <span class="heart">🤍</span>
+          </button>
+        </div>
+        <p>Yim Kuk Kai is a famous Ipoh specialty where chicken is marinated with Chinese herbs, wrapped in paper, and
+          baked in coarse salt to retain its natural juices.</p>
+        <p><b>Normal Price:</b> RM 20.00 - RM 35.00 per chicken</p>
+        <p><b>Popular in:</b> Ipoh, Perak</p>
+        <p><b>Best Served With:</b> Rice</p>
+        <a href="https://confessionsofaweekendcook.blogspot.com/2012/03/salt-baked-chicken-yim-kuk-kai.html"
+          target="_blank" class="more-btn">More Info</a>
+      </div>
+      <div class="ingredients">
+        <h3>Ingredients:</h3>
+        <ul>
+          <li>Whole chicken</li>
+          <li>Chinese herbs</li>
+          <li>Coarse salt</li>
+          <li>Paper wrapping</li>
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <!-- Auth Modal -->
+  <div class="modal fade" id="authModal" tabindex="-1" aria-hidden="true" aria-labelledby="authTitle">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <form id="authForm">
+          <div class="modal-header">
+            <h5 id="authTitle" class="modal-title">Login</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+
+          <div class="modal-body">
+            <!-- Username (login: 'Username or Email', signup: 'Username') -->
+            <div class="mb-3" id="rowUsername">
+              <label class="form-label" id="labelUsername">Username or Email</label>
+              <input id="authUsername" type="text" class="form-control" minlength="3" required>
+            </div>
+
+            <!-- Email (shown only in signup) -->
+            <div class="mb-3 d-none" id="rowEmail">
+              <label class="form-label">Email</label>
+              <input id="authEmail" type="email" class="form-control">
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Password</label>
+              <input id="authPassword" type="password" class="form-control" minlength="6" required>
+            </div>
+
+            <!-- Confirm password (signup only) -->
+            <div id="rowConfirm" class="mb-3 d-none">
+              <label class="form-label">Confirm Password</label>
+              <input id="authConfirm" type="password" class="form-control" minlength="6">
+            </div>
+
+            <div class="form-check mb-2">
+              <input id="authRemember" class="form-check-input" type="checkbox">
+              <label class="form-check-label" for="authRemember">Remember me</label>
+            </div>
+
+            <div id="authError" class="text-danger small d-none"></div>
+          </div>
+
+          <div class="modal-footer justify-content-between">
+            <div class="small">
+              <span id="authHint">No account?
+                <a href="#" id="linkToSignup">Sign up</a>
+              </span>
+            </div>
+            <button id="authSubmit" class="btn btn-primary" type="submit">Continue</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+  <!-- JS -->
+  <script src="RouYan/location-permission.js"></script>
+  <script src="RouYan/state.js"></script>
+  <script src="main.js"></script>
+  <script src="RouYan/food.js"></script>
+  <script src="JiaXuan/weather.js"></script>
+
+</body>
+
+</html>
