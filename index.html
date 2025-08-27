@@ -34,7 +34,6 @@
       </button>
 
       <div class="collapse navbar-collapse" id="navbarNav">
-        <!-- Navigation Menu -->
         <ul class="navbar-nav me-auto align-items-lg-center">
           <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
           <li class="nav-item"><a class="nav-link" href="ranking.html">Top Ranking</a></li>
@@ -57,7 +56,6 @@
           <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
         </ul>
 
-        <!-- Auth Buttons -->
         <div class="d-flex align-items-center gap-2">
           <span id="navUser" class="nav-link text-muted small d-none">
             Hello, <span id="usernameDisplay"></span>
@@ -79,18 +77,19 @@
             Logout
           </button>
         </div>
-
-        <!-- Weather + Time -->
-        <div class="weather-time-box">
-          <div id="local-time" class="small"></div>
-          <div id="local-weather" class="small"></div>
-        </div>
       </div>
+    </div>
+
+    <!-- Weather + Time (rightmost, inside collapse) -->
+    <div class="weather-time-box ms-auto">
+      <div id="local-time" class="small"></div>
+      <div id="local-weather" class="small"></div>
     </div>
   </nav>
 
   <!-- Hero Section with Search Bar -->
   <section class="hero-section" id="home" role="banner" aria-label="Discover Malaysia's Street Food">
+
     <div class="container">
       <div class="hero-content text-center text-white">
         <h1>Discover Malaysia's Street Food</h1>
@@ -102,7 +101,7 @@
 
         <!-- Search Bar placed right below the button -->
         <div class="search-container mt-4">
-          <input type="text" id="foodSearch" class="form-control" placeholder="Search for food, states, or races..." />
+          <input type="text" id="foodSearch" class="form-control" placeholder=" Search for food, states, or races..." />
           <button class="btn btn-explore text-white" onclick="searchFood()">Search</button>
         </div>
       </div>
@@ -184,205 +183,201 @@
   </section>
 
   <!---Explore Street Food-->
-<section id="features" class="py-5">
-  <div class="container">
-    <div class="features-header text-center mb-5">
-      <h2>Explore Street Food Your Way</h2>
-      <p>Discover Malaysia's diverse street food culture through multiple options</p>
+  <section id="features" class="py-5">
+    <div class="container">
+      <div class="features-header text-center mb-5">
+        <h2>Explore Street Food Your Way</h2>
+        <p>Discover Malaysia's diverse street food culture through multiple options</p>
+      </div>
+
+      <div class="row g-4">
+        <!-- Street Food Card -->
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fas fa-utensils"></i>
+            </div>
+            <div class="feature-content">
+              <h3 class="feature-title">Street Food</h3>
+              <p class="feature-description">Browse Malaysian foods by States or by Races</p>
+              <div class="feature-actions">
+                <a href="state.html" class="feature-btn">States</a>
+                <a href="Race.html" class="feature-btn">Races</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Near Me Card -->
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fas fa-location-arrow"></i>
+            </div>
+            <div class="feature-content">
+              <h3 class="feature-title">Near Me</h3>
+              <p class="feature-description">Find the best street food stalls closest to your location</p>
+              <div class="feature-actions">
+                <a href="nearme.html" class="feature-btn">Find Nearby</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Top Rankings Card -->
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fas fa-trophy"></i>
+            </div>
+            <div class="feature-content">
+              <h3 class="feature-title">Top Rankings</h3>
+              <p class="feature-description">Check out the most popular and highly-rated street foods</p>
+              <div class="feature-actions">
+                <a href="#top-ranking" class="feature-btn">See Rankings</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+  </section>
 
+  <!-- Top Ranking -->
+  <section id="top-ranking" class="ranking-section">
+        <div class="container">
+            <div class="ranking-header">
+                <h2>Top Malaysian Street Foods</h2>
+                <p>Discover the most beloved street foods that define Malaysia's rich culinary heritage, ranked by food enthusiasts nationwide.</p>
+            </div>
+
+            <div class="row g-4">
+                <!-- Rank 1 Card -->
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="ranking-card">
+                        <div class="rank-badge top-1">1</div>
+                        <div class="card-image">
+                            <img src="JiaXuan/images/nasi-lemak.jpg" alt="Nasi Lemak">
+                        </div>
+                        <div class="card-content">
+                            <h3 class="food-title">Nasi Lemak</h3>
+                            <div class="food-tags">
+                                <span class="food-tag">Rice</span>
+                                <span class="food-tag">Breakfast</span>
+                            </div>
+                            <p class="food-description">A fragrant coconut rice dish served with sambal, crispy anchovies, roasted peanuts, and hard-boiled egg.</p>
+                            <div class="card-footer">
+                                <div class="rating">
+                                    <div class="stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                    </div>
+                                    <span class="rating-value">4.8</span>
+                                    <span class="votes">(1250 votes)</span>
+                                </div>
+                                <a href="ranking.html" class="view-details-btn">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Rank 2 Card -->
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="ranking-card">
+                        <div class="rank-badge top-2">2</div>
+                        <div class="card-image">
+                            <img src="JiaXuan/images/char-kway-teow.jpg" alt="Char Kway Teow">
+                        </div>
+                        <div class="card-content">
+                            <h3 class="food-title">Char Kway Teow</h3>
+                            <div class="food-tags">
+                                <span class="food-tag">Noodles</span>
+                                <span class="food-tag">Stir-fried</span>
+                            </div>
+                            <p class="food-description">Stir-fried rice noodles with prawns, bloody cockles, Chinese sausage, eggs, and bean sprouts in dark soy sauce.</p>
+                            <div class="card-footer">
+                                <div class="rating">
+                                    <div class="stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                    </div>
+                                    <span class="rating-value">4.7</span>
+                                    <span class="votes">(1100 votes)</span>
+                                </div>
+                                <a href="ranking.html" class="view-details-btn">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Rank 3 Card -->
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="ranking-card">
+                        <div class="rank-badge top-3">3</div>
+                        <div class="card-image">
+                            <img src="JiaXuan/images/roticanai.jpg" alt="Roti Canai">
+                        </div>
+                        <div class="card-content">
+                            <h3 class="food-title">Roti Canai</h3>
+                            <div class="food-tags">
+                                <span class="food-tag">Bread</span>
+                                <span class="food-tag">Breakfast</span>
+                            </div>
+                            <p class="food-description">Flaky, crispy flatbread served with flavorful dhal or curry sauce, a Malaysian breakfast favorite.</p>
+                            <div class="card-footer">
+                                <div class="rating">
+                                    <div class="stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                    </div>
+                                    <span class="rating-value">4.7</span>
+                                    <span class="votes">(1540 votes)</span>
+                                </div>
+                                <a href="ranking.html" class="view-details-btn">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ranking-cta">
+                <a href="ranking.html">View Full Rankings</a>
+            </div>
+        </div>
+    </section>
+
+  <!-- Stats -->
+  <section class="stats-section">
+  <div class="container">
     <div class="row g-4">
-      <!-- Street Food Card -->
-      <div class="col-12 col-md-6 col-lg-4">
-        <div class="feature-card">
-          <div class="feature-icon">
-            <i class="fas fa-utensils"></i>
-          </div>
-          <div class="feature-content">
-            <h3 class="feature-title">Street Food</h3>
-            <p class="feature-description">Browse Malaysian foods by States or by Races</p>
-            <div class="feature-actions">
-              <a href="state.html" class="feature-btn">States</a>
-                              <a href="Race.html" class="feature-btn">Races</a>
-            </div>
-          </div>
-        </div>
+      <div class="col-6 col-md-3 stat-item">
+        <span id="streetFoodStalls" class="stat-number" data-count="80">80+</span>
+        <span>Street Food Stall</span>
       </div>
-
-      <!-- Near Me Card -->
-      <div class="col-12 col-md-6 col-lg-4">
-        <div class="feature-card">
-          <div class="feature-icon">
-            <i class="fas fa-location-arrow"></i>
-          </div>
-          <div class="feature-content">
-            <h3 class="feature-title">Near Me</h3>
-            <p class="feature-description">Find the best street food stalls closest to your location</p>
-            <div class="feature-actions">
-              <a href="nearme.html" class="feature-btn">Find Nearby</a>
-            </div>
-          </div>
-        </div>
+      <div class="col-6 col-md-3 stat-item">
+        <span id="streetFoods" class="stat-number" data-count="100">100+</span>
+        <span>Street Foods</span>
       </div>
-
-      <!-- Top Rankings Card -->
-      <div class="col-12 col-md-6 col-lg-4">
-        <div class="feature-card">
-          <div class="feature-icon">
-            <i class="fas fa-trophy"></i>
-          </div>
-          <div class="feature-content">
-            <h3 class="feature-title">Top Rankings</h3>
-            <p class="feature-description">Check out the most popular and highly-rated street foods</p>
-            <div class="feature-actions">
-              <a href="#top-ranking" class="feature-btn">See Rankings</a>
-            </div>
-          </div>
-        </div>
+      <div class="col-6 col-md-3 stat-item">
+        <span id="statesCovered" class="stat-number" data-count="13">13</span>
+        <span>States Covered</span>
+      </div>
+      <div class="col-6 col-md-3 stat-item">
+        <span id="happyFoodies" class="stat-number" data-count="800">800+</span>
+        <span>Happy Foodies</span>
       </div>
     </div>
   </div>
 </section>
-
-  <!-- Top Ranking -->
-  <section id="top-ranking" class="ranking-section">
-    <div class="container">
-      <div class="ranking-header">
-        <h2>Top Malaysian Street Foods</h2>
-        <p>Discover the most beloved street foods that define Malaysia's rich culinary heritage, ranked by food
-          enthusiasts nationwide.</p>
-      </div>
-
-      <div class="row g-4">
-        <!-- Rank 1 -->
-        <div class="col-12 col-md-6 col-lg-4">
-          <div class="ranking-card">
-            <div class="rank-badge top-1">1</div>
-            <div class="card-image">
-              <img src="JiaXuan/images/nasilemak.jpg" alt="Nasi Lemak">
-            </div>
-            <div class="card-content">
-              <h3 class="food-title">Nasi Lemak</h3>
-              <div class="food-tags">
-                <span class="food-tag">Rice</span>
-                <span class="food-tag">Breakfast</span>
-              </div>
-              <p class="food-description">A fragrant coconut rice dish served with sambal, crispy anchovies, roasted
-                peanuts, and hard-boiled egg.</p>
-              <div class="card-footer">
-                <div class="rating">
-                  <div class="stars">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star-half-alt"></i>
-                  </div>
-                  <span class="rating-value">4.8</span>
-                  <span class="votes">(1250 votes)</span>
-                </div>
-                <button class="view-details-btn">View Details</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Rank 2 -->
-        <div class="col-12 col-md-6 col-lg-4">
-          <div class="ranking-card">
-            <div class="rank-badge top-2">2</div>
-            <div class="card-image">
-              <img src="JiaXuan/images/char-kway-teow.jpg" alt="Char Kway Teow">
-            </div>
-            <div class="card-content">
-              <h3 class="food-title">Char Kway Teow</h3>
-              <div class="food-tags">
-                <span class="food-tag">Noodles</span>
-                <span class="food-tag">Stir-fried</span>
-              </div>
-              <p class="food-description">Stir-fried rice noodles with prawns, bloody cockles, Chinese sausage, eggs,
-                and bean sprouts in dark soy sauce.</p>
-              <div class="card-footer">
-                <div class="rating">
-                  <div class="stars">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star-half-alt"></i>
-                  </div>
-                  <span class="rating-value">4.7</span>
-                  <span class="votes">(1100 votes)</span>
-                </div>
-                <button class="view-details-btn">View Details</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Rank 3 -->
-        <div class="col-12 col-md-6 col-lg-4">
-          <div class="ranking-card">
-            <div class="rank-badge top-3">3</div>
-            <div class="card-image">
-              <img src="JiaXuan/images/roticanai.jpg" alt="Roti Canai">
-            </div>
-            <div class="card-content">
-              <h3 class="food-title">Roti Canai</h3>
-              <div class="food-tags">
-                <span class="food-tag">Bread</span>
-                <span class="food-tag">Breakfast</span>
-              </div>
-              <p class="food-description">Flaky, crispy flatbread served with flavorful dhal or curry sauce, a Malaysian
-                breakfast favorite.</p>
-              <div class="card-footer">
-                <div class="rating">
-                  <div class="stars">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star-half-alt"></i>
-                  </div>
-                  <span class="rating-value">4.7</span>
-                  <span class="votes">(1540 votes)</span>
-                </div>
-                <button class="view-details-btn">View Details</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="ranking-cta">
-        <a href="ranking.html">View Full Rankings</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Stats -->
-  <section class="stats-section">
-    <div class="container">
-      <div class="row g-4">
-        <div class="col-6 col-md-3 stat-item">
-          <span class="stat-number" data-count="500">0</span>
-          <span>Street Food Stalls</span>
-        </div>
-        <div class="col-6 col-md-3 stat-item">
-          <span class="stat-number" data-count="13">0</span>
-          <span>States Covered</span>
-        </div>
-        <div class="col-6 col-md-3 stat-item">
-          <span class="stat-number" data-count="50">0</span>
-          <span>Food Categories</span>
-        </div>
-        <div class="col-6 col-md-3 stat-item">
-          <span class="stat-number" data-count="1000">0</span>
-          <span>Happy Foodies</span>
-        </div>
-      </div>
-    </div>
-  </section>
 
   <!-- Footer -->
   <footer>
@@ -397,7 +392,8 @@
           <ul class="list-unstyled">
             <li><a href="#home" class="text-light">Home</a></li>
             <li><a href="#features" class="text-light">Explore</a></li>
-            <li><a href="contact.html" class="text-light">Contact</a></li>
+            <li><a href="#blog-preview" class="text-light">Blog</a></li>
+
           </ul>
         </div>
         <div class="col-md-3">
@@ -405,16 +401,16 @@
           <ul class="list-unstyled">
             <li><a href="#top-ranking" class="text-light">Top Ranking</a></li>
             <li><a href="nearme.html" class="text-light">Near Me</a></li>
-            <li><a href="#" class="text-light" onclick="document.getElementById('streetFoodDropdown').click()">Street
-                Food</a></li>
+            <li><a href="state.html" class="text-light">Street Food (States)</a></li>
+            <li><a href="Race.html" class="text-light">Street Food (Races)</a></li>
           </ul>
         </div>
         <div class="col-md-3">
           <h6>Follow Us</h6>
           <div class="social-links">
-            <a href="#" class="text-light me-3"><i class="fab fa-facebook-f"></i></a>
-            <a href="#" class="text-light me-3"><i class="fab fa-instagram"></i></a>
-            <a href="#" class="text-light me-3"><i class="fab fa-twitter"></i></a>
+            <a class="text-light me-3"><i class="fab fa-facebook-f"></i></a>
+            <a class="text-light me-3"><i class="fab fa-instagram"></i></a>
+            <a class="text-light me-3"><i class="fab fa-twitter"></i></a>
           </div>
         </div>
       </div>
@@ -480,11 +476,6 @@
       </div>
     </div>
   </div>
-
-  <!-- FAB -->
-  <button class="floating-action" type="button" data-action="scrolltop" aria-label="Scroll to top">
-    <i class="fas fa-arrow-up"></i>
-  </button>
 
   <!-- Vendor JS -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
