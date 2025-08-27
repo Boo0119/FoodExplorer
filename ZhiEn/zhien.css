@@ -121,11 +121,12 @@
      color: #000 !important;
  }
 
- html[data-theme="dark"] .food-description p,
- h4 {
+ html[data-theme="dark"] .food-description p {
      color: #d8d3d3 !important;
  }
-
+html[data-theme="dark"] .food-description h4 {
+     color: #d8d3d3 !important;
+ }
  html[data-theme="dark"] .rating-value {
      color: #d8d3d3 !important;
  }
@@ -1025,3 +1026,4 @@
      }
 
  }
+
