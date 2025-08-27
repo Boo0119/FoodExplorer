@@ -11,56 +11,94 @@ function updateTime() {
 setInterval(updateTime, 60000);
 updateTime();
 
-// Show weather using OpenWeather API
-async function loadWeather() {
+// OpenWeather integration with current location support
+(function(){
   const apiKey = "2cfd43855f99e910f0202148f940ef0b";
-  const lat = 3.139;   // Kuala Lumpur latitude
-  const lon = 101.6869; // Kuala Lumpur longitude
+  const KL_COORDS = { lat: 3.139, lon: 101.6869 };
 
-  try {
-    const response = await fetch(
-      `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`
-    );
-    const data = await response.json();
-    const temp = Math.round(data.main.temp);
-    const condition = data.weather[0].main;       // e.g. "Clouds"
-    const description = data.weather[0].description; // e.g. "broken clouds"
+  const weatherIcons = {
+    Clear: "☀️",
+    Clouds: "☁️",
+    FewClouds: "🌤️",
+    ScatteredClouds: "🌥️",
+    BrokenClouds: "☁️",
+    Rain: "🌧️",
+    Drizzle: "🌦️",
+    Thunderstorm: "⛈️",
+    Snow: "❄️",
+    Mist: "🌫️",
+    Haze: "🌫️",
+    Smoke: "💨",
+    Dust: "🌪️",
+    Fog: "🌫️",
+    Sand: "🏜️",
+    Ash: "🌋",
+    Squall: "💨",
+    Tornado: "🌪️"
+  };
 
-    // Weather icon mapping
-    const weatherIcons = {
-      Clear: "☀️",
-      Clouds: "☁️",
-      FewClouds: "🌤️",
-      ScatteredClouds: "🌥️",
-      BrokenClouds: "☁️",
-      Rain: "🌧️",
-      Drizzle: "🌦️",
-      Thunderstorm: "⛈️",
-      Snow: "❄️",
-      Mist: "🌫️",
-      Haze: "🌫️",
-      Smoke: "💨",
-      Dust: "🌪️",
-      Fog: "🌫️",
-      Sand: "🏜️",
-      Ash: "🌋",
-      Squall: "💨",
-      Tornado: "🌪️"
-    };
-
-    // Pick icon based on condition
-    const icon = weatherIcons[condition] || "🌤️";
-
-    // Display with icon + temp + description
-    document.getElementById("local-weather").textContent =
-      `${icon} ${temp}°C, ${description}`;
-  } catch (err) {
-    console.error("Weather fetch error:", err);
-    document.getElementById("local-weather").textContent = "Weather unavailable";
+  async function fetchWeatherByCoords(lat, lon) {
+    const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`;
+    const response = await fetch(url);
+    if (!response.ok) throw new Error("Weather fetch failed");
+    return response.json();
   }
-}
 
-// Load once
-loadWeather();
-// Refresh every 10 minutes
-setInterval(loadWeather, 600000);
+  function renderWeather(data) {
+    const temp = Math.round(data.main?.temp);
+    const condition = data.weather?.[0]?.main || "";
+    const description = data.weather?.[0]?.description || "";
+    const icon = weatherIcons[condition] || "🌤️";
+    const el = document.getElementById("local-weather");
+    if (el) el.textContent = `${icon} ${isFinite(temp) ? temp + "°C" : ""}${temp ? ", " : ""}${description}`;
+  }
+
+  async function loadWeatherWithFallback() {
+    try {
+      // Prefer LocationPermissionManager if present
+      if (window.locationManager?.getLocation) {
+        const loc = await window.locationManager.getLocation();
+        if (loc?.latitude && loc?.longitude) {
+          const data = await fetchWeatherByCoords(loc.latitude, loc.longitude);
+          return renderWeather(data);
+        }
+      }
+
+      // Fallback to direct geolocation API
+      if (navigator.geolocation) {
+        const position = await new Promise((resolve, reject) => {
+          navigator.geolocation.getCurrentPosition(resolve, reject, { enableHighAccuracy: true, timeout: 8000, maximumAge: 300000 });
+        });
+        const { latitude, longitude } = position.coords;
+        const data = await fetchWeatherByCoords(latitude, longitude);
+        return renderWeather(data);
+      }
+    } catch (_) {
+      // ignore and fallback
+    }
+    try {
+      // Final fallback: Kuala Lumpur
+      const data = await fetchWeatherByCoords(KL_COORDS.lat, KL_COORDS.lon);
+      renderWeather(data);
+    } catch (err) {
+      const el = document.getElementById("local-weather");
+      if (el) el.textContent = "Weather unavailable";
+      console.error("Weather fetch error:", err);
+    }
+  }
+
+  // Expose a hook for LocationPermissionManager to push updates immediately after grant
+  window.updateWeatherWithLocation = async function(locationData){
+    if (!locationData) return loadWeatherWithFallback();
+    try {
+      const data = await fetchWeatherByCoords(locationData.latitude, locationData.longitude);
+      renderWeather(data);
+    } catch {
+      loadWeatherWithFallback();
+    }
+  };
+
+  // Initial load + refresh every 10 minutes
+  loadWeatherWithFallback();
+  setInterval(loadWeatherWithFallback, 600000);
+})();
