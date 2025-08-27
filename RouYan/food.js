@@ -1,21 +1,3 @@
-// OpenWeather API Key (Replace with your own API key)
-const apiKey = '6809b68c82301a21a1be45f20b0575f2';
-const apiUrl = 'https://api.openweathermap.org/data/2.5/weather';
-const defaultLocation = 'Kampar,MY'; // Default location
-
-// Weather condition to emoji fallback mapping
-const weatherIconMap = {
-  '01d': '☀️', '01n': '🌙', // Clear sky
-  '02d': '🌤️', '02n': '☁️', // Few clouds
-  '03d': '☁️', '03n': '☁️', // Scattered clouds
-  '04d': '☁️', '04n': '☁️', // Broken clouds
-  '09d': '🌦️', '09n': '🌧️', // Shower rain
-  '10d': '🌦️', '10n': '🌧️', // Rain
-  '11d': '⛈️', '11n': '⛈️', // Thunderstorm
-  '13d': '🌨️', '13n': '🌨️', // Snow
-  '50d': '🌫️', '50n': '🌫️', // Mist/Fog
-};
-
 // Run a callback when DOM is ready, even if this script loads after DOMContentLoaded
 function onReady(callback) {
   if (document.readyState === 'loading') {
@@ -23,91 +5,6 @@ function onReady(callback) {
   } else {
     callback();
   }
-}
-
-// Update weather icon (centralized handling)
-function updateWeatherIcon(iconCode, description) {
-  const iconElement = document.getElementById('weather-icon');
-  if (!iconElement) return;
-
-  const openWeatherIconUrl = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
-
-  // Try OpenWeather icon
-  iconElement.src = openWeatherIconUrl;
-  iconElement.alt = description;
-
-  // Fallback if image fails
-  iconElement.onerror = function () {
-    const fallbackIcon = weatherIconMap[iconCode] || '🌤️';
-    this.src = `data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" 
-      viewBox="0 0 100 100">
-        <text y="50%" x="50%" text-anchor="middle" dominant-baseline="central" 
-        font-size="60">${fallbackIcon}</text>
-      </svg>`;
-    this.alt = description;
-  };
-}
-
-// Fetch weather
-async function fetchWeather() {
-  try {
-    const response = await fetch(`${apiUrl}?q=${defaultLocation}&appid=${apiKey}&units=metric`);
-    if (!response.ok) throw new Error('Failed to fetch weather data');
-
-    const data = await response.json();
-
-    // Update UI
-    const locationElement = document.getElementById('weather-location');
-    const tempElement = document.getElementById('weather-temp');
-
-    if (locationElement) locationElement.textContent = data.name;
-    if (tempElement) tempElement.textContent = `${Math.round(data.main.temp)}°C`;
-
-    updateWeatherIcon(data.weather[0].icon, data.weather[0].description);
-
-    console.log('Weather loaded:', {
-      location: data.name,
-      temperature: data.main.temp,
-      condition: data.weather[0].main,
-      description: data.weather[0].description,
-      icon: data.weather[0].icon
-    });
-  } catch (error) {
-    console.error('Error fetching weather data:', error);
-
-    const locationElement = document.getElementById('weather-location');
-    const tempElement = document.getElementById('weather-temp');
-    const iconElement = document.getElementById('weather-icon');
-
-    if (locationElement) locationElement.textContent = 'Weather Unavailable';
-    if (tempElement) tempElement.textContent = '';
-    if (iconElement) {
-      iconElement.src = `data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" 
-        viewBox="0 0 100 100">
-          <text y="50%" x="50%" text-anchor="middle" dominant-baseline="central" 
-          font-size="60">🌤️</text>
-        </svg>`;
-      iconElement.alt = 'Weather data unavailable';
-    }
-  }
-}
-
-// Retry mechanism
-async function fetchWeatherWithRetry(maxRetries = 3) {
-  let attempts = 0;
-  while (attempts < maxRetries) {
-    try {
-      await fetchWeather();
-      return;
-    } catch (error) {
-      attempts++;
-      console.warn(`Weather fetch attempt ${attempts} failed:`, error);
-      if (attempts < maxRetries) {
-        await new Promise(r => setTimeout(r, 1000 * Math.pow(2, attempts)));
-      }
-    }
-  }
-  console.error('All weather fetch attempts failed');
 }
 
 // Local Storage utilities
@@ -202,11 +99,6 @@ onReady(function () {
   // Initialize user session
   initializeUserSession();
 
-  // Fetch weather data with retry mechanism
-  fetchWeatherWithRetry();
-
-  // Refresh weather every 10 minutes
-  setInterval(fetchWeatherWithRetry, 600000);
 });
 
 // User session management
