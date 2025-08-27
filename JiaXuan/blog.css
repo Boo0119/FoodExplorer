@@ -1,0 +1,539 @@
+/* General */
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  background: #ecf0f1;
+}
+
+/* Hero Section */
+.hero-container {
+  margin-top: 70px;
+  position: relative;
+  max-width: 100%;
+  overflow: hidden;
+  background-color: #000;
+}
+
+.hero-container::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+}
+
+.hero-image {
+  position: relative;
+  width: 100%;
+  height: 500px;
+}
+
+.slides img {
+  width: 100%;
+  height: 500px;
+  object-fit: cover;
+  display: none;
+}
+
+.slides img.active {
+  display: block;
+  animation: fade 1.2s ease-in-out;
+}
+
+@keyframes fade {
+  from {
+    opacity: 0.4;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+
+/* Overlay */
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.5));
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  padding: 0 15px;
+  color: #fff;
+  z-index: 5;
+}
+
+/* Text */
+.hero-overlay h2 {
+   font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 800;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, .45);
+  margin-bottom: 1rem
+}
+
+.hero-overlay p {
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, .4);
+  margin-bottom: 1.5rem
+}
+
+/* Arrows */
+.prev,
+.next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 50%;
+  z-index: 10;
+  transition: background 0.3s ease;
+}
+
+.prev:hover,
+.next:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.prev {
+  left: 15px;
+}
+
+.next {
+  right: 15px;
+}
+
+/* Dots */
+.dots {
+  position: absolute;
+  bottom: 10px;
+  width: 100%;
+  text-align: center;
+  z-index: 10;
+}
+
+.dot {
+  height: 10px;
+  width: 10px;
+  margin: 0 4px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.dot.active,
+.dot:hover {
+  background-color: #f39c12;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .hero-image {
+    height: 280px;
+    /* smaller for mobile */
+  }
+
+  .slides img {
+    height: 280px;
+  }
+
+  .hero-overlay h2 {
+    font-size: 1.3rem;
+  }
+
+  .hero-overlay p {
+    font-size: 0.8rem;
+  }
+}
+
+
+/* Posts */
+.post {
+  max-width: 600px;
+  margin: 20px auto;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.post-header {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+}
+
+.post-header .avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.post-title {
+  margin-top: 10px;
+  margin-left: 10px;
+  font-size: 22px;
+  font-weight: bold
+}
+
+.username {
+  font-weight: bold;
+  margin-right: auto;
+}
+
+.auto-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 18px;
+  margin-right: 10px;
+  flex-shrink: 0;
+}
+
+.date {
+  font-size: 0.8em;
+  color: #2c3e50;
+  opacity: 0.7;
+}
+
+.post-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+/* Post Actions */
+.post-actions {
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.like-btn,
+.comment-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+  padding: 0;
+}
+
+.like-btn:hover i {
+  color: #e63946;
+}
+
+.comment-btn:hover i {
+  color: #0095f6;
+}
+
+.like-count {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+/* Captions & Comments */
+.post-caption {
+  padding: 0 10px 10px;
+  font-size: 0.95rem;
+  color: #2c3e50;
+}
+
+.comments {
+  padding: 8px 12px;
+  border-top: 1px solid #eee;
+}
+
+.comments p {
+  margin: 4px 0;
+  font-size: 0.9rem;
+  color: #2c3e50;
+}
+
+.comments p strong {
+  margin-right: 6px;
+  font-weight: 600;
+}
+
+.comment-count {
+  font-size: 0.85rem;
+  color: #2c3e50;
+  opacity: 0.7;
+}
+
+/* Comment Form */
+.comment-form {
+  display: flex;
+  align-items: center;
+  border-top: 1px solid #eee;
+  padding: 10px 10px;
+  gap: 6px;
+}
+
+.comment-form input {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 8px;
+  font-size: 0.9rem;
+  background: transparent;
+  color: #2c3e50;
+}
+
+.comment-form input::placeholder {
+  color: #aaa;
+  font-style: italic;
+}
+
+.comment-form button {
+  border: none;
+  background: none;
+  color: #e94230;
+  /* red post button */
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.comment-form button:disabled {
+  color: #f39c12;
+  /* orange disabled */
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Only flex for dynamic comments */
+.comment-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 4px 0;
+  font-size: 0.9rem;
+  color: #2c3e50;
+}
+
+/* Trash bin button */
+.comment-item .delete-comment {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  color: #025599;
+  margin-left: 10px;
+}
+
+.comment-item .delete-comment:hover {
+  color: #e63946;
+}
+
+
+/* Footer */
+.site-footer {
+  background-color: #2c3e50;
+  color: #ecf0f1;
+  text-align: center;
+  padding: 10px 0;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+}
+
+/* Modal background overlay */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 9998;
+}
+
+/* Modal box */
+.modal-content {
+  position: relative;
+  background: white;
+  margin: 10% auto;
+  padding: 20px;
+  border-radius: 12px;
+  width: 400px;
+  max-width: 90%;
+  z-index: 9999;
+}
+
+/* Close button */
+.close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.modal-content h2 {
+  margin-top: 0;
+  color: #2c3e50;
+}
+
+.close {
+  float: right;
+  cursor: pointer;
+  font-size: 1.2rem;
+  color: #e94230;
+  font-weight: bold;
+}
+
+.close:hover {
+  color: #f39c12;
+}
+
+.modal-content form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.modal-content input,
+.modal-content button {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}
+
+.modal-content button {
+  background: #e94230;
+  color: white;
+  border: none;
+  font-weight: 600;
+}
+
+.modal-content button:hover {
+  background: #2c3e50;
+}
+
+/* Floating New Post Button */
+.new-post-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 30px;
+  background: #e94230;
+  color: #fff;
+  border: none;
+  padding: 15px 20px;
+  border-radius: 50px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: 0.3s ease;
+  z-index: 1000;
+}
+
+.new-post-btn:hover {
+  background: #2c3e50;
+}
+
+.share-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+  padding: 0;
+}
+
+.share-btn:hover i {
+  color: #25D366;
+}
+
+.share-menu {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  position: absolute;
+  padding: 10px;
+  margin-top: 5px;
+  z-index: 10;
+}
+
+.share-menu.hidden {
+  display: none;
+}
+
+.share-option {
+  padding: 8px 12px;
+  color: #333;
+  text-decoration: none;
+  font-size: 14px;
+  border-radius: 6px;
+  transition: background 0.3s;
+}
+
+.share-option:hover {
+  background: #f0f0f0;
+}
+
+/* Delete Button */
+.delete-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+  padding: 0;
+}
+
+.delete-btn:hover i {
+  color: #025599;
+}
+
+/* Scroll to Top Button */
+#scrollTopBtn {
+  display: none;
+  position: fixed;
+  bottom: 80px;
+  right: 70px;
+  z-index: 99;
+  width: 50px;
+  height: 50px;
+  border: none;
+  outline: none;
+  background-color: #f44336;
+  color: white;
+  cursor: pointer;
+  border-radius: 50%;
+  font-size: 18px;
+  font-weight: bold;
+  line-height: 50px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease;
+}
+
+#scrollTopBtn:hover {
+  background-color: #d32f2f;
+}
