@@ -26,6 +26,7 @@
             </button>
 
             <div class="collapse navbar-collapse" id="navbarNav">
+                <!-- Navigation Menu -->
                 <ul class="navbar-nav me-auto align-items-lg-center">
                     <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="ranking.html">Top Ranking</a></li>
@@ -50,6 +51,7 @@
                     <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
                 </ul>
 
+                <!-- Auth Buttons -->
                 <div class="d-flex align-items-center gap-2">
                     <span id="navUser" class="nav-link text-muted small d-none">
                         Hello, <span id="usernameDisplay"></span>
@@ -71,6 +73,12 @@
                     <button id="btnLogout" type="button" class="btn btn-outline-secondary px-3 rounded-pill d-none">
                         Logout
                     </button>
+                </div>
+
+                <!-- Weather + Time -->
+                <div class="weather-time-box">
+                    <div id="local-time" class="small"></div>
+                    <div id="local-weather" class="small"></div>
                 </div>
             </div>
         </div>
