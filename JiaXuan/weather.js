@@ -1,106 +1,145 @@
-// Show Malaysia local time
-function updateTime() {
-  fetch("https://timeapi.io/api/Time/current/zone?timeZone=Asia/Kuala_Lumpur")
-    .then(response => response.json())
-    .then(data => {
-      const date = new Date(data.dateTime);
-      const options = { weekday: 'short', day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' };
-      document.getElementById("local-time").textContent = "🕒 " + date.toLocaleString("en-GB", options);
-    });
-}
-setInterval(updateTime, 60000);
-updateTime();
+<!DOCTYPE html>
+<html lang="en">
 
-// OpenWeather integration with current location support
-(function(){
-  const apiKey = "2cfd43855f99e910f0202148f940ef0b";
-  const KL_COORDS = { lat: 3.139, lon: 101.6869 };
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Malaysia Street Food Blog</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="JiaXuan/blog.css">
+    <link rel="stylesheet" href="style.css">
 
-  const weatherIcons = {
-    Clear: "☀️",
-    Clouds: "☁️",
-    FewClouds: "🌤️",
-    ScatteredClouds: "🌥️",
-    BrokenClouds: "☁️",
-    Rain: "🌧️",
-    Drizzle: "🌦️",
-    Thunderstorm: "⛈️",
-    Snow: "❄️",
-    Mist: "🌫️",
-    Haze: "🌫️",
-    Smoke: "💨",
-    Dust: "🌪️",
-    Fog: "🌫️",
-    Sand: "🏜️",
-    Ash: "🌋",
-    Squall: "💨",
-    Tornado: "🌪️"
-  };
+</head>
 
-  async function fetchWeatherByCoords(lat, lon) {
-    const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`;
-    const response = await fetch(url);
-    if (!response.ok) throw new Error("Weather fetch failed");
-    return response.json();
-  }
+<body>
+    <nav class="navbar navbar-expand-lg fixed-top navbar-light shadow-sm app-navbar">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <i class="fas fa-utensils me-2"></i>MY StreetFood
+      </a>
 
-  function renderWeather(data) {
-    const temp = Math.round(data.main?.temp);
-    const condition = data.weather?.[0]?.main || "";
-    const icon = weatherIcons[condition] || "🌤️";
-    const city = data.name || "";
-    const country = data.sys?.country || "";
-    const locationLabel = city ? `${city}${country ? ", " + country : ""}` : "";
-    const el = document.getElementById("local-weather");
-    if (el) el.textContent = `${icon} ${isFinite(temp) ? temp + "°C" : ""}${temp && locationLabel ? ", " : ""}${locationLabel}`;
-  }
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-  async function loadWeatherWithFallback() {
-    try {
-      // Prefer LocationPermissionManager if present
-      if (window.locationManager?.getLocation) {
-        const loc = await window.locationManager.getLocation();
-        if (loc?.latitude && loc?.longitude) {
-          const data = await fetchWeatherByCoords(loc.latitude, loc.longitude);
-          return renderWeather(data);
-        }
-      }
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <!-- Navigation Menu -->
+        <ul class="navbar-nav me-auto align-items-lg-center">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="ranking.html">Top Ranking</a></li>
 
-      // Fallback to direct geolocation API
-      if (navigator.geolocation) {
-        const position = await new Promise((resolve, reject) => {
-          navigator.geolocation.getCurrentPosition(resolve, reject, { enableHighAccuracy: true, timeout: 8000, maximumAge: 300000 });
-        });
-        const { latitude, longitude } = position.coords;
-        const data = await fetchWeatherByCoords(latitude, longitude);
-        return renderWeather(data);
-      }
-    } catch (_) {
-      // ignore and fallback
-    }
-    try {
-      // Final fallback: Kuala Lumpur
-      const data = await fetchWeatherByCoords(KL_COORDS.lat, KL_COORDS.lon);
-      renderWeather(data);
-    } catch (err) {
-      const el = document.getElementById("local-weather");
-      if (el) el.textContent = "Weather unavailable";
-      console.error("Weather fetch error:", err);
-    }
-  }
+          <!-- Street Food dropdown -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="streetFoodDropdown" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">Street Food</a>
+            <ul class="dropdown-menu" aria-labelledby="streetFoodDropdown">
+              <!-- Link to States page -->
+              <li><a class="dropdown-item" href="state.html"><i class="fas fa-map-marker-alt me-2"></i>States</a></li>
 
-  // Expose a hook for LocationPermissionManager to push updates immediately after grant
-  window.updateWeatherWithLocation = async function(locationData){
-    if (!locationData) return loadWeatherWithFallback();
-    try {
-      const data = await fetchWeatherByCoords(locationData.latitude, locationData.longitude);
-      renderWeather(data);
-    } catch {
-      loadWeatherWithFallback();
-    }
-  };
+              <!-- Link to Race page -->
+              <li><a class="dropdown-item" href="Race.html"><i class="fas fa-users me-2"></i>Races</a></li>
+            </ul>
+          </li>
 
-  // Initial load + refresh every 10 minutes
-  loadWeatherWithFallback();
-  setInterval(loadWeatherWithFallback, 600000);
-})();
+          <li class="nav-item"><a class="nav-link text-uppercase" href="blog.html">BLOG</a></li>
+          <li class="nav-item"><a class="nav-link" href="nearme.html">Near Me</a></li>
+          <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
+        </ul>
+
+        <!-- Auth Buttons -->
+        <div class="d-flex align-items-center gap-2">
+          <span id="navUser" class="nav-link text-muted small d-none">
+            Hello, <span id="usernameDisplay"></span>
+          </span>
+
+          <!-- Login Button (hidden if logged in) -->
+          <a id="btnLogin" href="login.html" class="btn btn-outline-primary px-3 rounded-pill text-decoration-none">
+            Login
+          </a>
+
+          <!-- Sign Up Button (hidden if logged in) -->
+          <a id="btnSignup" href="signup.html"
+            class="btn btn-primary px-3 rounded-pill text-decoration-none text-white">
+            Sign Up
+          </a>
+
+          <!-- Logout Button (shown if logged in) -->
+          <button id="btnLogout" type="button" class="btn btn-outline-secondary px-3 rounded-pill d-none">
+            Logout
+          </button>
+        </div>
+        <!-- Weather + Time -->
+        <div class="weather-time-box">
+            <div id="local-time" class="small"></div>
+            <div id="local-weather" class="small"></div>
+        </div>
+      </div>
+    </div>
+    </nav>
+
+    <div class="hero-container">
+        <div class="hero-image">
+            <div class="slides">
+                <img src="JiaXuan/images/food1.png" alt="Slide 1">
+                <img src="JiaXuan/images/food2.png" alt="Slide 2">
+                <img src="JiaXuan/images/food3.png" alt="Slide 3">
+                <img src="JiaXuan/images/food4.png" alt="Slide 4">
+                <img src="JiaXuan/images/food5.png" alt="Slide 5">
+            </div>
+            <button class="prev" onclick="changeSlide(-1)">&#8249;</button>
+            <button class="next" onclick="changeSlide(1)">&#8250;</button>
+        </div>
+        <div class="dots">
+            <span class="dot" onclick="currentSlide(1)"></span>
+            <span class="dot" onclick="currentSlide(2)"></span>
+            <span class="dot" onclick="currentSlide(3)"></span>
+            <span class="dot" onclick="currentSlide(4)"></span>
+            <span class="dot" onclick="currentSlide(5)"></span>
+        </div>
+
+        <div class="hero-overlay">
+            <h2>Malaysia Street Food Blog</h2>
+            <p>Your guide to the must-try flavors of Malaysia’s streets.</p>
+        </div>
+    </div>
+
+    <section id="postsSection">
+        <div id="postContainer"></div>
+    </section>
+
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Create a New Post</h2>
+            <form id="blogForm" class="new-post-form">
+                <input type="text" id="username" placeholder="Your name" required>
+                <input type="text" id="title" placeholder="Post title" required>
+                <input type="file" id="image" accept="image/*" required>
+                <textarea id="caption" placeholder="Write your caption..." required></textarea>
+                <button type="submit" class="publish-btn"><i class="fa fa-paper-plane"></i> Publish</button>
+            </form>
+        </div>
+    </div>
+
+    <button class="new-post-btn" id="openModal"><i class="fa fa-pen"></i> New Post</button>
+    <button class="scrollTop-btn" id="scrollTopBtn" title="Go to top">↑</button>
+
+    <footer>
+        <div class="container">
+            <div class="text-center">
+                <p class="mb-0">&copy; <span id="year"></span> Malaysia Street Food Explorer. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="JiaXuan/blog.js"></script>
+    <script src="JiaXuan/weather.js"></script>
+    <script src="main.js"></script>
+
+</body>
+
+</html>
