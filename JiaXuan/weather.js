@@ -1,14 +1,17 @@
-// Show Malaysia local time with jQuery
+// Show Malaysia local time
 function updateTime() {
-  $.getJSON("https://timeapi.io/api/Time/current/zone?timeZone=Asia/Kuala_Lumpur", function(data) {
-    const date = new Date(data.dateTime);
-    const options = { weekday: 'short', day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' };
-    $("#local-time").text("🕒 " + date.toLocaleString("en-GB", options));
-  });
+  fetch("https://timeapi.io/api/Time/current/zone?timeZone=Asia/Kuala_Lumpur")
+    .then(response => response.json())
+    .then(data => {
+      const date = new Date(data.dateTime);
+      const options = { weekday: 'short', day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' };
+      document.getElementById("local-time").textContent = "🕒 " + date.toLocaleString("en-GB", options);
+    });
 }
 setInterval(updateTime, 60000);
 updateTime();
 
+// OpenWeather integration with current location support
 (function(){
   const apiKey = "2cfd43855f99e910f0202148f940ef0b";
   const KL_COORDS = { lat: 3.139, lon: 101.6869 };
@@ -34,9 +37,11 @@ updateTime();
     Tornado: "🌪️"
   };
 
-  function fetchWeatherByCoords(lat, lon) {
+  async function fetchWeatherByCoords(lat, lon) {
     const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`;
-    return $.getJSON(url);
+    const response = await fetch(url);
+    if (!response.ok) throw new Error("Weather fetch failed");
+    return response.json();
   }
 
   function renderWeather(data) {
@@ -46,59 +51,56 @@ updateTime();
     const city = data.name || "";
     const country = data.sys?.country || "";
     const locationLabel = city ? `${city}${country ? ", " + country : ""}` : "";
-    const text = `${icon} ${isFinite(temp) ? temp + "°C" : ""}${temp && locationLabel ? ", " : ""}${locationLabel}`;
-    $("#local-weather").text(text);
+    const el = document.getElementById("local-weather");
+    if (el) el.textContent = `${icon} ${isFinite(temp) ? temp + "°C" : ""}${temp && locationLabel ? ", " : ""}${locationLabel}`;
   }
 
-  function loadWeatherWithFallback() {
-    // Prefer LocationPermissionManager if present
-    if (window.locationManager && window.locationManager.getLocation) {
-      window.locationManager.getLocation().then(function(loc) {
-        if (loc && loc.latitude && loc.longitude) {
-          fetchWeatherByCoords(loc.latitude, loc.longitude)
-            .done(renderWeather)
-            .fail(loadWeatherWithFallbackFallback);
-        } else {
-          loadWeatherWithFallbackFallback();
+  async function loadWeatherWithFallback() {
+    try {
+      // Prefer LocationPermissionManager if present
+      if (window.locationManager?.getLocation) {
+        const loc = await window.locationManager.getLocation();
+        if (loc?.latitude && loc?.longitude) {
+          const data = await fetchWeatherByCoords(loc.latitude, loc.longitude);
+          return renderWeather(data);
         }
-      }).catch(loadWeatherWithFallbackFallback);
-      return;
-    }
+      }
 
-    // Fallback to direct geolocation API
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(function(position) {
+      // Fallback to direct geolocation API
+      if (navigator.geolocation) {
+        const position = await new Promise((resolve, reject) => {
+          navigator.geolocation.getCurrentPosition(resolve, reject, { enableHighAccuracy: true, timeout: 8000, maximumAge: 300000 });
+        });
         const { latitude, longitude } = position.coords;
-        fetchWeatherByCoords(latitude, longitude)
-          .done(renderWeather)
-          .fail(loadWeatherWithFallbackFallback);
-      }, loadWeatherWithFallbackFallback, { enableHighAccuracy: true, timeout: 8000, maximumAge: 300000 });
-    } else {
-      loadWeatherWithFallbackFallback();
+        const data = await fetchWeatherByCoords(latitude, longitude);
+        return renderWeather(data);
+      }
+    } catch (_) {
+      // ignore and fallback
     }
-  }
-
-  function loadWeatherWithFallbackFallback() {
-    // Final fallback: Kuala Lumpur
-    fetchWeatherByCoords(KL_COORDS.lat, KL_COORDS.lon)
-      .done(renderWeather)
-      .fail(function(err) {
-        $("#local-weather").text("Weather unavailable");
-        console.error("Weather fetch error:", err);
-      });
+    try {
+      // Final fallback: Kuala Lumpur
+      const data = await fetchWeatherByCoords(KL_COORDS.lat, KL_COORDS.lon);
+      renderWeather(data);
+    } catch (err) {
+      const el = document.getElementById("local-weather");
+      if (el) el.textContent = "Weather unavailable";
+      console.error("Weather fetch error:", err);
+    }
   }
 
   // Expose a hook for LocationPermissionManager to push updates immediately after grant
-  window.updateWeatherWithLocation = function(locationData) {
+  window.updateWeatherWithLocation = async function(locationData){
     if (!locationData) return loadWeatherWithFallback();
-    fetchWeatherByCoords(locationData.latitude, locationData.longitude)
-      .done(renderWeather)
-      .fail(loadWeatherWithFallback);
+    try {
+      const data = await fetchWeatherByCoords(locationData.latitude, locationData.longitude);
+      renderWeather(data);
+    } catch {
+      loadWeatherWithFallback();
+    }
   };
 
   // Initial load + refresh every 10 minutes
-  $(document).ready(function() {
-    loadWeatherWithFallback();
-    setInterval(loadWeatherWithFallback, 600000);
-  });
+  loadWeatherWithFallback();
+  setInterval(loadWeatherWithFallback, 600000);
 })();
